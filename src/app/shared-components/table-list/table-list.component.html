@@ -382,7 +382,7 @@
         <table class="table table-sm table-ordered" *ngIf="data && data.tableBody.length === 0">
           <tr class="headerRow">
             <th *ngFor="let request of data.tableHeader; let i = index">
-              {{request}}
+              {{'tables.' + request |translate}}
               <span *ngIf="i !== data.tableHeader.length - 1" (click)="sortBy(sortStatus, request)">
                 <i class="fa fa-sort"></i>
               </span>
