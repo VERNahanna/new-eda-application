@@ -184,6 +184,28 @@
       display: none;
     }
   }
+
+  .profileMenu {
+    button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 5px 0;
+
+      span {
+        margin-left: 10px;
+        color: #c28a30;
+        direction: ltr;
+      }
+    }
+
+    button:after {
+      content: '';
+      display: none;
+    }
+  }
 }
 
 /*---------------------Drop Down Navbar ----------------*/
