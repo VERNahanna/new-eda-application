@@ -8,13 +8,8 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class AppComponent {
   title = 'eda-application';
+  currentLang;
 
   constructor(public translateService: TranslateService) {
-    translateService.addLangs(['en', 'ar']);
-    translateService.setDefaultLang('en');
-  }
-
-  translateSite(language: string) {
-    this.translateService.use(language);
   }
 }

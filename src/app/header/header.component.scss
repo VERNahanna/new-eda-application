@@ -8,60 +8,57 @@
 .logo {
   width: 100%;
   padding: 15px 0px;
-}
 
-.logo img {
-  width: 100%;
+  img {
+    width: 100%;
+  }
 }
-
 
 /* -------------------------- title Styling ------------------- */
 .TitleContainer {
   text-align: center;
-}
 
-.TitleContainer h2 {
-  background: -webkit-linear-gradient(90deg, #a66c15, #d6b679);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 42px;
-  height: 50px;
-  margin-bottom: 0;
+  h2 {
+    background: -webkit-linear-gradient(90deg, #a66c15, #d6b679);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 42px;
+    height: 50px;
+    margin-bottom: 0;
+  }
 }
 
 /* --------------------- social media List ----------------------- */
-
 .socialMediaList {
   display: inline-block;
   vertical-align: top;
-}
 
-.socialMediaList ul {
-  list-style-type: none;
-}
+  ul {
+    list-style-type: none;
 
-.socialMediaList ul li {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 15px;
-}
+    li {
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 15px;
 
-.socialMediaList ul li a {
-  color: #c28a30;
-}
+      a {
+        color: #c28a30;
+      }
 
-.socialMediaList ul li a:hover {
-  color: #fff;
-}
+      a:hover {
+        color: #fff;
+      }
 
-.socialMediaList ul li span {
-  font-size: 22px;
-}
+      span {
+        font-size: 22px;
+      }
+    }
 
-.socialMediaList ul li:last-child {
-  margin-right: 0;
+    li:last-child {
+      margin-right: 0;
+    }
+  }
 }
-
 
 /* ----------------------------- phone container ------------ */
 .phoneNumberContainer {
@@ -71,10 +68,10 @@
   color: #c28a30;
   font-weight: bolder;
   font-size: 22px;
-}
 
-.phoneNumberContainer i {
-  transform: rotate(-45deg);
+  i {
+    transform: rotate(-45deg);
+  }
 }
 
 
@@ -82,7 +79,6 @@
 .changeLang {
   display: inline-block;
   vertical-align: top;
-  margin-left: 1.5em;
   color: #c28a30;
   font-weight: bolder;
   font-size: 22px;
@@ -111,93 +107,83 @@
 .searchIcon {
   display: inline-block;
   vertical-align: top;
-  margin-left: 1.5em;
-}
 
-.searchIcon a {
-  color: #c28a30;
-  font-weight: bolder;
-  font-size: 22px;
+  a {
+    color: #c28a30;
+    font-weight: bolder;
+    font-size: 22px;
+  }
 }
-
 
 /* ---------------------------- menu ---------------------- */
 .menu {
   display: inline-block;
-  margin-right: 1.5em;
-}
 
-.menu ul {
-  list-style-type: none;
-}
+  ul {
+    list-style-type: none;
 
-.menu ul li {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 2em;
-}
+    li {
+      display: inline-block;
+      vertical-align: top;
 
-.menu ul li:last-child {
-  margin-right: 0em;
-}
+      a {
+        color: #fff;
+        font-weight: 500;
+        font-size: 18px;
+        padding-bottom: 5px;
+      }
 
-.menu ul li a {
-  color: #fff;
-  font-weight: 500;
-  font-size: 18px;
-  padding-bottom: 5px;
-}
+      a:hover {
+        color: #c28a30;
+        text-decoration: none;
+      }
 
-.menu ul li a:hover {
-  color: #c28a30;
-  text-decoration: none;
+      a.active {
+        color: #c28a30;
+      }
+    }
+  }
 }
-
-.menu ul li a.active {
-  color: #c28a30;
-}
-
 
 /* ------------------------ my profile icon --------------------*/
 .profile {
   display: inline-block;
   vertical-align: top;
-}
 
-.profileIcon {
-  display: inline-block;
-  vertical-align: top;
-  background: #c28a30;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  line-height: 3em;
-  overflow: hidden;
-  margin-right: 1em;
-}
+  .profileIcon {
+    display: inline-block;
+    vertical-align: top;
+    background: #c28a30;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 3em;
+    overflow: hidden;
 
-.profileIcon span {
-  font-size: 2em;
-}
+    span {
+      font-size: 2em;
+    }
 
-.profileMenu button {
-  background: none;
-  border: none;
-  color: #fff;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 5px 0;
-}
+    button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 5px 0;
 
-.profileMenu button span {
-  margin-left: 10px;
-  color: #c28a30;
-}
+      span {
+        margin-left: 10px;
+        color: #c28a30;
+      }
+    }
 
-.profileMenu button:after {
-  content: '';
-  display: none;
+    button:after {
+      content: '';
+      display: none;
+    }
+  }
 }
 
 /*---------------------Drop Down Navbar ----------------*/
@@ -218,11 +204,21 @@
 
 .dropdown {
   position: relative;
+
+  a {
+    i {
+      font-size: 14px;
+      margin-left: 1em;
+    }
+  }
 }
 
-.dropdown a i {
-  font-size: 14px;
-  margin-left: 1em;
+[lang="ar"] .dropdown {
+  a {
+    i {
+      margin-right: 1em;
+    }
+  }
 }
 
 .dropdown-content {
@@ -286,53 +282,73 @@
 
 .dropdown.forResponsiveMenu {
   display: none;
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    min-width: 200px;
+    right: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+
+    ul {
+      li {
+        list-style-type: none;
+
+        a {
+          color: #000000;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+
+        a:hover {
+          color: #fff;
+        }
+      }
+    }
+
+    a:hover, .dropdown-item.active, .dropdown-item:active {
+      background-color: #a06731 !important;
+      color: #fff !important;
+    }
+  }
+
+  .profile-menu {
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+  }
 }
 
-.forResponsiveMenu .dropdown-content {
+
+[lang="ar"] .dropdown.forResponsiveMenu {
   display: none;
-  position: absolute;
-  background-color: rgb(255, 255, 255);
-  min-width: 200px;
-  right: 0;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+
+  .dropdown-content {
+    left: 0;
+  }
+
+  .profile-menu {
+    margin-right: 15px;
+  }
 }
 
-.forResponsiveMenu .profile-menu {
-  margin-top: 5px;
-  margin-left: 15px;
-  margin-bottom: 15px;
-}
-
-.forResponsiveMenu .dropdown-content ul li {
-  list-style-type: none;
-
-}
-
-.forResponsiveMenu .dropdown-content ul li a {
-  color: #000000;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.forResponsiveMenu .dropdown-content ul li a:hover {
-  color: #fff;
-
-}
-
-.forResponsiveMenu .dropdown-content a:hover, .dropdown-item.active, .dropdown-item:active {
+.dropdown-item.active, .dropdown-item:active {
   background-color: #a06731 !important;
   color: #fff !important;
 }
 
-.forResponsiveMenu .dropdown:hover .dropdown-content {
-  display: block;
-}
+.dropdown:hover {
+  .dropdown-content {
+    display: block;
+  }
 
-.forResponsiveMenu .dropdown:hover .dropbtn {
+  .dropbtn {
 
-  background-color: #92918e;
+    background-color: #92918e;
+  }
 }
 
 /* ---------------- Notification ------------- */
@@ -340,106 +356,27 @@
   /*color: #c28a30;*/
   color: #f00;
   font-size: 50px;
-}
 
-.notification .bellContainer {
-  position: relative;
-  text-shadow: 0px 0px 20px #fff;
-}
+  .bellContainer {
+    position: relative;
+    text-shadow: 0px 0px 20px #fff;
 
-.notification .bellContainer .notificationCountClass {
-  font-size: 17px;
-  color: #fff;
-  position: absolute;
-  font-weight: bold;
-  top: 13px;
-  right: 8px;
-  width: 30px;
-}
-
-/* ---------------- responsive --------------- */
-@media only screen and (max-width: 1440px) {
-  .menu ul li {
-    margin-right: 1.1em;
-  }
-
-  .menu ul li a {
-    font-size: 15px;
-    font-weight: 600;
-  }
-
-  .profileIcon {
-    width: 35px;
-    height: 35px;
-  }
-
-  .profileMenu button {
-    font-size: 15px;
+    .notificationCountClass {
+      font-size: 17px;
+      color: #fff;
+      position: absolute;
+      font-weight: bold;
+      top: 13px;
+      right: 8px;
+      width: 30px;
+    }
   }
 }
 
-@media only screen and (max-width: 1366px) {
-  .menu ul li {
-    margin-right: 1em;
+[lang="ar"] .notification {
+  .bellContainer {
+    .notificationCountClass {
+      left: 8px;
+    }
   }
-}
-
-@media only screen and (max-width: 1280px) {
-  .menu ul li {
-    margin-right: 0.7em;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .menu ul li {
-    margin-right: 0.9em;
-  }
-
-  .menu ul li a {
-    font-size: 9.5px;
-    font-weight: 600;
-  }
-
-  .profileIcon {
-    width: 35px;
-    height: 35px;
-  }
-
-  .profileMenu button {
-    font-size: 15px;
-  }
-}
-
-@media only screen and (max-width: 960px) {
-  .menu ul li a {
-    font-weight: 500;
-    font-size: 19px;
-  }
-
-  .dropdown.forResponsiveMenu {
-    display: inline-block;
-  }
-
-  .menu {
-    display: none;
-  }
-
-  .none {
-    display: none !important;
-  }
-}
-
-@media only screen and (max-width: 375px) {
-  .menu ul li a {
-    font-weight: 500;
-    font-size: 14px;
-  }
-
-}
-
-@media only screen and (max-width: 580px) {
-  .dropbtn {
-    margin-top: 2rem;
-  }
-
 }

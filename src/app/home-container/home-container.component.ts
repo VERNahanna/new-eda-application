@@ -40,6 +40,7 @@ export class HomeContainerComponent implements OnInit {
   companyProfileId: any;
   username;
   unseenCount;
+  currentLang;
 
   constructor(private inputService: InputService, private getService: FormService) {
     interval(10000).subscribe(x => { // will execute every 30 seconds
@@ -157,5 +158,11 @@ export class HomeContainerComponent implements OnInit {
 
       this.unseenCount = res.filter(x => !x.f_seen).map(list => list).length;
     }, error => this.handleError(error));
+  }
+
+  changeLang(event) {
+    this.currentLang = event;
+
+    this.inputService.publish({type: 'currentLang', payload: this.currentLang})
   }
 }

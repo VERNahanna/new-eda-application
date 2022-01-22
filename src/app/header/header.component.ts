@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {FormService} from '../services/form.service';
 import {FormBuilder} from '@angular/forms';
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() Username;
   @Input() notificationCount;
+  @Output() selectedLanguage = new EventEmitter();
   screenWidth;
   menuObject = [
     {
@@ -74,7 +75,7 @@ export class HeaderComponent implements OnInit {
   alertErrorNotification: any;
   isLoading: boolean = false;
   Token;
-  currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'de';
+  currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
 
   constructor(private fb: FormBuilder,
               private getService: FormService,
@@ -94,6 +95,13 @@ export class HeaderComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe(res => {
       this.Token = res.payload;
+    });
+
+    this.inputService.getInput$().pipe(
+      filter(x => x.type === 'currentLang'),
+      distinctUntilChanged()
+    ).subscribe(res => {
+      this.currentLang = res.payload;
     });
   }
 
@@ -125,19 +133,7 @@ export class HeaderComponent implements OnInit {
 
   translateSite(language: string) {
     this.translateService.use(language);
+
+    this.selectedLanguage.emit(language);
   }
 }
-
-// new request -> Custom Release
-// {
-//   name: 'Custom Release',
-//     link: '/new-request/custom-release'
-// },
-// {
-//   name: 'Custom Release2',
-//     link: '/new-request/custom-release2'
-// },
-// {
-//   name: 'Inspection',
-//     link: '/new-request/inspection'
-// },

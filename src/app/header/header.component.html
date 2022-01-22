@@ -5,7 +5,7 @@
         <img src="assets/img/logo.png">
       </div>
     </div>
-    <div class="col-lg-9 col-md-8 col-sm-12 paddingLeftRight">
+    <div class="col-lg-9 col-md-8 col-sm-12">
       <div class="row h-100">
         <div class="col-12 p-0 pt-3 pb-3 border-bottom h-100">
           <div
@@ -14,14 +14,15 @@
                  [ngClass]="{'w-100 w-sm-85': screenWidth <= 960 }">
               <div class="d-flex align-items-center">
                 <h2>EgyCosma</h2>
-                <a class="ml-auto notification" routerLink="/notification-list">
+                <a class="{{currentLang === 'ar' ? 'mr-auto':'ml-auto'}} notification"
+                   routerLink="/notification-list">
                   <div class="bellContainer">
                     <i class="fas fa-bell"></i>
 
                     <span class="notificationCountClass">{{notificationCount}}</span>
                   </div>
                 </a>
-                <div class="changeLang ml-4">
+                <div class="changeLang {{currentLang === 'ar' ? 'mr-4':'ml-4'}}">
                   <select class="form-control" #langauge (change)="translateSite(langauge.value)">
 
                     <option *ngFor="let localization of translateService.getLangs()" [value]="localization"
@@ -33,7 +34,9 @@
                 </div>
               </div>
             </div>
-            <div class="btn-group mx-auto ml-sm-auto dropdown forResponsiveMenu" dropdown>
+            <div
+              class="btn-group mx-auto {{currentLang === 'ar' ? ' mr-sm-auto':'ml-sm-auto'}} dropdown forResponsiveMenu"
+              dropdown>
               <button class="dropbtn btn btn-primary" type="button" dropdownToggle aria-controls="dropdown-basic">
                 <span>
                 <i class="fas fa-bars"></i>
@@ -48,8 +51,9 @@
                     </a>
                   </li>
                   <li class="profile-menu">
-                    <div class="profile d-inline-flex justify-content-center align-items-center ml-auto">
-                      <div class="profileIcon">
+                    <div
+                      class="profile d-inline-flex justify-content-center align-items-center {{currentLang === 'ar' ? 'mr-auto':'ml-auto'}}">
+                      <div class="profileIcon {{currentLang === 'ar' ? ' mr-3':'ml-3'}}">
                       <span>
                         <i class="fas fa-user"></i>
                       </span>
@@ -84,9 +88,10 @@
         </div>
         <div class="col-12 p-0 pt-3 pb-3">
           <div class="d-flex align-items-center">
-            <div class="menu">
+            <div class="menu {{currentLang === 'ar' ? 'ml-4':'mr-4'}}">
               <ul>
-                <li *ngFor="let item of menuObject">
+                <li *ngFor="let item of menuObject; let i = index"
+                    class="{{currentLang === 'ar' && i < menuObject?.length ? 'ml-4':'mr-4'}}">
                   <a *ngIf="!item.dropDownStatus" routerLink="{{item.link}}" routerLinkActive="active">
                     {{'header.' + item.name | translate}}
                   </a>
@@ -111,7 +116,8 @@
                 </li>
               </ul>
             </div>
-            <div class="profile d-inline-flex justify-content-center align-items-center ml-auto none">
+            <div
+              class="profile d-inline-flex justify-content-center align-items-center {{currentLang === 'ar' ? 'mr-auto':'ml-auto '}} none">
               <div class="profileIcon">
                 <span>
                   <i class="fas fa-user"></i>

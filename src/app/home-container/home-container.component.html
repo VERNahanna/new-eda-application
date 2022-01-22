@@ -1,5 +1,6 @@
-<div class="appContainer">
-  <app-header [Username]="username" [notificationCount]="unseenCount"></app-header>
+<div class="appContainer" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+  <app-header [Username]="username" [notificationCount]="unseenCount"
+              (selectedLanguage)="changeLang($event)"></app-header>
 
   <div class="sectionContainer">
     <div [@routerTransitionSlide]="prepareRoute(outlet)">
@@ -10,7 +11,8 @@
   <app-footer></app-footer>
 </div>
 
-<alert type="danger" class="AlertForAllRequests" dismissible="true"  (onClosed)="onClosedErrorAlert()"
+<alert type="danger" class="AlertForAllRequests" dismissible="true" (onClosed)="onClosedErrorAlert()"
+       [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'"
        *ngIf="alertErrorNotificationStatus">
   <strong>Error message</strong> <br> {{alertErrorNotification.msg}}
 </alert>
