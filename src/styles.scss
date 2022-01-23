@@ -537,30 +537,33 @@ body {
 }
 
 
-.RequestingTable .table .headerRow th:first-child, .RequestingTable .table td:first-child {
-  width: 15%;
-}
+.RequestingTable {
+  .table {
+    th:first-child, td:first-child {
+      width: 15%;
+    }
 
-.RequestingTable .table .headerRow th:nth-child(2), .RequestingTable .table td:nth-child(2) {
-  width: 15%;
-}
+    th:nth-child(2), td:nth-child(2) {
+      width: 15%;
+    }
 
-.RequestingTable .table .headerRow th:nth-child(3), .RequestingTable .table td:nth-child(3) {
-  width: 15%;
-}
+    th:nth-child(3), td:nth-child(3) {
+      width: 15%;
+    }
 
-.RequestingTable .table .headerRow th:nth-child(4), .RequestingTable .table td:nth-child(4) {
-  width: 15%;
-}
+    th:nth-child(4), td:nth-child(4) {
+      width: 15%;
+    }
 
-.RequestingTable .table .headerRow th:nth-child(5), .RequestingTable .table td:nth-child(5) {
-  width: 15%;
-}
+    th:nth-child(5), td:nth-child(5) {
+      width: 15%;
+    }
 
-.RequestingTable .table .headerRow th:nth-child(6), .RequestingTable .table td:nth-child(6) {
-  width: 15%;
+    th:nth-child(6), td:nth-child(6) {
+      width: 15%;
+    }
+  }
 }
-
 
 .RequestingTableForKit .table .headerRow th:first-child, .RequestingTableForKit .table td:first-child {
   width: 15%;
@@ -735,37 +738,38 @@ button span.ellipsisSpan {
 .subBtnContainer {
   padding: 1em 10em;
   border-top: 2px solid #e2e2e1;
+
+  .btn.btn-primary {
+    background: #fff;
+    border: 2px solid #161c30;
+    color: #161c30;
+  }
+
+  .btn.btn-primary:hover {
+    background: #161c30 !important;
+    border-color: #161c30;
+  }
+
+  .btn.btn-primary.active {
+    background: #161c30 !important;
+    border-color: #161c30;
+  }
 }
 
-.subBtnContainer .btn.btn-primary {
-  background: #fff;
-  border: 2px solid #161c30;
-  color: #161c30;
-}
+.modalContainer {
+  h2 {
+    text-align: center;
+    color: #4ad295;
 
-.subBtnContainer .btn.btn-primary:hover {
-  background: #161c30 !important;
-  border-color: #161c30;
-}
+    span {
+      font-size: 32px;
+    }
+  }
 
-.subBtnContainer .btn.btn-primary.active {
-  background: #161c30 !important;
-  border-color: #161c30;
-}
-
-
-.modalContainer h2 {
-  text-align: center;
-  color: #4ad295;
-}
-
-.modalContainer h2 span {
-  font-size: 32px;
-}
-
-.modalContainer h3 {
-  text-align: center;
-  color: #161c30;
+  h3 {
+    text-align: center;
+    color: #161c30;
+  }
 }
 
 /* ----------------------- responsive -------------------------- */
@@ -830,3 +834,9 @@ button span.ellipsisSpan {
     width: 9rem;
   }
 }
+
+
+/* -------------------------- arabic styling ------------------------------ */
+
+
+

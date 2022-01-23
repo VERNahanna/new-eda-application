@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiURL: 'http://82.201.223.6:2020/edaapi/api/',
+  compareURL: 'http://82.201.223.6:2020/compare/api/',
 };
 
 /*

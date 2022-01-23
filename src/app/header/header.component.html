@@ -91,7 +91,7 @@
             <div class="menu {{currentLang === 'ar' ? 'ml-4':'mr-4'}}">
               <ul>
                 <li *ngFor="let item of menuObject; let i = index"
-                    class="{{currentLang === 'ar' && i < menuObject?.length ? 'ml-4':'mr-4'}}">
+                    class="{{currentLang === 'ar' && i !== menuObject?.length-1 ? 'ml-4':'mr-4'}}">
                   <a *ngIf="!item.dropDownStatus" routerLink="{{item.link}}" routerLinkActive="active">
                     {{'header.' + item.name | translate}}
                   </a>

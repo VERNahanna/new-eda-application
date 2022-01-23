@@ -3,6 +3,7 @@
     <div class="amountOfAllRequests">
       <ul>
         <li *ngFor="let request of numberOFAllRequestObject; let i = index"
+            class="{{i !== numberOFAllRequestObject.length -1 ? currentLang === 'ar' ? 'ml-4':'mr-4': ''}}"
             (click)="selectCharts(request.id, i)"
             [ngClass]="{'active': request.active}">
           <div class="d-flex align-items-center justify-content-center">
