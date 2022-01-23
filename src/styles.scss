@@ -169,7 +169,6 @@ a,
   cursor: not-allowed;
 }
 
-
 .w-85 {
   width: 85% !important;
 }
@@ -332,47 +331,73 @@ body {
 }
 
 /* ------------------------------------ Tabs ----------------------------------- */
-.nav-pills {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+.tabs {
+  .nav-pills {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .nav-item {
+      width: 32%;
+      margin-right: 2%;
+      text-align: center;
+    }
+
+    .nav-item:last-child {
+      margin-right: 0%;
+
+    }
+
+    .nav-link {
+      color: #161c30;
+      font-weight: 600;
+      border: 1px solid #161c30;
+      border-radius: 10px 0px 10px 10px !important;
+      -webkit-transition: ease-out 1s;
+      -moz-transition: ease-out 1s;
+      transition: ease-out 1s;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+      background: #161c30;
+    }
+
+    .nav-link.active, .nav-link.active:hover {
+      color: #fff;
+      background-color: #c28a30 !important;
+      border: none;
+    }
+
+    .show > .nav-link {
+      color: #fff;
+      background-color: #c28a30 !important;
+      border: none;
+    }
+  }
 }
 
-.nav-pills .nav-item {
-  width: 32%;
-  margin-right: 2%;
-  text-align: center;
+.arabicTabs {
+  .nav-pills {
+    .nav-item {
+      margin-left: 2%;
+      margin-right: 0;
+    }
+
+    .nav-item:last-child {
+      margin-left: 0%;
+      margin-right: 0;
+    }
+  }
 }
 
-.formTable .nav-pills .nav-item, .invoiceFormContainer .nav-pills .nav-item, .itemsFormContainer .nav-pills .nav-item {
-  width: 49%;
-}
-
-.nav-pills .nav-item:last-child {
-  margin-right: 0%;
-
-}
-
-.nav-pills .nav-link {
-  color: #161c30;
-  font-weight: 600;
-  border: 1px solid #161c30;
-  border-radius: 10px 0px 10px 10px !important;
-  -webkit-transition: ease-out 1s;
-  -moz-transition: ease-out 1s;
-  transition: ease-out 1s;
-}
-
-.nav-pills .nav-link:hover {
-  color: #fff;
-  background: #161c30;
-}
-
-.nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #c28a30 !important;
-  border: none;
+.formTable, .invoiceFormContainer, .itemsFormContainer {
+  .nav-pills {
+    .nav-item {
+      width: 49%;
+    }
+  }
 }
 
 /* -------------------- Table ---------------------- */

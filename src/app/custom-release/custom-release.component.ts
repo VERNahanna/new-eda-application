@@ -9,6 +9,7 @@ import {MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {TabsetComponent} from 'ngx-bootstrap/tabs';
 import {InputService} from '../services/input.service';
 import {BsModalRef, BsModalService, ModalOptions} from 'ngx-bootstrap/modal';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-custom-release',
@@ -499,12 +500,14 @@ export class CustomReleaseComponent implements OnInit {
       },
     ],
   };
+  currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
 
   constructor(private fb: FormBuilder,
               private number: DecimalPipe,
               private router: Router,
               private readonly route: ActivatedRoute,
               private inputService: InputService,
+              public translateService: TranslateService,
               private modalService: BsModalService,
               private getService: FormService) {
     this.getFormAsStarting('', '');
@@ -660,6 +663,13 @@ export class CustomReleaseComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe(res => {
       this.setApplicant(res.payload);
+    });
+
+    this.inputService.getInput$().pipe(
+      filter(x => x.type === 'currentLang'),
+      distinctUntilChanged()
+    ).subscribe(res => {
+      this.currentLang = res.payload;
     });
   }
 

@@ -23,6 +23,7 @@
     "submissionWithId": "Your request id is",
     "submissionMessage": "Thank you for submission",
     "errorMessage": "Error message",
+    "thank": "Thank You",
     "validationStatement": {
       "required": "this field is required",
       "maxSizeMessage": "this file must be as PDF and less than 5MB.",
@@ -120,5 +121,8 @@
     "manufacturingCompany": "Manufacturing company",
     "quantity": "Quantity",
     "batchNo": "Batch No."
+  },
+  "alerts": {
+
   }
 }
