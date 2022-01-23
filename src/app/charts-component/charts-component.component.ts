@@ -10,6 +10,7 @@ export class ChartsComponentComponent implements OnInit, OnChanges {
 
   @Input() data;
   @Input() pieData;
+  @Input() currentLang;
   svg;
   margin = 50;
   width = 950 - (this.margin * 2);

@@ -892,7 +892,6 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   onSubmitItems() {
-    console.log('this.regItemsForm.value', this.regItemsForm.value);
     if (this.regItemsForm.valid) {
       if (!this.editItemIndex && this.editItemIndex !== 0) {
         this.regInvoicesForm.value.itemDetails.push({...this.regItemsForm.value});
@@ -908,8 +907,6 @@ export class CustomReleaseComponent implements OnInit {
       this.itemListTable.tableBody.push(this.regItemsForm.value);
 
       this.getItemsFormAsStarting('', '');
-
-      console.log('this.itemListTable', this.itemListTable);
     } else {
       this.alertErrorNotificationStatus = true;
       this.alertErrorNotification = {msg: 'please complete the required values which marked with *'};
@@ -959,11 +956,9 @@ export class CustomReleaseComponent implements OnInit {
 
   getTheSelectedValueForImportedReason(itemType, event) {
     this.formData.importReasonList[itemType].filter(item => item.id === event.value).map(res => {
-      console.log('res', res);
       this.showNotificationNoStatus = res.showNotificationNoInput;
     });
 
-    console.log('showNotificationNoStatus', this.showNotificationNoStatus);
     this.isLoading = true;
 
     setTimeout(() => {
@@ -989,8 +984,6 @@ export class CustomReleaseComponent implements OnInit {
 
       return item;
     });
-
-    console.log('ItemAttachmentFields', this.ItemAttachmentFields);
   }
 
   applyProduct(notificationNumber) {

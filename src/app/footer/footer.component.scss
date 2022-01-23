@@ -8,10 +8,10 @@
 .logo {
   width: 70px;
   padding: 15px 0px;
-}
 
-.logo img {
-  width: 100%;
+  img {
+    width: 100%;
+  }
 }
 
 /* --------------------- social media List ----------------------- */
@@ -19,32 +19,27 @@
 .socialMediaList {
   display: inline-block;
   vertical-align: top;
-}
 
-.socialMediaList ul {
-  list-style-type: none;
-}
+  ul {
+    list-style-type: none;
 
-.socialMediaList ul li {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 15px;
-}
+    li {
+      display: inline-block;
+      vertical-align: top;
 
-.socialMediaList ul li a {
-  color: #c28a30;
-}
+      a {
+        color: #c28a30;
+      }
 
-.socialMediaList ul li a:hover {
-  color: #fff;
-}
+      a:hover {
+        color: #fff;
+      }
 
-.socialMediaList ul li span {
-  font-size: 22px;
-}
-
-.socialMediaList ul li:last-child {
-  margin-right: 0;
+      span {
+        font-size: 22px;
+      }
+    }
+  }
 }
 
 
@@ -52,14 +47,13 @@
 .phoneNumberContainer {
   display: inline-block;
   vertical-align: top;
-  margin-left: 1.5em;
   color: #c28a30;
   font-weight: light;
   font-size: 22px;
-}
 
-.phoneNumberContainer i {
-  transform: rotate(-45deg);
+  i {
+    transform: rotate(-45deg);
+  }
 }
 
 
@@ -71,55 +65,55 @@
   color: #c28a30;
   font-weight: light;
   font-size: 22px;
-}
 
-.changeLang .form-group select {
-  border: none;
-  background: none;
-  color: #c28a30;
-  font-weight: light;
-  border-radius: 0;
-  padding: 0px 4px;
-  width: 60px;
-  font-size: 18px;
-  height: calc(1.5em + 0.25rem + 2px);
-  cursor: pointer;
-}
+  .form-group {
+    select {
+      border: none;
+      background: none;
+      color: #c28a30;
+      font-weight: light;
+      border-radius: 0;
+      padding: 0px 4px;
+      width: 60px;
+      font-size: 18px;
+      height: calc(1.5em + 0.25rem + 2px);
+      cursor: pointer;
+    }
 
-.changeLang .form-group select:active, .changeLang .form-group select:focus {
-  box-shadow: 0px 0px 0.2rem #c28a30;
+    select:active, select:focus {
+      box-shadow: 0px 0px 0.2rem #c28a30;
+    }
+  }
 }
-
 
 /* ----------------- search Icon --------------------- */
 .searchIcon {
   display: inline-block;
   vertical-align: top;
   margin-left: 1.5em;
-}
 
-.searchIcon a {
-  color: #c28a30;
-  font-weight: light;
-  font-size: 22px;
+  a {
+    color: #c28a30;
+    font-weight: light;
+    font-size: 22px;
+  }
 }
 
 /* ---------------------- email Container --------------------------- */
 .emailIcon {
   display: inline-block;
   vertical-align: top;
-  margin-left: 1.5em;
-}
 
-.emailIcon a {
-  color: #c28a30;
-  font-weight: light;
-  font-size: 22px;
-}
+  a {
+    color: #c28a30;
+    font-weight: light;
+    font-size: 22px;
+  }
 
-.emailIcon a:hover {
-  color: #fff;
-  text-decoration: none;
+  a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
 }
 
 /*--------------------------------responsive--------------------------*/
