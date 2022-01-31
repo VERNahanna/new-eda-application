@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiURL: 'http://82.201.223.6:2020/edaapi/api/',
-  compareURL: 'http://82.201.223.6:2020/compare/api/',
+  secondApiURL: 'http://82.201.223.6:2041/api/',
 };
 
 /*

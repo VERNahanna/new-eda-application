@@ -124,6 +124,41 @@ a,
 }
 
 /* ------------------------------ General Classes -------------------------- */
+.form-group {
+  label {
+    margin-bottom: 0;
+  }
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  padding: 0.1em 0 !important;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 0.15em !important;
+}
+
+.mat-select {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  height: 0px !important;
+}
+
+.datepickerContainer .mat-form-field-flex {
+  padding: 0.6em 0 !important;
+}
+
+.itemsFormContainer .getProductByNotificationNumber .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+.Attachments.tab-pane .row > div:nth-child(n + 4) {
+  margin-top: 1em;
+}
+
 .border-bottom {
   border-bottom: 1px solid #d7d7d7 !important;
 }
@@ -169,6 +204,10 @@ a,
   cursor: not-allowed;
 }
 
+.paddingRight5 {
+  padding-right: 5rem;
+}
+
 .w-85 {
   width: 85% !important;
 }
@@ -190,7 +229,6 @@ body {
   background-color: #c28a30;
   border: none !important;
   outline: none !important;
-  height: 2px;
 }
 
 .mat-form-field.mat-focused .mat-form-field-ripple {
@@ -204,7 +242,6 @@ body {
 .mat-form-field-flex {
   background-color: rgba(0, 0, 0, 0) !important;
   border-bottom: 1px solid #161c30;
-  padding: .75em 0 0 0 !important;
 }
 
 .mat-input-element:active, .mat-input-element:focus {
@@ -287,47 +324,8 @@ body {
   border-left-color: #c28a30;
 }
 
-/*.detailsTable .mat-form-field-wrapper {*/
-/*  padding-bottom: 0em !important;*/
-/*}*/
-
-.detailsTable .mat-form-field-flex {
-  padding: 0em !important;
-  border: none;
-}
-
-.detailsTable .mat-form-field-appearance-fill .mat-form-field-infix {
-  padding: 0em !important;
-}
-
-.detailsTable .mat-form-field-appearance-legacy .detailsTable .mat-form-field-underline {
-  background-color: rgba(22, 28, 48, 0);
-}
-
-.detailsTable .mat-form-field, .detailsTable .mat-select, .detailsTable .mat-select-trigger, .detailsTable .mat-form-field-flex, .detailsTable .mat-form-field-infix, .detailsTable .mat-form-field-wrapper {
-  padding-bottom: 0;
-}
-
-.detailsTable .mat-form-field-underline {
-  bottom: 0.2em;
-}
-
-.detailsTable .mat-select .mat-form-field-label {
-  margin-top: -7px;
-}
-
-.detailsTable .mat-select-value {
-  margin-bottom: 0px;
-  padding-bottom: 1em;
-  padding-top: 0.99em;
-}
-
-.detailsTable .tab-pane .col-sm-4 {
-  margin-top: 1em;
-}
-
-.mat-form-field-label {
-  height: 33px;
+.mat-form-field-appearance-fill .mat-form-field-infix {
+  padding: 0.1em 0;
 }
 
 /* ------------------------------------ Tabs ----------------------------------- */
@@ -401,219 +399,6 @@ body {
 }
 
 /* -------------------- Table ---------------------- */
-.TrackTable .table th:first-child, .TrackTable .table td:first-child {
-  width: 10%;
-}
-
-.TrackTable .table th:nth-child(2), .TrackTable .table td:nth-child(2) {
-  width: 10%;
-}
-
-.TrackTable .table th:nth-child(3), .TrackTable .table td:nth-child(3) {
-  width: 20%;
-}
-
-.TrackTable .table th:nth-child(4), .TrackTable .table td:nth-child(4) {
-  width: 20%;
-}
-
-.TrackTable .table th:nth-child(5), .TrackTable .table td:nth-child(5) {
-  width: 13%;
-}
-
-.TrackTable .table th:nth-child(6), .TrackTable .table td:nth-child(6) {
-  width: 12%;
-}
-
-.TrackTable .table th:nth-child(7), .TrackTable .table td:nth-child(7) {
-  width: 13%;
-}
-
-.TrackTable .table th:nth-child(8), .TrackTable .table td:nth-child(8) {
-  width: 12%;
-}
-
-
-.DraftTable .table th:first-child, .DraftTable .table td:first-child {
-  width: 10%;
-}
-
-.DraftTable .table th:nth-child(2), .DraftTable .table td:nth-child(2) {
-  width: 10%;
-}
-
-.DraftTable .table th:nth-child(3), .DraftTable .table td:nth-child(3) {
-  width: 20%;
-}
-
-.DraftTable .table th:nth-child(4), .DraftTable .table td:nth-child(4) {
-  width: 20%;
-}
-
-.DraftTable .table th:nth-child(5), .DraftTable .table td:nth-child(5) {
-  width: 20%;
-}
-
-.DraftTable .table th:nth-child(6), .DraftTable .table td:nth-child(6) {
-  width: 10%;
-}
-
-.DraftTable .table th:nth-child(7), .DraftTable .table td:nth-child(7) {
-  width: 10%;
-}
-
-
-.ApprovedTable .table th:first-child, .ApprovedTable .table td:first-child {
-  width: 10%;
-}
-
-.ApprovedTable .table th:nth-child(2), .ApprovedTable .table td:nth-child(2) {
-  width: 10%;
-}
-
-.ApprovedTable .table th:nth-child(3), .ApprovedTable .table td:nth-child(3) {
-  width: 25%;
-}
-
-.ApprovedTable .table th:nth-child(4), .ApprovedTable .table td:nth-child(4) {
-  width: 25%;
-}
-
-.ApprovedTable .table th:nth-child(5), .ApprovedTable .table td:nth-child(5) {
-  width: 10%;
-}
-
-.ApprovedTable .table th:nth-child(6), .ApprovedTable .table td:nth-child(6) {
-  width: 10%;
-}
-
-.ApprovedTable .table th:nth-child(6), .ApprovedTable .table td:nth-child(7) {
-  width: 10%;
-}
-
-
-.ExpiredTable .table th:first-child, .ExpiredTable .table td:first-child {
-  width: 10%;
-}
-
-.ExpiredTable .table th:nth-child(2), .ExpiredTable .table td:nth-child(2) {
-  width: 10%;
-}
-
-.ExpiredTable .table th:nth-child(3), .ExpiredTable .table td:nth-child(3) {
-  width: 10%;
-}
-
-.ExpiredTable .table th:nth-child(4), .ExpiredTable .table td:nth-child(4) {
-  width: 15%;
-}
-
-.ExpiredTable .table th:nth-child(5), .ExpiredTable .table td:nth-child(5) {
-  width: 15%;
-}
-
-.ExpiredTable .table th:nth-child(6), .ExpiredTable .table td:nth-child(6) {
-  width: 12.5%;
-}
-
-.ExpiredTable .table th:nth-child(7), .ExpiredTable .table td:nth-child(7) {
-  width: 12.5%;
-}
-
-.ExpiredTable .table th:nth-child(8), .ExpiredTable .table td:nth-child(8) {
-  width: 10%;
-}
-
-.ExpiredTable .table th:nth-child(9), .ExpiredTable .table td:nth-child(9) {
-  width: 5%;
-}
-
-
-.NotificationList .table th:first-child, .NotificationList .table td:first-child {
-  width: 10%;
-}
-
-.NotificationList .table th:nth-child(2), .NotificationList .table td:nth-child(2) {
-  width: 20%;
-}
-
-.NotificationList .table th:nth-child(3), .NotificationList .table td:nth-child(3) {
-  width: 20%;
-}
-
-.NotificationList .table th:nth-child(4), .NotificationList .table td:nth-child(4) {
-  width: 15%;
-}
-
-.NotificationList .table th:nth-child(5), .NotificationList .table td:nth-child(5) {
-  width: 15%;
-}
-
-.NotificationList .table th:nth-child(6), .NotificationList .table td:nth-child(6) {
-  width: 10%;
-}
-
-.NotificationList .table th:nth-child(6), .NotificationList .table td:nth-child(7) {
-  width: 10%;
-}
-
-.NotificationList .table td .btn-primary {
-  pointer-events: fill;
-}
-
-
-.RequestingTable {
-  .table {
-    th:first-child, td:first-child {
-      width: 15%;
-    }
-
-    th:nth-child(2), td:nth-child(2) {
-      width: 15%;
-    }
-
-    th:nth-child(3), td:nth-child(3) {
-      width: 15%;
-    }
-
-    th:nth-child(4), td:nth-child(4) {
-      width: 15%;
-    }
-
-    th:nth-child(5), td:nth-child(5) {
-      width: 15%;
-    }
-
-    th:nth-child(6), td:nth-child(6) {
-      width: 15%;
-    }
-  }
-}
-
-.RequestingTableForKit .table .headerRow th:first-child, .RequestingTableForKit .table td:first-child {
-  width: 15%;
-}
-
-.RequestingTableForKit .table .headerRow th:nth-child(2), .RequestingTableForKit .table td:nth-child(2) {
-  width: 15%;
-}
-
-.RequestingTableForKit .table .headerRow th:nth-child(3), .RequestingTableForKit .table td:nth-child(3) {
-  width: 20%;
-}
-
-.RequestingTableForKit .table .headerRow th:nth-child(4), .RequestingTableForKit .table td:nth-child(4) {
-  width: 20%;
-}
-
-.RequestingTableForKit .table .headerRow th:nth-child(5), .RequestingTableForKit .table td:nth-child(5) {
-  width: 15%;
-}
-
-.RequestingTableForKit .table .headerRow th:nth-child(6), .RequestingTableForKit .table td:nth-child(6) {
-  width: 5%;
-}
-
 .insidePanelHeader {
   border-bottom: 0px !important;
 }
@@ -670,15 +455,6 @@ body {
 .page-item.active .page-link {
   background-color: #c28a30;
   border-color: #c28a30;
-}
-
-.mainRequest .mat-form-field-flex {
-  padding-top: 1.2em !important;
-}
-
-.mainRequest .mat-form-field-infix {
-  padding: 0 !important;
-  border-top: 0px !important;
 }
 
 .tabs {
@@ -796,72 +572,6 @@ button span.ellipsisSpan {
     color: #161c30;
   }
 }
-
-/* ----------------------- responsive -------------------------- */
-@media only screen and (min-width: 1025px) {
-  .paddingLeftRight {
-    padding-left: 5em;
-    padding-right: 0em;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .paddingLeftRight {
-    padding-left: 1em;
-    padding-right: 0em;
-  }
-
-  .sectionContainer .homepageContainer {
-    background-size: cover;
-  }
-}
-
-@media only screen and (max-width: 960px) {
-  .border-bottom {
-    border: none !important;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .bottomButtons {
-    margin-bottom: 1rem;
-    width: 100% !important;
-  }
-}
-
-@media only screen and (max-width: 650px) {
-  .nav-pills .nav-item {
-    width: 100%;
-    margin-top: 1em;
-    margin-right: 0%;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  .whiteContainer {
-    padding: 1.5em;
-  }
-
-  .btn.btn-primary {
-    width: 100%;
-  }
-}
-
-@media only screen and (max-width: 425px) {
-  .nav-pills .nav-item {
-    width: 100%;
-    margin-top: 1em;
-    margin-right: 0%;
-  }
-
-  .btnList .dropdown-menu {
-    min-width: 8rem;
-    width: 9rem;
-  }
-}
-
-
-/* -------------------------- arabic styling ------------------------------ */
 
 
 

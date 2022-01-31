@@ -28,8 +28,7 @@ export class HomeContainerComponent implements OnInit {
     currencies: [],
     unitOfMeasure: [],
     applicantList: [],
-    itemTypeList:[],
-    importReasonList:[]
+    itemTypeList:[]
   };
   alertErrorNotificationStatus: boolean = false;
   alertErrorNotification: any;

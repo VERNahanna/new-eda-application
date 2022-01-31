@@ -136,7 +136,7 @@ export class CustomReleaseComponent implements OnInit {
   notificationNo;
   editItemIndex;
   editItemRowStatus = false;
-
+  customImportRelease: any = [];
 
   allItemTypeAttachmentFields = {
     finishedProduct: [
@@ -622,13 +622,9 @@ export class CustomReleaseComponent implements OnInit {
 
   async getTermType(event): Promise<any> {
     console.log('event', event);
+    console.log('form', this.formData.importReason);
 
-    await this.getService.getImportReasonByItemId(event.value).subscribe((res: any) => {
-      if (res) {
-        this.formData.importReasonList = res;
-      }
-    });
-
+    // this.customImportRelease = this.formData.importReason.filter()
 
     // if (this.itemType === 'premix') {
     //   this.importReason = this.formData.importReasonList[this.itemType][0].name;

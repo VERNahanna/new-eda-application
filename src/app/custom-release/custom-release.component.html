@@ -644,7 +644,7 @@
               <mat-select [(ngModel)]="itemType"
                           (selectionChange)="getTermType($event)"
                           required>
-                <mat-option *ngFor="let option of formData.itemTypeList" [value]="option.id">
+                <mat-option *ngFor="let option of formData.itemTypeList" [value]="option">
                   {{option.name[currentLang]}}
                 </mat-option>
               </mat-select>
