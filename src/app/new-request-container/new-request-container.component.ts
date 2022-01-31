@@ -19,9 +19,9 @@ export class NewRequestContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getService.getVariablesPricesLookUp().subscribe((res: any) => {
-      this.inputService.publish({type: 'variablesPrices', payload: res});
-    }, error => this.handleError(error));
+    // this.getService.getVariablesPricesLookUp().subscribe((res: any) => {
+    //   this.inputService.publish({type: 'variablesPrices', payload: res});
+    // }, error => this.handleError(error));
   }
 
 

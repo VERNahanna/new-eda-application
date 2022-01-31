@@ -1,19 +1,23 @@
 <div class="headerContainer">
   <div class="row d-flex align-items-center justify-content-center">
-    <div class="col-lg-3 col-md-4 col-sm-12">
+    <div class="col-lg-2 col-md-4 col-sm-12">
       <div class="logo">
         <img src="assets/img/logo.png">
       </div>
     </div>
-    <div class="col-lg-9 col-md-8 col-sm-12">
+    <div class="col-lg-10 col-md-8 col-sm-12">
       <div class="row h-100">
-        <div class="col-12 p-0 pt-3 pb-3 border-bottom h-100">
+        <div class="col-12 p-0 border-bottom h-100">
           <div
             [ngClass]="{'text-right': screenWidth > 960, 'd-flex flex-column flex-sm-row': screenWidth <= 960, 'mt-5': screenWidth <= 960 && screenWidth > 640}">
             <div class="TitleContainer"
                  [ngClass]="{'w-100 w-sm-85': screenWidth <= 960 }">
               <div class="d-flex align-items-center">
-                <h2>EgyCosma</h2>
+                <div class="d-flex align-items-start justify-content-center p-3">
+                  <h2>{{'header.partnerTitles.centralAdministration' | translate}}</h2>
+                  <h2>{{'header.partnerTitles.generalDirectorate' | translate}}</h2>
+                  <h2>{{'header.partnerTitles.EServices' | translate}}</h2>
+                </div>
                 <a class="{{currentLang === 'ar' ? 'mr-auto':'ml-auto'}} notification"
                    routerLink="/notification-list">
                   <div class="bellContainer">
@@ -91,15 +95,25 @@
             <div class="menu {{currentLang === 'ar' ? 'ml-4':'mr-4'}}">
               <ul>
                 <li *ngFor="let item of menuObject; let i = index"
-                    class="{{i !== menuObject?.length-1  ? currentLang === 'ar' ? 'ml-4':'mr-4' : ''}}">
+                    class="{{i !== menuObject?.length-1  ? currentLang === 'ar' ? 'ml-3':'mr-2' : ''}}">
                   <a *ngIf="!item.dropDownStatus" routerLink="{{item.link}}" routerLinkActive="active">
-                    {{'header.' + item.name | translate}}
+                    <span class="{{currentLang === 'ar' ? 'mr-1':'ml-1'}}">
+                      <i class="{{item.icon}}"></i>
+                    </span>
+                    <span *ngIf="item.name">
+                      {{'header.' + item.name | translate}}
+                    </span>
                   </a>
                   <div *ngIf="item.dropDownStatus" class="btn-group dropdown" dropdown triggers="hover">
                     <a dropdownToggle
                        aria-controls="dropdown-basic"
                        [ngClass]="{'active': isActive(item.link)}">
-                      {{'header.' + item.name | translate}}
+                      <span class="{{currentLang === 'ar' ? 'mr-1':'ml-1'}}">
+                        <i class="{{item.icon}}"></i>
+                      </span>
+                      <span *ngIf="item.name">
+                        {{'header.' + item.name | translate}}
+                      </span>
                       <i class="fas fa-chevron-down"></i>
                     </a>
                     <div class="dropdown-content">
@@ -107,6 +121,9 @@
                           role="menu" aria-labelledby="button-basic">
                         <li *ngFor="let element of item.dropdownLinks" role="menuitem">
                           <a class="dropdown-item" routerLink="{{element.link}}" routerLinkActive="active">
+                            <span class="{{currentLang === 'ar' ? 'mr-1':'ml-1'}}">
+                              <i class="{{element.icon}}"></i>
+                            </span>
                             {{'header.' + element.name | translate}}
                           </a>
                         </li>

@@ -93,7 +93,6 @@ export class TableListComponent implements OnInit, OnChanges {
   deletedIdsListForManufacturing = [];
   deletedIdsListForDetailsRow = [];
   deletedIdsListForIngrediant = [];
-  noDataStatment = 'There is no data ...';
 
   constructor(private router: Router, private route: ActivatedRoute, private inputService: InputService) {
   }

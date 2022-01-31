@@ -19,53 +19,122 @@ export class HeaderComponent implements OnInit {
   screenWidth;
   menuObject = [
     {
-      name: 'home',
+      name: '',
       link: '/home',
-      dropDownStatus: false
+      dropDownStatus: false,
+      icon: 'fas fa-home'
     },
     {
-      name: 'createRequests',
+      name: 'pharmaceuticalRawMaterial',
       link: '/new-request',
       dropDownStatus: true,
+      icon: 'fas fa-pills',
       dropdownLinks: [
         {
-          name: 'customRelease',
-          link: '/new-request/custom-release'
+          name: 'importationServices',
+          link: '#',
+          icon: 'fas fa-shipping-fast'
         },
+        {
+          name: 'releaseServices',
+          link: '/new-request/custom-release',
+          icon: 'fas fa-dolly-flatbed'
+        }
       ]
     },
     {
-      name: 'draftRequests',
+      name: 'pharmaceuticalProducts',
       link: '/draft-request',
       dropDownStatus: true,
+      icon: 'fas fa-first-aid',
       dropdownLinks: [
         {
-          name: 'customRelease',
-          link: '/draft-request/custom-release'
+          name: 'importationServices',
+          link: '#',
+          icon: 'fas fa-shipping-fast'
         },
+        {
+          name: 'releaseServices',
+          link: '/new-request/custom-release',
+          icon: 'fas fa-dolly-flatbed'
+        }
       ]
     },
     {
-      name: 'trackRequests',
+      name: 'biologicalProducts',
       link: '/track-request',
       dropDownStatus: true,
+      icon: 'fas fa-dna',
       dropdownLinks: [
         {
-          name: 'customRelease',
-          link: '/track-request/custom-release'
+          name: 'importationServices',
+          link: '#',
+          icon: 'fas fa-shipping-fast'
         },
+        {
+          name: 'releaseServices',
+          link: '/new-request/custom-release',
+          icon: 'fas fa-dolly-flatbed'
+        }
       ]
     },
     {
-      name: 'rejectedRequests',
+      name: 'narcotics',
       link: '/rejected-request',
       dropDownStatus: true,
+      icon: 'fas fa-tablets',
       dropdownLinks: [
         {
-          name: 'customRelease',
-          link: '/rejected-request/custom-release'
+          name: 'importationServices',
+          link: '#',
+          icon: 'fas fa-shipping-fast'
         },
+        {
+          name: 'releaseServices',
+          link: '/new-request/custom-release',
+          icon: 'fas fa-dolly-flatbed'
+        }
       ]
+    },
+    {
+      name: 'detergentsAndPesticides',
+      link: '/rejected-request',
+      dropDownStatus: true,
+      icon: 'fas fa-vials',
+      dropdownLinks: [
+        {
+          name: 'importationServices',
+          link: '#',
+          icon: 'fas fa-shipping-fast'
+        },
+        {
+          name: 'releaseServices',
+          link: '/new-request/custom-release',
+          icon: 'fas fa-dolly-flatbed'
+        }
+      ]
+    },
+    {
+      name: 'cosmeticsProducts',
+      link: '/rejected-request',
+      dropDownStatus: true,
+      icon: 'fas fa-medkit',
+      dropdownLinks: [
+        {
+          name: 'importationServices',
+          link: '#'
+        },
+        {
+          name: 'releaseServices',
+          link: '/new-request/custom-release'
+        }
+      ]
+    },
+    {
+      name: 'pharmaceuticalExemption',
+      link: '/rejected-request',
+      dropDownStatus: false,
+      icon: 'fas fa-receipt'
     }
   ];
 

@@ -12,7 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class FormService {
   private _isLoggedIn: boolean;
   apiBaseUrl = environment.apiURL;
-  compareBaseUrl = environment.compareURL;
+  secondApiURL = environment.secondApiURL;
   Token;
 
   // loginAPIURL = environment.loginAPIURL;
@@ -77,154 +77,210 @@ export class FormService {
     this._isLoggedIn = v;
   }
 
-  getRequestTypeLookUp() {
+  getDashboardData() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/registrationtype`, options)
+    return this.http.get(`${this.apiBaseUrl}Lookups/Dashboard`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getMarketingTypeLookUp() {
+  getAllPortsLookUp() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/marketingtype`, options)
+    return this.http.get(`${this.secondApiURL}BillOfLading/ports`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getCountryLookUp() {
+  getAllInvoiceItemTypes() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/Country`, options)
+    return this.http.get(`${this.secondApiURL}Invoice/itemTypes`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getFunctionLookUp() {
+  getAllImportReason() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/functions`, options)
+    return this.http.get(`${this.secondApiURL}Invoice/importReasons`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getManufacturingCompanyLookUp(page, filterText) {
+  getImportReasonByItemId(itemId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/manufactorycompany?pagesize=15000&pageNo=${page}&searchname=${filterText}`, options)
+    return this.http.get(`${this.secondApiURL}Invoice/importReasons/${itemId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getPackagingTypeLookUp() {
+  getCompanyProfiles() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/packagingtype`, options)
+    return this.http.get(`${this.secondApiURL}Company/GetCompanyProfiles`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getPhysicalStateLookUp() {
+  getAllIngredient() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/productphysicalstate`, options)
+    return this.http.get(`${this.secondApiURL}Item/Ingredients`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getUnitOfMeasureLookUp() {
+  getIngredientByRange(start, end) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/unitofmessure`, options)
+    return this.http.get(`${this.secondApiURL}Item​/Ingredients/${start}/${end}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getUsePurposeLookUp() {
+  getAllPackagingList() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/usepurpose`, options)
+    return this.http.get(`${this.secondApiURL}Item/PackingTypes`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getProductColorLookUp() {
+  getAllSrcRowMaterial() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/productcolour`, options)
+    return this.http.get(`${this.secondApiURL}Item/GetSrcRawMaterials`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getProductIngrediantsLookUp(page, filterText) {
+  getAllProductManufacture() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/ingredients?pagesize=40000&pageNo=${page}&searchname=${filterText}`, options)
+    return this.http.get(`${this.secondApiURL}Product/ProductManufacture`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getAllReleaseType() {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}RequestRelease/ReleaseType`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getSharedCountries() {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Shared/Countries`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getSharedCurrencies() {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Shared/Currencies`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getAllUnitOfMeasure() {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Shared/unitsOfMeasurement`, options)
       .pipe(map((res: any) => {
           return res;
         }),
@@ -245,146 +301,375 @@ export class FormService {
         catchError(this.handleError));
   }
 
-  getStoragePlaceLookUp() {
+  getInvoicesByBilOfLanding(bolId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/storageplaces`, options)
+    return this.http.get(`${this.secondApiURL}Invoice/InvoicesByBilOfLading/${bolId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getTrackTypeLookUp() {
+  getIngredientCount(bolId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/tracktype`, options)
+    return this.http.get(`${this.secondApiURL}Item/Ingredients/Count`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getDashboardData() {
+  getInvoiceItemForView(invoiceId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Lookups/Dashboard`, options)
+    return this.http.get(`${this.secondApiURL}Item/invoiceItems/${invoiceId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getApprovedProductsList() {
+  getInvoiceApprovedItem(invoiceId, approveNo) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=approved&pageNo=1&pageSize=5000`, options)
+    return this.http.get(`${this.secondApiURL}Item/invoiceItems/${invoiceId}/${approveNo}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getApprovedProductsWithCommentsFromLabsList() {
+  getRequestDetails(requestId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=flagLab&pageNo=1&pageSize=5000`, options)
+    return this.http.get(`${this.secondApiURL}Requests/${requestId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getApprovedProductsWithCommentsFromRegList() {
+  getAllRequest() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=flagReg&pageNo=1&pageSize=5000`, options)
+    return this.http.get(`${this.secondApiURL}Requests`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getApprovedProductsWithCommentsFromVariationList() {
+  deleteRequestDetails(requestId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=flagVariation&pageNo=1&pageSize=5000`, options)
+    return this.http.get(`${this.secondApiURL}Requests/${requestId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getApprovedHoldProductsFromLabList() {
+  setRequestAsDraft(event) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=holdLab&pageNo=1&pageSize=5000`, options)
+    const JSONData = JSON.stringify(event);
+
+    return this.http.post(`${this.apiBaseUrl}Requests/SaveRequest`, JSONData, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getApprovedHoldProductsFromRegList() {
+  setSubmissionRequest(event) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=holdReg&pageNo=1&pageSize=5000`, options)
+    const JSONData = JSON.stringify(event);
+
+    return this.http.post(`${this.apiBaseUrl}Requests/SubmitRequest`, JSONData, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
-  getApprovedHoldProductsFromVariationList() {
+  getRequestCount(companyRoleId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token
     });
     const options = {headers};
 
-    return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=holdVariation&pageNo=1&pageSize=5000`, options)
+    return this.http.get(`${this.secondApiURL}Requests/GetAllRequestsCount/${companyRoleId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
   }
 
+  getAllDraftRequestCount(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Requests/GetDraftRequestsCount/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getAllApprovedRequestCount(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Requests/GetApprovedRequestsCount/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getAllRejectedRequestCount(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Requests/GetRejectedRequestsCount/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getAllPendingRequestCount(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Requests/GetPendingRequestsCount​/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getDraftRequestForView(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Requests/GetDraftRequestsForView/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getApprovedRequestForView(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Requests/GetApprovedRequestsForView/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getRejectedRequestForView(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Requests/GetRejectedRequestsForView/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getPendingRequestForView(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Requests/GetPendingRequestsForView/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+
+  // getTrackTypeLookUp() {
+  //   const headers = new HttpHeaders({
+  //     'Content-type': 'application/json',
+  //     'Token': this.Token
+  //   });
+  //   const options = {headers};
+  //
+  //   return this.http.get(`${this.apiBaseUrl}Lookups/tracktype`, options)
+  //     .pipe(map((res: any) => {
+  //         return res;
+  //       }),
+  //       catchError(this.handleError));
+  // }
+  //
+  // getApprovedProductsList() {
+  //   const headers = new HttpHeaders({
+  //     'Content-type': 'application/json',
+  //     'Token': this.Token
+  //   });
+  //   const options = {headers};
+  //
+  //   return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=approved&pageNo=1&pageSize=5000`, options)
+  //     .pipe(map((res: any) => {
+  //         return res;
+  //       }),
+  //       catchError(this.handleError));
+  // }
+  //
+  // getApprovedProductsWithCommentsFromLabsList() {
+  //   const headers = new HttpHeaders({
+  //     'Content-type': 'application/json',
+  //     'Token': this.Token
+  //   });
+  //   const options = {headers};
+  //
+  //   return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=flagLab&pageNo=1&pageSize=5000`, options)
+  //     .pipe(map((res: any) => {
+  //         return res;
+  //       }),
+  //       catchError(this.handleError));
+  // }
+  //
+  // getApprovedProductsWithCommentsFromRegList() {
+  //   const headers = new HttpHeaders({
+  //     'Content-type': 'application/json',
+  //     'Token': this.Token
+  //   });
+  //   const options = {headers};
+  //
+  //   return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=flagReg&pageNo=1&pageSize=5000`, options)
+  //     .pipe(map((res: any) => {
+  //         return res;
+  //       }),
+  //       catchError(this.handleError));
+  // }
+  //
+  // getApprovedProductsWithCommentsFromVariationList() {
+  //   const headers = new HttpHeaders({
+  //     'Content-type': 'application/json',
+  //     'Token': this.Token
+  //   });
+  //   const options = {headers};
+  //
+  //   return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=flagVariation&pageNo=1&pageSize=5000`, options)
+  //     .pipe(map((res: any) => {
+  //         return res;
+  //       }),
+  //       catchError(this.handleError));
+  // }
+  //
+  // getApprovedHoldProductsFromLabList() {
+  //   const headers = new HttpHeaders({
+  //     'Content-type': 'application/json',
+  //     'Token': this.Token
+  //   });
+  //   const options = {headers};
+  //
+  //   return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=holdLab&pageNo=1&pageSize=5000`, options)
+  //     .pipe(map((res: any) => {
+  //         return res;
+  //       }),
+  //       catchError(this.handleError));
+  // }
+  //
+  // getApprovedHoldProductsFromRegList() {
+  //   const headers = new HttpHeaders({
+  //     'Content-type': 'application/json',
+  //     'Token': this.Token
+  //   });
+  //   const options = {headers};
+  //
+  //   return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=holdReg&pageNo=1&pageSize=5000`, options)
+  //     .pipe(map((res: any) => {
+  //         return res;
+  //       }),
+  //       catchError(this.handleError));
+  // }
+  //
+  // getApprovedHoldProductsFromVariationList() {
+  //   const headers = new HttpHeaders({
+  //     'Content-type': 'application/json',
+  //     'Token': this.Token
+  //   });
+  //   const options = {headers};
+  //
+  //   return this.http.get(`${this.apiBaseUrl}Product/GetNotificationList?Type=holdVariation&pageNo=1&pageSize=5000`, options)
+  //     .pipe(map((res: any) => {
+  //         return res;
+  //       }),
+  //       catchError(this.handleError));
+  // }
+  //
   getNotificationLogsList() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
@@ -443,19 +728,20 @@ export class FormService {
         catchError(this.handleError));
   }
 
-  getVariablesPricesLookUp() {
-    const headers = new HttpHeaders({
-      'Content-type': 'application/json',
-      'Token': this.Token
-    });
-    const options = {headers};
-
-    return this.http.get(`${this.apiBaseUrl}Lookups/variables`, options)
-      .pipe(map((res: any) => {
-          return res;
-        }),
-        catchError(this.handleError));
-  }
+  //
+  // getVariablesPricesLookUp() {
+  //   const headers = new HttpHeaders({
+  //     'Content-type': 'application/json',
+  //     'Token': this.Token
+  //   });
+  //   const options = {headers};
+  //
+  //   return this.http.get(`${this.apiBaseUrl}Lookups/variables`, options)
+  //     .pipe(map((res: any) => {
+  //         return res;
+  //       }),
+  //       catchError(this.handleError));
+  // }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 401) {

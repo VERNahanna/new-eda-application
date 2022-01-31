@@ -1,3 +1,13 @@
+$height: calc((100vh - 850px) / 2);
+
+@mixin Height($val) {
+  @if $val > 0 {
+    top: $val;
+  } @else {
+    top: 2rem
+  }
+}
+
 .formTableContainer {
   padding-left: 5.5%;
   position: relative;
@@ -8,14 +18,14 @@
   padding: 3rem;
   width: 75%;
   display: block;
-  top: calc((100vh - 850px) / 2);
   left: 12.5%;
-  height: 850px;
+  height: 90vh;
   overflow: auto;
   background: #fff;
   border: 1px solid #c28a30;
   border-radius: 10px 0 10px 10px;
   z-index: 101;
+  top: 2rem
 }
 
 .itemsFormContainer {
@@ -23,9 +33,9 @@
   padding: 3rem;
   width: 75%;
   display: block;
-  top: calc((100vh - 680px) / 2);
+  top: 5rem;
   left: 12.5%;
-  height: 680px;
+  height: 70vh;
   overflow: auto;
   background: #fff;
   border: 1px solid #c28a30;
@@ -83,13 +93,11 @@ input:active, input:focus {
   box-shadow: none;
 }
 
-form > .row > div:nth-child(n + 4) {
-  margin-top: 2em;
-}
+//form > .row > div:nth-child(n + 4) {
+//  margin-top: 2em;
+//}
 
-tab-pane .row > div:nth-child(n + 4) {
-  margin-top: 2em;
-}
+
 
 .form-group {
   position: relative;
@@ -172,7 +180,6 @@ input[type=range] {
   width: 100%;
   border: none !important;
   padding: 0;
-  margin-top: 17px;
 }
 
 input[type=range]:focus {

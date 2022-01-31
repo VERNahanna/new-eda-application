@@ -54,9 +54,9 @@
                              [matAutocomplete]="requestedReleaseTypeList" required>
                       <mat-autocomplete #requestedReleaseTypeList="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptionsForRequestedReleaseType | async"
-                                    [value]="option.NAME">
-                          <span class="tooltipContainer" tooltip="{{option.NAME}}"
-                                placement="top">{{option.NAME}}</span>
+                                    [value]="option.name">
+                          <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
+                                placement="top">{{option.name[currentLang]}}</span>
                         </mat-option>
                       </mat-autocomplete>
                       <div
@@ -99,9 +99,9 @@
                              [matAutocomplete]="customPortNameList" required>
                       <mat-autocomplete #customPortNameList="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptionsForCustomPortName | async"
-                                    [value]="option.NAME">
-                          <span class="tooltipContainer" tooltip="{{option.NAME}}"
-                                placement="top">{{option.NAME}}</span>
+                                    [value]="option.name">
+                          <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
+                                placement="top">{{option.name[currentLang]}}</span>
                         </mat-option>
                       </mat-autocomplete>
                       <div
@@ -130,9 +130,20 @@
                   </div>
                   <div class="col-lg-4 col-sm-6 col-12">
                     <mat-form-field class="example-full-width">
-                      <mat-label>{{'customRelease.formLabel.supplierCounty' | translate}}</mat-label>
-                      <input type="text" class="form-control" matInput formControlName="supplierCounty"
-                             placeholder="{{'customRelease.formLabel.supplierCounty' | translate}}">
+                      <mat-label>{{'customRelease.formLabel.supplierCountry' | translate}}</mat-label>
+                      <input type="text"
+                             class="form-control"
+                             placeholder="{{'customRelease.formLabel.supplierCountry' | translate}}"
+                             matInput
+                             formControlName="supplierCountry"
+                             [matAutocomplete]="supplierCountryList" required>
+                      <mat-autocomplete #supplierCountryList="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptionsForSupplierCountry | async"
+                                    [value]="option.name">
+                          <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
+                                placement="top">{{option.name[currentLang]}}</span>
+                        </mat-option>
+                      </mat-autocomplete>
                     </mat-form-field>
                   </div>
                   <div class="col-lg-4 col-sm-6 col-12">
@@ -147,13 +158,13 @@
                   <div class="col-lg-4 col-sm-6 col-12">
                     <div class="row">
                       <div class="col-12 col-sm-9">
-                        <div class="form-group">
+                        <div class="form-group {{currentLang === 'ar'? 'text-right' :'text-left'}}">
                           <label>
                             {{'customRelease.formLabel.grossWeight' | translate}}
                             <span class="requiredStar">*</span>
                           </label>
                           <mat-slider
-                            class="example-margin mt-3"
+                            class="example-margin mt-1"
                             [max]="500"
                             [min]="0"
                             [step]="1"
@@ -168,7 +179,6 @@
                                  [value]="regCustomReleaseForm.get('grossWeight').value"
                                  formControlName="grossWeight"
                                  (change)="setShelfValue($event)" required>
-                          <span class="labelForRange">KG</span>
                           <div
                             *ngIf="regCustomReleaseForm.get('grossWeight').invalid"
                             class="alert alert-danger">
@@ -192,9 +202,9 @@
                              [matAutocomplete]="measureUnitList" required>
                       <mat-autocomplete #measureUnitList="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptionsForMeasureUnitList | async"
-                                    [value]="option.NAME">
-                          <span class="tooltipContainer" tooltip="{{option.NAME}}"
-                                placement="top">{{option.NAME}}</span>
+                                    [value]="option.name">
+                          <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
+                                placement="top">{{option.name[currentLang]}}</span>
                         </mat-option>
                       </mat-autocomplete>
                       <div
@@ -310,10 +320,11 @@
             </tab>
             <tab [heading]="'customRelease.wizardSteps.attachments' | translate" class="Attachments">
               <div class="mt-5">
-                <app-title [smallTitle]="true" [title]="'Attachement'"></app-title>
+                <app-title [smallTitle]="true"
+                           [title]="'customRelease.wizardSteps.attachments' | translate"></app-title>
                 <div class="row mt-3">
                   <div class="col-lg-4 col-sm-6 col-12" *ngFor="let field of attachmentFields">
-                    <div class="form-group" *ngIf="field.enable">
+                    <div class="form-group {{currentLang === 'ar' ? 'text-right':'text-left'}}" *ngIf="field.enable">
                       <label>
                         {{'customRelease.formLabel.' + field.id | translate}}
                         <span class="requiredStar" *ngIf="field.required">*</span>
@@ -337,8 +348,8 @@
                             </div>
                           </div>
                         </div>
-                        <label class="custom-file-label" [for]="field.id">
-                          {{field.fileName ? field.fileName : 'Choose file'}}
+                        <label class="custom-file-label {{currentLang === 'ar'? 'paddingRight5' :''}}" [for]="field.id">
+                          {{field.fileName ? field.fileName : 'common.chooseFile' | translate}}
                         </label>
                         <button type="button" class="custom-file-download-Button" *ngIf="field.fileValue"
                                 (click)="downloadFile(field.id)">
@@ -458,7 +469,7 @@
                     </mat-form-field>
                   </div>
                   <div class="col-lg-4 col-sm-6 col-12">
-                    <mat-form-field appearance="fill">
+                    <mat-form-field class="datepickerContainer" appearance="fill">
                       <mat-label>
                         {{'customRelease.formLabel.invoiceDate' | translate}}
                       </mat-label>
@@ -478,35 +489,6 @@
                   <div class="col-lg-4 col-sm-6 col-12">
                     <mat-form-field class="example-full-width inputBesideSelect">
                       <mat-label>
-                        {{'customRelease.formLabel.countryOfOrigin' | translate}}
-                      </mat-label>
-                      <input type="text"
-                             class="form-control"
-                             placeholder="{{'customRelease.formLabel.countryOfOrigin' | translate}}"
-                             aria-label="{{'customRelease.formLabel.countryOfOrigin' | translate}}"
-                             matInput
-                             formControlName="countryOfOrigin"
-                             [matAutocomplete]="countryOfOriginList" required>
-                      <mat-autocomplete #countryOfOriginList="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredOptionsForCountryOfOrigin | async"
-                                    [value]="option.NAME">
-                                      <span class="tooltipContainer" tooltip="{{option.NAME}}"
-                                            placement="top">{{option.NAME}}</span>
-                        </mat-option>
-                      </mat-autocomplete>
-                      <div
-                        *ngIf="regInvoicesForm.get('countryOfOrigin').invalid && (regInvoicesForm.get('countryOfOrigin').dirty || regInvoicesForm.get('countryOfOrigin').touched)"
-                        class="alert alert-danger">
-                        <div
-                          *ngIf="regInvoicesForm.get('countryOfOrigin').errors.required">
-                          {{'common.validationStatement.required'}}
-                        </div>
-                      </div>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <mat-form-field class="example-full-width inputBesideSelect">
-                      <mat-label>
                         {{'customRelease.formLabel.currency' | translate}}
                       </mat-label>
                       <input type="text"
@@ -518,9 +500,9 @@
                              [matAutocomplete]="CurrencyList" required>
                       <mat-autocomplete #CurrencyList="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptionsForCurrency | async"
-                                    [value]="option.NAME">
-                                      <span class="tooltipContainer" tooltip="{{option.NAME}}"
-                                            placement="top">{{option.NAME}}</span>
+                                    [value]="option.name">
+                                      <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
+                                            placement="top">{{option.name[currentLang]}}</span>
                         </mat-option>
                       </mat-autocomplete>
                       <div
@@ -560,7 +542,7 @@
                   </div>
                   <div class="col-12">
                     <app-table-list [data]="itemListTable"
-                                    [whichTable]="'invoiceList'">
+                                    [whichTable]="'itemList'">
                     </app-table-list>
                   </div>
                 </div>
@@ -570,7 +552,7 @@
               <div class="mt-5">
                 <div class="row mt-3">
                   <div class="col-lg-4 col-sm-6 col-12" *ngFor="let field of InvoiceAttachmentFields">
-                    <div class="form-group" *ngIf="field.enable">
+                    <div class="form-group {{currentLang === 'ar' ? 'text-right':'text-left'}}" *ngIf="field.enable">
                       <label>
                         {{'customRelease.formLabel.' + field.id | translate}}
                         <span class="requiredStar" *ngIf="field.required">*</span>
@@ -594,8 +576,8 @@
                             </div>
                           </div>
                         </div>
-                        <label class="custom-file-label" [for]="field.id">
-                          {{field.fileName ? field.fileName : 'Choose file'}}
+                        <label class="custom-file-label {{currentLang === 'ar'? 'paddingRight5' :''}}" [for]="field.id">
+                          {{field.fileName ? field.fileName : 'common.chooseFile' | translate}}
                         </label>
                         <button type="button" class="custom-file-download-Button" *ngIf="field.fileValue"
                                 (click)="downloadFile(field.id)">
@@ -663,7 +645,7 @@
                           (selectionChange)="getTermType($event)"
                           required>
                 <mat-option *ngFor="let option of formData.itemTypeList" [value]="option.id">
-                  {{option.name}}
+                  {{option.name[currentLang]}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -720,7 +702,7 @@
           </div>
           <div class="col-lg-4 col-sm-6 col-12" *ngIf="importReason && showNotificationNoStatus">
             <div class="row">
-              <div class="col-6">
+              <div class="col-6 getProductByNotificationNumber">
                 <mat-form-field class="example-full-width">
                   <mat-label>
                     {{'customRelease.formLabel.productNotificationNumber' | translate}}
@@ -732,7 +714,7 @@
               </div>
               <div class="col-6 d-flex">
                 <button type="button"
-                        class="btn btn-primary {{currentLang === 'ar' ? 'mr-auto':'ml-auto'}} mt-sm-4 mb-3"
+                        class="btn btn-primary {{currentLang === 'ar' ? 'mr-auto':'ml-auto'}} mt-sm-2"
                         [disabled]="!notificationNo"
                         (click)="applyProduct(notificationNo)">
                   {{'customRelease.specificStatement.getProduct' | translate}}
@@ -993,7 +975,7 @@
                       <div class="col-lg-4 col-sm-6 col-12"
                            *ngFor="let field of ItemAttachmentFields"
                            [ngClass]="{'d-none': !field.enable}">
-                        <div class="form-group">
+                        <div class="form-group {{currentLang === 'ar' ? 'text-right':'text-left'}}">
                           <label>
                             {{'customRelease.formLabel.' + field.id | translate}}
                             <span class="requiredStar" *ngIf="field.required">*</span>
@@ -1017,8 +999,9 @@
                                 </div>
                               </div>
                             </div>
-                            <label class="custom-file-label" [for]="field.id">
-                              {{field.fileName ? field.fileName : 'Choose file'}}
+                            <label class="custom-file-label {{currentLang === 'ar'? 'paddingRight5' :''}}"
+                                   [for]="field.id">
+                              {{field.fileName ? field.fileName : 'common.chooseFile' | translate}}
                             </label>
                             <button type="button" class="custom-file-download-Button" *ngIf="field.fileValue"
                                     (click)="downloadFile(field.id)">

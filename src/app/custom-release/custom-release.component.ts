@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormService} from '../services/form.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DecimalPipe} from '@angular/common';
-import {distinctUntilChanged, filter} from 'rxjs/operators';
+import {catchError, debounceTime, distinctUntilChanged, filter, map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {TabsetComponent} from 'ngx-bootstrap/tabs';
@@ -41,8 +41,8 @@ export class CustomReleaseComponent implements OnInit {
   regItemsForm: FormGroup;
   filteredOptionsForRequestedReleaseType: Observable<LookupState[]>;
   filteredOptionsForCustomPortName: Observable<LookupState[]>;
+  filteredOptionsForSupplierCountry: Observable<LookupState[]>;
   filteredOptionsForMeasureUnitList: Observable<LookupState[]>;
-  filteredOptionsForCountryOfOrigin: Observable<LookupState[]>;
   filteredOptionsForCurrency: Observable<LookupState[]>;
   filteredOptionsForManufacturingCompany: Observable<LookupState[]>;
   filteredOptionsForManufacturingCountry: Observable<LookupState[]>;
@@ -118,7 +118,7 @@ export class CustomReleaseComponent implements OnInit {
   fileStructure;
   attachmentRequiredStatus: boolean = false;
   invoiceListTable = {
-    tableHeader: ['invoiceNo', 'invoiceDate', 'invoiceValue', 'countryOfOrigin', 'Currency', 'Actions'],
+    tableHeader: ['invoiceNo', 'invoiceDate', 'invoiceValue', 'Currency', 'Actions'],
     tableBody: []
   };
   itemListTable = {
@@ -505,7 +505,7 @@ export class CustomReleaseComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private number: DecimalPipe,
               private router: Router,
-              private readonly route: ActivatedRoute,
+              private route: ActivatedRoute,
               private inputService: InputService,
               public translateService: TranslateService,
               private modalService: BsModalService,
@@ -520,86 +520,10 @@ export class CustomReleaseComponent implements OnInit {
       filter(x => x.type === 'allLookups'),
       distinctUntilChanged()
     ).subscribe(res => {
+      console.log('res', res);
+
       this.formData = {
         ...res.payload,
-        itemTypeList: [
-          {
-            id: 'finishedProduct',
-            name: 'Finished Product'
-          },
-          {
-            id: 'premix',
-            name: 'Premix'
-          },
-          {
-            id: 'rawMaterials',
-            name: 'Raw materials'
-          },
-          {
-            id: 'packagingMaterial',
-            name: 'Packaging Material'
-          },
-        ],
-        importReasonList: {
-          finishedProduct: [
-            {
-              id: 'registeredProduct',
-              name: 'Registered product',
-              showNotificationNoInput: true,
-            },
-            {
-              id: 'samplesFinishedProduct',
-              name: 'Samples finished product',
-              showNotificationNoInput: false,
-            },
-          ],
-          premix: [
-            {
-              id: 'Premix',
-              name: 'Premix',
-              showNotificationNoInput: true,
-            }
-          ],
-          rawMaterials: [
-            {
-              id: 'localProducts',
-              name: 'Local Products',
-              showNotificationNoInput: true,
-            },
-            {
-              id: 'exportationProducts',
-              name: 'Exportation Products',
-              showNotificationNoInput: true,
-            },
-            {
-              id: 'importers',
-              name: 'Importers',
-              showNotificationNoInput: false,
-            },
-            {
-              id: 'RDSamples',
-              name: 'R&D Samples',
-              showNotificationNoInput: false,
-            }
-          ],
-          packagingMaterial: [
-            {
-              id: 'localProducts',
-              name: 'Local Products',
-              showNotificationNoInput: true,
-            },
-            {
-              id: 'exportation',
-              name: 'Exportation',
-              showNotificationNoInput: true,
-            },
-            {
-              id: 'samplesOfPackagingMaterials',
-              name: 'Samples of Packaging Materials',
-              showNotificationNoInput: false,
-            }
-          ],
-        },
         premixNameList: [
           {
             id: 'localFactory',
@@ -671,6 +595,17 @@ export class CustomReleaseComponent implements OnInit {
     ).subscribe(res => {
       this.currentLang = res.payload;
     });
+
+
+    this.setAllLookupsInObservable();
+  }
+
+  setAllLookupsInObservable() {
+    this.filteredOptionsForRequestedReleaseType = this.filterLookupsFunction('releaseType', this.regCustomReleaseForm.get('requestedReleaseType'), this.formData?.releaseType);
+    this.filteredOptionsForCustomPortName = this.filterLookupsFunction('ports', this.regCustomReleaseForm.get('customPortName'), this.formData?.ports);
+    this.filteredOptionsForSupplierCountry = this.filterLookupsFunction('countries', this.regCustomReleaseForm.get('supplierCountry'), this.formData?.countries);
+    this.filteredOptionsForMeasureUnitList = this.filterLookupsFunction('unitOfMeasure', this.regCustomReleaseForm.get('measureUnit'), this.formData?.unitOfMeasure);
+    this.filteredOptionsForCurrency = this.filterLookupsFunction('currencies', this.regInvoicesForm.get('currency'), this.formData?.currencies);
   }
 
   nextToNextTab(whichTab) {
@@ -685,12 +620,21 @@ export class CustomReleaseComponent implements OnInit {
     activeTabIndex >= 0 ? whichTab.tabs[activeTabIndex - 1].active = true : null;
   }
 
-  getTermType(event) {
-    if (this.itemType === 'premix') {
-      this.importReason = this.formData.importReasonList[this.itemType][0].name;
+  async getTermType(event): Promise<any> {
+    console.log('event', event);
 
-      this.getTheSelectedValueForImportedReason(this.itemType, {value: this.importReason});
-    }
+    await this.getService.getImportReasonByItemId(event.value).subscribe((res: any) => {
+      if (res) {
+        this.formData.importReasonList = res;
+      }
+    });
+
+
+    // if (this.itemType === 'premix') {
+    //   this.importReason = this.formData.importReasonList[this.itemType][0].name;
+    //
+    //   this.getTheSelectedValueForImportedReason(this.itemType, {value: this.importReason});
+    // }
   }
 
   setApplicant(companyProfileID) {
@@ -817,7 +761,7 @@ export class CustomReleaseComponent implements OnInit {
         customPortName: this.fb.control('', Validators.required),
         pod: this.fb.control(''),
         supplierName: this.fb.control(''),
-        supplierCounty: this.fb.control(''),
+        supplierCountry: this.fb.control(''),
         carrierName: this.fb.control(''),
         grossWeight: this.fb.control('', Validators.required),
         measureUnit: this.fb.control('', Validators.required),
@@ -843,7 +787,6 @@ export class CustomReleaseComponent implements OnInit {
         withinIncluded: this.fb.control(false),
         invoiceValue: this.fb.control('', Validators.required),
         invoiceDate: this.fb.control(null, Validators.required),
-        countryOfOrigin: this.fb.control('', Validators.required),
         currency: this.fb.control('', Validators.required),
         itemDetails: [],
         invoice: this.fb.control('', Validators.required),
@@ -999,6 +942,35 @@ export class CustomReleaseComponent implements OnInit {
   applyProduct(notificationNumber) {
 
   }
+
+  filterLookupsFunction(whichLookup, formControlValue, list, index?: any) {
+    if (whichLookup === 'ingrediant') {
+      if (formControlValue) {
+        return formControlValue.valueChanges
+          .pipe(
+            startWith(''),
+            debounceTime(30),
+            map(state => state ? this.filterInsideList(whichLookup, state, list, index).slice(0, 3000) : list.slice(0, 3000))
+          );
+      }
+    } else {
+      if (formControlValue) {
+        return formControlValue.valueChanges
+          .pipe(
+            startWith(''),
+            map(state => state ? this.filterInsideList(whichLookup, state, list) : list.slice())
+          );
+      }
+    }
+  }
+
+  filterInsideList(lookup, value, list, index?: any): LookupState[] {
+    let filterValue;
+    if (value) {
+      filterValue = value.toLowerCase() ? value.toLowerCase() : '';
+    }
+    return list.filter(option => option.name[this.currentLang].toLowerCase().includes(filterValue)).map(x => x);
+  }
 }
 
 export interface AttachemntObject {
@@ -1014,6 +986,8 @@ export interface AttachemntObject {
 }
 
 export interface LookupState {
-  ID: number;
-  NAME: string;
+  code: string;
+  description: { en: string, ar: string };
+  id: number;
+  name: { en: string, ar: string };
 }
