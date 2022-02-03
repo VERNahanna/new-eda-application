@@ -4,6 +4,8 @@ import {PharmaceuticalRawMaterialsContainerComponent} from "./pharmaceutical-raw
 import {ApplicationGuard} from "../application.guard";
 import {CustomReleaseComponent} from "../custom-release/custom-release.component";
 import {PharmaceuticalRawMaterialsComponent} from "./pharmaceutical-raw-materials/pharmaceutical-raw-materials.component";
+import {DraftRequestsComponent} from "./draft-requests/draft-requests.component";
+import {TrackRequestsComponent} from "./track-requests/track-requests.component";
 
 const routes: Routes = [
   {
@@ -13,18 +15,28 @@ const routes: Routes = [
       {
         path: 'importation-services',
         component: PharmaceuticalRawMaterialsComponent,
-        data: {animation: 'pharmaceutical-row-material'}
+        data: {animation: 'inner'}
       },
       {
         path: 'release-services',
         component: PharmaceuticalRawMaterialsComponent,
-        data: {animation: 'pharmaceutical-row-material'}
+        data: {animation: 'inner'}
       },
       {
         path: 'new-request',
         component: CustomReleaseComponent,
-        data: {animation: 'pharmaceutical-row-material'}
+        data: {animation: 'inner'}
       },
+      {
+        path: 'draft-request',
+        component: DraftRequestsComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path: 'track-request',
+        component: TrackRequestsComponent,
+        data: {animation: 'inner'}
+      }
     ]
   },
 ];

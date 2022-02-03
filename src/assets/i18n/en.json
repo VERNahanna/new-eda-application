@@ -12,6 +12,8 @@
     "pharmaceuticalExemption": "Pharmaceutical Exemption",
     "importationServices": "Importation services",
     "releaseServices": "Release services",
+    "draftRequest": "Drafted requests",
+    "trackRequest": "Track requests",
     "customRelease": "Custom release",
     "partnerTitles": {
       "centralAdministration": "Central Administration of Pharmaceutical Policies and Market Access",
@@ -135,7 +137,15 @@
     "manufacturingCompany": "Manufacturing company",
     "quantity": "Quantity",
     "batchNo": "Batch No.",
-    "emptyRows": "There is no data ..."
+    "emptyRows": "There is no data ...",
+    "name": "Name",
+    "type": "Type",
+    "companyName": "Company Name",
+    "companyCountry": "Company Country",
+    "requestType": "Request type",
+    "requestStatus": "Request Status",
+    "submissionDate": "Submission date",
+    "action": "Action"
   },
   "alerts": {
   }

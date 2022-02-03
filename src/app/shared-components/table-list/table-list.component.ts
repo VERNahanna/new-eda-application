@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PageChangedEvent} from 'ngx-bootstrap/pagination';
 import {Observable} from 'rxjs';
 import {InputService} from '../../services/input.service';
+import {TranslateService} from "@ngx-translate/core";
+import {distinctUntilChanged, filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-table-list',
@@ -62,6 +64,7 @@ export class TableListComponent implements OnInit, OnChanges {
   };
   sortStatus = false;
   alertNotificationStatus: boolean = false;
+  currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
 
   filteredData: Observable<any[]>;
 
@@ -94,7 +97,10 @@ export class TableListComponent implements OnInit, OnChanges {
   deletedIdsListForDetailsRow = [];
   deletedIdsListForIngrediant = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private inputService: InputService) {
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              public translateService: TranslateService,
+              private inputService: InputService) {
   }
 
   ngOnChanges() {
@@ -147,6 +153,12 @@ export class TableListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.inputService.getInput$().pipe(
+      filter(x => x.type === 'currentLang'),
+      distinctUntilChanged()
+    ).subscribe(res => {
+      this.currentLang = res.payload;
+    });
   }
 
   setStep(index: number) {

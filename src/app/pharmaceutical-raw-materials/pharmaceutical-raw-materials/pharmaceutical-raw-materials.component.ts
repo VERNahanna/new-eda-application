@@ -21,8 +21,8 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         ar: 'الجملة 1'
       },
       newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '',
-      trackListLink: '',
+      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
       icon: 'fas fa-pills'
     },
     {
@@ -36,8 +36,8 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         ar: 'الجملة 1'
       },
       newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '',
-      trackListLink: '',
+      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
       icon: 'fas fa-pills'
     },
     {
@@ -51,8 +51,8 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         ar: 'الجملة 1'
       },
       newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '',
-      trackListLink: '',
+      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
       icon: 'fas fa-pills'
     },
     {
@@ -66,8 +66,8 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         ar: 'الجملة 1'
       },
       newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '',
-      trackListLink: '',
+      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
       icon: 'fas fa-pills'
     },
     {
@@ -81,8 +81,8 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         ar: 'الجملة 1'
       },
       newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '',
-      trackListLink: '',
+      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
       icon: 'fas fa-pills'
     },
   ];

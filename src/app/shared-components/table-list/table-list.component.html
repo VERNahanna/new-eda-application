@@ -4,8 +4,8 @@
       <div class="table-responsive mt-5">
         <table class="table table-sm table-ordered" *ngIf="data && data.tableBody.length > 0">
           <tr class="headerRow">
-            <th *ngFor="let request of data.tableHeader; let i = index"
-                [ngClass]="{'text-center': whichTable === 'notificationList' && i === data.tableHeader.length -1}">
+            <th class="{{currentLang === 'ar' ? 'text-right' : 'text-left'}}"
+                *ngFor="let request of data.tableHeader; let i = index">
               {{'tables' + request |translate}}
               <span *ngIf="i !== data.tableHeader.length - 1" (click)="sortBy(sortStatus, request)">
                 <i class="fa fa-sort"></i>
@@ -14,60 +14,7 @@
           </tr>
           <tr
             *ngFor="let request of this.dataAfterFilters.length> 0 ? this.dataAfterFilters : returnedArray && returnedArray.length > 0 ? returnedArray : data.tableBody; let i = index">
-            <td colspan="8" *ngIf="whichTable === 'track'">
-              <mat-accordion>
-                <mat-expansion-panel class="areaContainer {{request.colorFlag}}" [expanded]="step === i"
-                                     (opened)="setStep(i)" hideToggle>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      <table class="table table-sm tableDetailsCont">
-                        <tr>
-                          <td class="hide">{{request.NotificationNo}}</td>
-                          <td class="hide">{{request.ID}}</td>
-                          <td>{{request.SubmmittionDate | date}}</td>
-                          <td class="hide">{{request.productTypeName}}</td>
-                          <td class="hide"><span class="ellipsisSpan" tooltip="{{request.NameEN}}"
-                                                 placement="right">{{request.NameEN}}</span></td>
-                          <td class="hide"><span class="ellipsisSpan" tooltip="{{request.NameAR}}"
-                                                 placement="right">{{request.NameAR}}</span></td>
-                          <td>{{request.Status}}</td>
-                          <td><i (click)="editProduct(request)" class="fa fa-edit"></i></td>
-                        </tr>
-                      </table>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div class="detailsContainer pt-4">
-                    <div class="row">
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Notification Number :</label>
-                        <span>{{request.NotificationNo}}</span>
-                      </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Submission date :</label>
-                        <span>{{request.SubmmittionDate | date}}</span>
-                      </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Type Of Notification :</label>
-                        <span>{{request.productTypeName}}</span>
-                      </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Product English name :</label>
-                        <span>{{request.NameEN}}</span>
-                      </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Product Arabic name :</label>
-                        <span>{{request.NameAR}}</span>
-                      </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label ">Status :</label>
-                        <span>{{request.Status}}</span>
-                      </div>
-                    </div>
-                  </div>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </td>
-            <td colspan="7" *ngIf="whichTable === 'draft'">
+            <td colspan="8" *ngIf="whichTable === 'drafted'">
               <mat-accordion>
                 <mat-expansion-panel class="areaContainer" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
                   <mat-expansion-panel-header>
@@ -75,21 +22,21 @@
                       <div class="table-responsive">
                         <table class="table table-sm tableDetailsCont">
                           <tr>
-                            <td class="hide">{{request.ID}}</td>
-                            <td>{{request.SubmmittionDate | date}}</td>
-                            <td>{{request.productTypeName}}</td>
-                            <td class="hide"><span class="ellipsisSpan" tooltip="{{request.NameEN}}"
-                                                   placement="right">{{request.NameEN}}</span></td>
-                            <td class="hide">{{request.flagTrackName}}</td>
-                            <td class="hide">{{request.Track_type}}</td>
-                            <td>
-                              <span (click)="editProduct(request)">
-                                <i class="fa fa-edit"></i>
-                              </span>
-                              <span class="ml-2" (click)="deleteProduct(request)">
-                                <i class="fa fa-trash"></i>
-                              </span>
-                            </td>
+                            <!--                            <td class="hide">{{request.ID}}</td>-->
+                            <!--                            <td>{{request.SubmmittionDate | date}}</td>-->
+                            <!--                            <td>{{request.productTypeName}}</td>-->
+                            <!--                            <td class="hide"><span class="ellipsisSpan" tooltip="{{request.NameEN}}"-->
+                            <!--                                                   placement="right">{{request.NameEN}}</span></td>-->
+                            <!--                            <td class="hide">{{request.flagTrackName}}</td>-->
+                            <!--                            <td class="hide">{{request.Track_type}}</td>-->
+                            <!--                            <td>-->
+                            <!--                              <span (click)="editProduct(request)">-->
+                            <!--                                <i class="fa fa-edit"></i>-->
+                            <!--                              </span>-->
+                            <!--                              <span class="ml-2" (click)="deleteProduct(request)">-->
+                            <!--                                <i class="fa fa-trash"></i>-->
+                            <!--                              </span>-->
+                            <!--                            </td>-->
                           </tr>
                         </table>
                       </div>
@@ -97,30 +44,89 @@
                   </mat-expansion-panel-header>
                   <div class="detailsContainer pt-4">
                     <div class="row">
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Request id :</label>
-                        <span>{{request.ID}}</span>
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Request id :</label>-->
+                      <!--                        <span>{{request.ID}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Saved date :</label>-->
+                      <!--                        <span>{{request.SubmmittionDate}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Product English name :</label>-->
+                      <!--                        <span>{{request.NameEN}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Type Of Notification :</label>-->
+                      <!--                        <span>{{request.productTypeName}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Type Of Request :</label>-->
+                      <!--                        <span>{{request.flagTrackName}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Track Type :</label>-->
+                      <!--                        <span>{{request.Track_type}}</span>-->
+                      <!--                      </div>-->
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </td>
+            <td colspan="8" *ngIf="whichTable === 'track'">
+              <mat-accordion>
+                <mat-expansion-panel class="areaContainer" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <div class="table-responsive">
+                        <table class="table table-sm tableDetailsCont">
+                          <tr>
+                            <!--                            <td class="hide">{{request.ID}}</td>-->
+                            <!--                            <td>{{request.SubmmittionDate | date}}</td>-->
+                            <!--                            <td>{{request.productTypeName}}</td>-->
+                            <!--                            <td class="hide"><span class="ellipsisSpan" tooltip="{{request.NameEN}}"-->
+                            <!--                                                   placement="right">{{request.NameEN}}</span></td>-->
+                            <!--                            <td class="hide">{{request.flagTrackName}}</td>-->
+                            <!--                            <td class="hide">{{request.Track_type}}</td>-->
+                            <!--                            <td>-->
+                            <!--                              <span (click)="editProduct(request)">-->
+                            <!--                                <i class="fa fa-edit"></i>-->
+                            <!--                              </span>-->
+                            <!--                              <span class="ml-2" (click)="deleteProduct(request)">-->
+                            <!--                                <i class="fa fa-trash"></i>-->
+                            <!--                              </span>-->
+                            <!--                            </td>-->
+                          </tr>
+                        </table>
                       </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Saved date :</label>
-                        <span>{{request.SubmmittionDate}}</span>
-                      </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Product English name :</label>
-                        <span>{{request.NameEN}}</span>
-                      </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Type Of Notification :</label>
-                        <span>{{request.productTypeName}}</span>
-                      </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Type Of Request :</label>
-                        <span>{{request.flagTrackName}}</span>
-                      </div>
-                      <div class="col-12 col-sm-6 col-md-4">
-                        <label class="label">Track Type :</label>
-                        <span>{{request.Track_type}}</span>
-                      </div>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="detailsContainer pt-4">
+                    <div class="row">
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Request id :</label>-->
+                      <!--                        <span>{{request.ID}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Saved date :</label>-->
+                      <!--                        <span>{{request.SubmmittionDate}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Product English name :</label>-->
+                      <!--                        <span>{{request.NameEN}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Type Of Notification :</label>-->
+                      <!--                        <span>{{request.productTypeName}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Type Of Request :</label>-->
+                      <!--                        <span>{{request.flagTrackName}}</span>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
+                      <!--                        <label class="label">Track Type :</label>-->
+                      <!--                        <span>{{request.Track_type}}</span>-->
+                      <!--                      </div>-->
                     </div>
                   </div>
                 </mat-expansion-panel>
@@ -571,7 +577,8 @@
         <!-- table For Empty Data -->
         <table class="table table-sm table-ordered" *ngIf="data && data.tableBody.length === 0">
           <tr class="headerRow">
-            <th *ngFor="let request of data.tableHeader; let i = index">
+            <th class="{{currentLang === 'ar' ? 'text-right' : 'text-left'}}"
+              *ngFor="let request of data.tableHeader; let i = index">
               {{'tables.' + request |translate}}
               <span *ngIf="i !== data.tableHeader.length - 1" (click)="sortBy(sortStatus, request)">
                 <i class="fa fa-sort"></i>
@@ -579,7 +586,7 @@
             </th>
           </tr>
           <tr class="text-center">
-            <td colspan="8" *ngIf="whichTable === 'track'">
+            <td colspan="8" *ngIf="whichTable === 'drafted'">
               <mat-accordion>
                 <mat-expansion-panel class="areaContainer" hideToggle>
                   <mat-expansion-panel-header>
@@ -594,14 +601,14 @@
                 </mat-expansion-panel>
               </mat-accordion>
             </td>
-            <td colspan="7" *ngIf="whichTable === 'draft'">
+            <td colspan="8" *ngIf="whichTable === 'track'">
               <mat-accordion>
                 <mat-expansion-panel class="areaContainer" hideToggle>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       <table class="table table-sm tableDetailsCont">
                         <tr>
-                          <td colspan="7">{{'tables.emptyRows' | translate}}</td> <!--  -->
+                          <td colspan="8">{{'tables.emptyRows' | translate}}</td> <!--  -->
                         </tr>
                       </table>
                     </mat-panel-title>

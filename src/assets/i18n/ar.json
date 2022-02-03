@@ -13,6 +13,8 @@
     "importationServices": "خدمات استيراد",
     "releaseServices": "خدمات افراج",
     "customRelease": "الإفراج الجمركي",
+    "draftRequest": "الطلبات المحفوة",
+    "trackRequest": "متابعة الطلبات",
     "partnerTitles": {
       "centralAdministration": "الإدارة المركزية للسياسات الدوائية ودعم الأسواق",
       "generalDirectorate": "الإدارة العامة للإستيراد والإفراج الطبي الجمركي",
@@ -134,6 +136,14 @@
     "manufacturingCompany": "الشركة المصنعة",
     "quantity": "الكمية",
     "batchNo": "رقم التشغيلة",
-    "emptyRows": "لا يوجد اي معلومات..."
+    "emptyRows": "لا يوجد اي معلومات...",
+    "name": "الاسم",
+    "type": "النوع",
+    "companyName": "اسم الشركة",
+    "companyCountry": "بلد الشركة",
+    "requestType": "نوع الطلب",
+    "requestStatus": "حالة الطلب",
+    "submissionDate": "تاريخ الانشاء",
+    "action": "اجراءات"
   }
 }

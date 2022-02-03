@@ -50,7 +50,8 @@
                 <ul *dropdownMenu class="dropdown-menu"
                     role="menu" aria-labelledby="button-basic">
                   <li *ngFor="let item of menuObject;let i =index" role="menuitem">
-                    <a class="dropdown-item" routerLink="{{item.link}}" routerLinkActive="active">
+                    <a class="dropdown-item {{currentLang === 'ar' ? 'text-right' : 'text-left'}}"
+                       routerLink="{{item.link}}" routerLinkActive="active">
                       {{'header.' + item.name | translate}}
                     </a>
                   </li>
@@ -96,7 +97,8 @@
               <ul>
                 <li *ngFor="let item of menuObject; let i = index"
                     class="{{i !== menuObject?.length-1  ? currentLang === 'ar' ? 'ml-3':'mr-2' : ''}}">
-                  <a *ngIf="!item.dropDownStatus" routerLink="{{item.link}}" routerLinkActive="active">
+                  <a class=" {{currentLang === 'ar' ? 'text-right' : 'text-left'}}" *ngIf="!item.dropDownStatus"
+                     routerLink="{{item.link}}" routerLinkActive="active">
                     <span class="{{currentLang === 'ar' ? 'mr-1':'ml-1'}}">
                       <i class="{{item.icon}}"></i>
                     </span>
@@ -120,7 +122,8 @@
                       <ul *dropdownMenu class="dropdown-menu"
                           role="menu" aria-labelledby="button-basic">
                         <li *ngFor="let element of item.dropdownLinks" role="menuitem">
-                          <a class="dropdown-item" routerLink="{{element.link}}" routerLinkActive="active">
+                          <a class="dropdown-item  {{currentLang === 'ar' ? 'text-right' : 'text-left'}}"
+                             routerLink="{{element.link}}" routerLinkActive="active">
                             <span class="{{currentLang === 'ar' ? 'mr-1':'ml-1'}}">
                               <i class="{{element.icon}}"></i>
                             </span>

@@ -25,10 +25,12 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../app.module";
 import {SharedComponentsModule} from "../shared-components/shared-components.module";
+import {DraftRequestsComponent} from './draft-requests/draft-requests.component';
+import {TrackRequestsComponent} from './track-requests/track-requests.component';
 
 
 @NgModule({
-  declarations: [PharmaceuticalRawMaterialsComponent, PharmaceuticalRawMaterialsContainerComponent],
+  declarations: [PharmaceuticalRawMaterialsComponent, PharmaceuticalRawMaterialsContainerComponent, DraftRequestsComponent, TrackRequestsComponent],
   imports: [
     CommonModule,
     PharmaceuticalRawMaterialsRoutingModule,

@@ -28,7 +28,7 @@ export class HomeContainerComponent implements OnInit {
     currencies: [],
     unitOfMeasure: [],
     applicantList: [],
-    itemTypeList:[]
+    itemTypeList: []
   };
   alertErrorNotificationStatus: boolean = false;
   alertErrorNotification: any;
@@ -59,62 +59,62 @@ export class HomeContainerComponent implements OnInit {
       if (res) {
         this.formData.ports = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getAllInvoiceItemTypes().subscribe((res: any) => {
       if (res) {
         this.formData.itemTypeList = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getAllImportReason().subscribe((res: any) => {
       if (res) {
         this.formData.importReason = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getCompanyProfiles().subscribe((res: any) => {
       if (res) {
         this.formData.companyProfile = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getAllIngredient().subscribe((res: any) => {
       if (res) {
         this.formData.ingredient = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getAllPackagingList().subscribe((res: any) => {
       if (res) {
         this.formData.packagingType = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getAllSrcRowMaterial().subscribe((res: any) => {
       if (res) {
         this.formData.rowMaterial = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getAllProductManufacture().subscribe((res: any) => {
       if (res) {
         this.formData.productManufacture = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getAllReleaseType().subscribe((res: any) => {
       if (res) {
         this.formData.releaseType = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getSharedCountries().subscribe((res: any) => {
       if (res) {
         this.formData.countries = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getSharedCurrencies().subscribe((res: any) => {
       if (res) {
         this.formData.currencies = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getAllUnitOfMeasure().subscribe((res: any) => {
       if (res) {
         this.formData.unitOfMeasure = res;
       }
-    });
+    }), error => this.handleError(error);
     await this.getService.getCompanyProfileLookUp(1, this.companyProfileId, '').subscribe((res: any) => {
       this.formData.applicantList = res;
 
@@ -122,15 +122,16 @@ export class HomeContainerComponent implements OnInit {
         this.username = x.NAME;
       });
     }, error => this.handleError(error));
-    this.isLoading = false;
-    this.inputService.publish({type: 'allLookups', payload: this.formData});
+    await this.inputService.publish({type: 'allLookups', payload: this.formData});
 
-    this.inputService.getInput$().pipe(
+    await this.inputService.getInput$().pipe(
       filter(x => x.type === 'notificationUnreadCount'),
       distinctUntilChanged()
     ).subscribe(res => {
       this.unseenCount = res.payload.filter(x => !x.f_seen).map(list => list).length;
     });
+
+    this.isLoading = false;
   }
 
   prepareRoute(outlet: RouterOutlet) {
@@ -151,8 +152,6 @@ export class HomeContainerComponent implements OnInit {
 
   getNotificationNumber() {
     this.getService.getNotificationLogsList().subscribe((res: any) => {
-      this.isLoading = false;
-
       this.unseenCount = res.filter(x => !x.f_seen).map(list => list).length;
     }, error => this.handleError(error));
   }
