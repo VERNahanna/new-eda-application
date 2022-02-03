@@ -33,6 +33,10 @@
     "submissionMessage": "شكرا لك علي الارسال",
     "errorMessage": "رسالة خطأ",
     "chooseFile": "اختر ملف",
+    "details": "شرح الخدمة",
+    "createNewRequest": "انشاء طلب جديد",
+    "draftList": "مسودات",
+    "trackList": "متابعة الطلبات",
     "validationStatement": {
       "required": "هذا الحقل مطلوب",
       "maxSizeMessage": "الملف لازم يكزم من نزع بي دي اف و لا يزيد عن 5ميجا",

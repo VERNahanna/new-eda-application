@@ -1,0 +1,21 @@
+<div class="titleContainer" *ngIf="!showCardDetails" (mouseover)="showDetails()">
+  <h2>{{itemData.name[currentLang]}}</h2>
+</div>
+
+<div class="detailsContainer" *ngIf="showCardDetails" (mouseleave)="hideDetails()">
+  <p class="{{currentLang === 'ar' ? 'text-right':'text-left'}}">{{'common.details' | translate}}</p>
+  <h4 class="{{currentLang === 'ar' ? 'text-right':'text-left'}}">{{itemData.description[currentLang]}}</h4>
+  <div class="d-flex align-items-center btnContainer">
+    <button class="col btn btn-primary {{currentLang === 'ar' ? 'ml-2':'mr-2'}}"
+            (click)="goToLink(itemData.newRequestLink)">
+      {{'common.createNewRequest' | translate}}
+    </button>
+    <button class="col btn btn-primary {{currentLang === 'ar' ? 'ml-2':'mr-2'}}"
+            (click)="goToLink(itemData.draftListLink)">
+      {{'common.draftList' | translate}}
+    </button>
+    <button class="col btn btn-primary" (click)="goToLink(itemData.trackListLink)">
+      {{'common.trackList' | translate}}
+    </button>
+  </div>
+</div>

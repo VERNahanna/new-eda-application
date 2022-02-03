@@ -34,6 +34,10 @@
     "errorMessage": "Error message",
     "thank": "Thank You",
     "chooseFile": "Choose file",
+    "details": "Details data",
+    "createNewRequest": "Create new request",
+    "draftList": "Draft requests",
+    "trackList": "Track requests",
     "validationStatement": {
       "required": "this field is required",
       "maxSizeMessage": "this file must be as PDF and less than 5MB.",
@@ -134,6 +138,5 @@
     "emptyRows": "There is no data ..."
   },
   "alerts": {
-
   }
 }

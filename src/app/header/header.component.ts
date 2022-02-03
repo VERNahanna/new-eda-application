@@ -26,18 +26,18 @@ export class HeaderComponent implements OnInit {
     },
     {
       name: 'pharmaceuticalRawMaterial',
-      link: '/new-request',
+      link: '/pharmaceutical-row-material',
       dropDownStatus: true,
       icon: 'fas fa-pills',
       dropdownLinks: [
         {
           name: 'importationServices',
-          link: '#',
+          link: '/pharmaceutical-row-material/importation-services',
           icon: 'fas fa-shipping-fast'
         },
         {
           name: 'releaseServices',
-          link: '/new-request/custom-release',
+          link: '/pharmaceutical-row-material/release-services',
           icon: 'fas fa-dolly-flatbed'
         }
       ]
