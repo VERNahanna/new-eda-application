@@ -655,10 +655,10 @@
               {{'customRelease.formLabel.importReason' | translate}}
             </mat-label>
             <mat-select (selectionChange)="getTheSelectedValueForImportedReason(itemType, $event)"
-                        [disabled]="this.itemType === 'premix'"
+                        [disabled]="this.itemType === 2"
                         [(ngModel)]="importReason" required>
-              <mat-option *ngFor="let option of formData.importReasonList[itemType]" [value]="option.id">
-                {{option.name}}
+              <mat-option *ngFor="let option of formData.importReason" [value]="option">
+                {{option.name[currentLang]}}
               </mat-option>
             </mat-select>
           </mat-form-field>

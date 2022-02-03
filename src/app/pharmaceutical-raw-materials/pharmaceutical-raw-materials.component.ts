@@ -20,7 +20,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '',
+      newRequestLink: '/pharmaceutical-row-material/new-request',
       draftListLink: '',
       trackListLink: '',
     },
@@ -34,7 +34,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '',
+      newRequestLink: '/pharmaceutical-row-material/new-request',
       draftListLink: '',
       trackListLink: '',
     },
@@ -48,7 +48,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '',
+      newRequestLink: '/pharmaceutical-row-material/new-request',
       draftListLink: '',
       trackListLink: '',
     },
@@ -62,7 +62,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '',
+      newRequestLink: '/pharmaceutical-row-material/new-request',
       draftListLink: '',
       trackListLink: '',
     },
@@ -76,7 +76,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '',
+      newRequestLink: '/pharmaceutical-row-material/new-request',
       draftListLink: '',
       trackListLink: '',
     },

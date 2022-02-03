@@ -32,6 +32,11 @@ const routes: Routes = [
             component: PharmaceuticalRawMaterialsComponent,
             data: {animation: 'pharmaceutical-row-material'}
           },
+          {
+            path: 'new-request',
+            component: CustomReleaseComponent,
+            data: {animation: 'pharmaceutical-row-material'}
+          },
         ]
       },
       {

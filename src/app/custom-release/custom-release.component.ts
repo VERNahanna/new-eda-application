@@ -139,7 +139,7 @@ export class CustomReleaseComponent implements OnInit {
   customImportRelease: any = [];
 
   allItemTypeAttachmentFields = {
-    finishedProduct: [
+    PRODUCTS: [
       {
         id: 'certificateOfOrigin',
         name: 'Certificate Of Origin',
@@ -148,7 +148,7 @@ export class CustomReleaseComponent implements OnInit {
         required: false,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['registeredProduct'],
+        relatedWithField: ['FINISHED_PRDUCTS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -160,7 +160,7 @@ export class CustomReleaseComponent implements OnInit {
         required: false,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['registeredProduct'],
+        relatedWithField: ['FINISHED_PRDUCTS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -172,7 +172,7 @@ export class CustomReleaseComponent implements OnInit {
         required: false,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['registeredProduct'],
+        relatedWithField: ['FINISHED_PRDUCTS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -184,7 +184,7 @@ export class CustomReleaseComponent implements OnInit {
         required: false,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['registeredProduct'],
+        relatedWithField: ['FINISHED_PRDUCTS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -197,12 +197,12 @@ export class CustomReleaseComponent implements OnInit {
         requiredWithImportReasonCondition: true,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['registeredProduct'],
+        relatedWithField: ['FINISHED_PRDUCTS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
     ],
-    premix: [
+    PREMIX: [
       {
         id: 'certificateOfOrigin',
         name: 'Certificate Of Origin',
@@ -314,7 +314,7 @@ export class CustomReleaseComponent implements OnInit {
         loadingStatus: false,
       },
     ],
-    rawMaterials: [
+    RAW_MATERIAL: [
       {
         id: 'certificateOfOrigin',
         name: 'Certificate Of Origin',
@@ -333,7 +333,7 @@ export class CustomReleaseComponent implements OnInit {
         required: false,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts', 'exportationProducts', 'importers'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -356,7 +356,7 @@ export class CustomReleaseComponent implements OnInit {
         requiredWithImportReasonCondition: true,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts', 'exportationProducts', 'importers'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -368,7 +368,7 @@ export class CustomReleaseComponent implements OnInit {
         required: false,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts', 'exportationProducts', 'importers'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -380,7 +380,7 @@ export class CustomReleaseComponent implements OnInit {
         required: false,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts', 'exportationProducts', 'importers'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -392,7 +392,7 @@ export class CustomReleaseComponent implements OnInit {
         required: false,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts', 'exportationProducts', 'importers'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -404,7 +404,7 @@ export class CustomReleaseComponent implements OnInit {
         required: false,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -417,7 +417,7 @@ export class CustomReleaseComponent implements OnInit {
         requiredWithImportReasonCondition: true,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts', 'exportationProducts', 'importers'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -430,7 +430,7 @@ export class CustomReleaseComponent implements OnInit {
         requiredWithImportReasonCondition: true,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts', 'exportationProducts', 'importers'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -443,7 +443,7 @@ export class CustomReleaseComponent implements OnInit {
         requiredWithImportReasonCondition: true,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -456,12 +456,12 @@ export class CustomReleaseComponent implements OnInit {
         requiredWithImportReasonCondition: true,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
     ],
-    packagingMaterial: [
+    PACKING_MATERIALS: [
       {
         id: 'certificateOfOrigin',
         name: 'Certificate Of Origin',
@@ -481,7 +481,7 @@ export class CustomReleaseComponent implements OnInit {
         requiredWithImportReasonCondition: true,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts'],
+        relatedWithField: ['PACK_FOR_LOCAL'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -494,7 +494,7 @@ export class CustomReleaseComponent implements OnInit {
         requiredWithImportReasonCondition: true,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['localProducts'],
+        relatedWithField: ['PACK_FOR_LOCAL'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -520,8 +520,6 @@ export class CustomReleaseComponent implements OnInit {
       filter(x => x.type === 'allLookups'),
       distinctUntilChanged()
     ).subscribe(res => {
-      console.log('res', res);
-
       this.formData = {
         ...res.payload,
         premixNameList: [
@@ -621,10 +619,10 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   async getTermType(event): Promise<any> {
-    console.log('event', event);
-    console.log('form', this.formData.importReason);
-
-    // this.customImportRelease = this.formData.importReason.filter()
+    await this.getService.getImportReasonByItemId(event.value.id).subscribe(res => {
+      console.log('res', res)
+      this.formData.importReason = res;
+    });
 
     // if (this.itemType === 'premix') {
     //   this.importReason = this.formData.importReasonList[this.itemType][0].name;
@@ -904,10 +902,6 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   getTheSelectedValueForImportedReason(itemType, event) {
-    this.formData.importReasonList[itemType].filter(item => item.id === event.value).map(res => {
-      this.showNotificationNoStatus = res.showNotificationNoInput;
-    });
-
     this.isLoading = true;
 
     setTimeout(() => {
@@ -918,16 +912,16 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   renderingTheItemAttachment(itemType, importReason) {
-    this.ItemAttachmentFields = this.allItemTypeAttachmentFields[itemType].map(item => {
-      if (item.requiredWithImportReasonCondition && item.relatedWithField.includes(importReason)) {
+    this.ItemAttachmentFields = this.allItemTypeAttachmentFields[itemType.code].map(item => {
+      if (item.requiredWithImportReasonCondition && item.relatedWithField.includes(importReason.code)) {
         item.required = true;
-      } else if (item.requiredWithImportReasonCondition && !item.relatedWithField.includes(importReason)) {
+      } else if (item.requiredWithImportReasonCondition && !item.relatedWithField.includes(importReason.code)) {
         item.required = false;
       }
 
-      if (item.enabledCondition && item.relatedWithField.includes(importReason)) {
+      if (item.enabledCondition && item.relatedWithField.includes(importReason.code)) {
         item.enable = true;
-      } else if (item.enabledCondition && !item.relatedWithField.includes(importReason)) {
+      } else if (item.enabledCondition && !item.relatedWithField.includes(importReason.code)) {
         item.enable = false;
       }
 

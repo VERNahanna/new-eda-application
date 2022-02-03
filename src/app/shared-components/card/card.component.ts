@@ -30,12 +30,10 @@ export class CardComponent implements OnInit {
   }
 
   showDetails() {
-    debugger;
     this.showCardDetails = true;
   }
 
   hideDetails() {
-    debugger;
     this.showCardDetails = false;
   }
 
