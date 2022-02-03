@@ -1,5 +1,8 @@
 <div class="titleContainer" *ngIf="!showCardDetails" (mouseover)="showDetails()">
-  <h2>{{itemData.name[currentLang]}}</h2>
+  <div class="d-flex flex-column align-items-center justify-content-center">
+    <i class="{{itemData.icon}}"></i>
+    <h2>{{itemData.name[currentLang]}}</h2>
+  </div>
 </div>
 
 <div class="detailsContainer" *ngIf="showCardDetails" (mouseleave)="hideDetails()">

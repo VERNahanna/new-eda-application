@@ -46,9 +46,9 @@ import {CustomReleaseComponent} from './custom-release/custom-release.component'
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {ChartsComponentComponent} from './charts-component/charts-component.component';
 import {CardListComponent} from './shared-components/card-list/card-list.component';
-import { PharmaceuticalRawMaterialsComponent } from './pharmaceutical-raw-materials/pharmaceutical-raw-materials.component';
-import { PharmaceuticalRawMaterialsContainerComponent } from './pharmaceutical-raw-materials-container/pharmaceutical-raw-materials-container.component';
-import { CardComponent } from './shared-components/card/card.component';
+import {CardComponent} from './shared-components/card/card.component';
+import {PharmaceuticalRawMaterialsModule} from "./pharmaceutical-raw-materials/pharmaceutical-raw-materials.module";
+import {SharedComponentsModule} from "./shared-components/shared-components.module";
 
 
 registerLocaleData(localeAr, 'ar-Ar', localeArabicExtra);
@@ -71,20 +71,12 @@ const translations = {
     HeaderComponent,
     FooterComponent,
     HomepageComponent,
-    TableListComponent,
-    TitleComponent,
     LoginComponent,
     HomeContainerComponent,
-    LoaderComponentComponent,
-    FiltersComponent,
     NotificationListComponent,
     CustomReleaseComponent,
     DashboardComponent,
     ChartsComponentComponent,
-    CardListComponent,
-    PharmaceuticalRawMaterialsComponent,
-    PharmaceuticalRawMaterialsContainerComponent,
-    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -116,6 +108,8 @@ const translations = {
         deps: [HttpClient]
       }
     }),
+    PharmaceuticalRawMaterialsModule,
+    SharedComponentsModule,
   ],
   providers: [DecimalPipe, DatePipe, FormService, CurrencyPipe],
   bootstrap: [AppComponent]

@@ -20,31 +20,31 @@ export class HeaderComponent implements OnInit {
   menuObject = [
     {
       name: '',
-      link: '/home',
+      link: '/pages/home',
       dropDownStatus: false,
       icon: 'fas fa-home'
     },
     {
       name: 'pharmaceuticalRawMaterial',
-      link: '/pharmaceutical-row-material',
+      link: '/pages/pharmaceutical-row-material',
       dropDownStatus: true,
       icon: 'fas fa-pills',
       dropdownLinks: [
         {
           name: 'importationServices',
-          link: '/pharmaceutical-row-material/importation-services',
+          link: '/pages/pharmaceutical-row-material/inner/importation-services',
           icon: 'fas fa-shipping-fast'
         },
         {
           name: 'releaseServices',
-          link: '/pharmaceutical-row-material/release-services',
+          link: '/pages/pharmaceutical-row-material/inner/release-services',
           icon: 'fas fa-dolly-flatbed'
         }
       ]
     },
     {
       name: 'pharmaceuticalProducts',
-      link: '/draft-request',
+      link: '#',
       dropDownStatus: true,
       icon: 'fas fa-first-aid',
       dropdownLinks: [
@@ -55,14 +55,14 @@ export class HeaderComponent implements OnInit {
         },
         {
           name: 'releaseServices',
-          link: '/new-request/custom-release',
+          link: '#',
           icon: 'fas fa-dolly-flatbed'
         }
       ]
     },
     {
       name: 'biologicalProducts',
-      link: '/track-request',
+      link: '#',
       dropDownStatus: true,
       icon: 'fas fa-dna',
       dropdownLinks: [
@@ -73,14 +73,14 @@ export class HeaderComponent implements OnInit {
         },
         {
           name: 'releaseServices',
-          link: '/new-request/custom-release',
+          link: '#',
           icon: 'fas fa-dolly-flatbed'
         }
       ]
     },
     {
       name: 'narcotics',
-      link: '/rejected-request',
+      link: '#',
       dropDownStatus: true,
       icon: 'fas fa-tablets',
       dropdownLinks: [
@@ -91,14 +91,14 @@ export class HeaderComponent implements OnInit {
         },
         {
           name: 'releaseServices',
-          link: '/new-request/custom-release',
+          link: '#',
           icon: 'fas fa-dolly-flatbed'
         }
       ]
     },
     {
       name: 'detergentsAndPesticides',
-      link: '/rejected-request',
+      link: '#',
       dropDownStatus: true,
       icon: 'fas fa-vials',
       dropdownLinks: [
@@ -109,14 +109,14 @@ export class HeaderComponent implements OnInit {
         },
         {
           name: 'releaseServices',
-          link: '/new-request/custom-release',
+          link: '#',
           icon: 'fas fa-dolly-flatbed'
         }
       ]
     },
     {
       name: 'cosmeticsProducts',
-      link: '/rejected-request',
+      link: '#',
       dropDownStatus: true,
       icon: 'fas fa-medkit',
       dropdownLinks: [
@@ -126,13 +126,13 @@ export class HeaderComponent implements OnInit {
         },
         {
           name: 'releaseServices',
-          link: '/new-request/custom-release'
+          link: '#'
         }
       ]
     },
     {
       name: 'pharmaceuticalExemption',
-      link: '/rejected-request',
+      link: '#',
       dropDownStatus: false,
       icon: 'fas fa-receipt'
     }

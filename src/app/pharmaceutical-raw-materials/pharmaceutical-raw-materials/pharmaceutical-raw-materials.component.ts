@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {CardsList} from "../../../utils/common-models";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {CardsList} from "../../utils/common-models";
 
 @Component({
   selector: 'app-pharmaceutical-raw-materials',
@@ -20,9 +20,10 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pharmaceutical-row-material/new-request',
+      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
     {
       id: '',
@@ -34,9 +35,10 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pharmaceutical-row-material/new-request',
+      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
     {
       id: '',
@@ -48,9 +50,10 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pharmaceutical-row-material/new-request',
+      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
     {
       id: '',
@@ -62,9 +65,10 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pharmaceutical-row-material/new-request',
+      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
     {
       id: '',
@@ -76,9 +80,10 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pharmaceutical-row-material/new-request',
+      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
   ];
   pharmaceuticalRawMaterialReleaseServices: CardsList[] = [
@@ -95,6 +100,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
       newRequestLink: '',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
     {
       id: '',
@@ -109,6 +115,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
       newRequestLink: '',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
     {
       id: '',
@@ -123,6 +130,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
       newRequestLink: '',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
     {
       id: '',
@@ -137,6 +145,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
       newRequestLink: '',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
     {
       id: '',
@@ -151,6 +160,7 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
       newRequestLink: '',
       draftListLink: '',
       trackListLink: '',
+      icon: 'fas fa-pills'
     },
   ];
 
@@ -158,12 +168,12 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
               private activatedRoute: ActivatedRoute) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.routingPath = event.url.split('/')[2];
+        this.routingPath = event.url.split('/')[4];
+        console.log('routingPath', this.routingPath)
       }
     });
   }
 
   ngOnInit(): void {
   }
-
 }

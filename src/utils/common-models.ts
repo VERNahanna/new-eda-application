@@ -4,11 +4,12 @@ export interface CardsList {
     ar: string,
     en: string
   },
-  description:{
+  description: {
     ar: string
     en: string,
   },
   newRequestLink: string,
   draftListLink: string,
-  trackListLink: string
+  trackListLink: string,
+  icon: string
 }

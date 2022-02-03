@@ -1,6 +1,6 @@
 .titleContainer {
   width: 100%;
-  min-height: 200px;
+  min-height: 250px;
   padding: 4rem;
   display: flex;
   align-items: center;
@@ -8,21 +8,31 @@
   -webkit-transition: all ease-in-out 2s;
   -moz-transition: all ease-in-out 2s;
   transition: all ease-in-out 2s;
+  background: #d7d7d7;
+  border-radius: 10px 0 10px 10px;
+  border: 2px solid #fff;
+  color: #161c30;
 
   h2 {
     margin-bottom: 0;
+  }
+
+  i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #c28a30;
   }
 }
 
 .detailsContainer {
   width: 100%;
-  min-height: 200px;
+  min-height: 250px;
   padding: 1rem;
   position: relative;
   background-color: #c28a30;
   color: #161c30;
   border-radius: 10px 0 10px 10px;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   -webkit-transition: all ease-in-out 2s;
   -moz-transition: all ease-in-out 2s;
   transition: all ease-in-out 2s;
