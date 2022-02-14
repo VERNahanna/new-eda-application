@@ -25,6 +25,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./pharmaceutical-raw-materials/pharmaceutical-raw-materials.module').then((m) => m.PharmaceuticalRawMaterialsModule),
       },
+      {
+        path: 'cosmetics-product',
+        canActivate: [ApplicationGuard],
+        data: {animation: 'cosmetics-product'},
+        loadChildren: () =>
+          import('./cosmetics-products/cosmetics-products.module').then((m) => m.CosmeticsProductsModule),
+      },
     ]
   },
   {path: '', pathMatch: 'full', redirectTo: '/login'}

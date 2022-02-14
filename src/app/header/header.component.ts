@@ -32,12 +32,12 @@ export class HeaderComponent implements OnInit {
       dropdownLinks: [
         {
           name: 'importationServices',
-          link: '/pages/pharmaceutical-row-material/inner/importation-services',
+          link: '#',
           icon: 'fas fa-shipping-fast'
         },
         {
           name: 'releaseServices',
-          link: '/pages/pharmaceutical-row-material/inner/release-services',
+          link: '#',
           icon: 'fas fa-dolly-flatbed'
         }
       ]
@@ -126,7 +126,7 @@ export class HeaderComponent implements OnInit {
         },
         {
           name: 'releaseServices',
-          link: '#'
+          link: '/pages/cosmetics-product/inner/release-services'
         }
       ]
     },

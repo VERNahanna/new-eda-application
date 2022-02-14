@@ -829,6 +829,7 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   saveData() {
+    console.log('form', this.regInvoicesForm.value);
   }
 
   onSubmit() {

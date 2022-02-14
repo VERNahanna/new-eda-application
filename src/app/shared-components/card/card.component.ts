@@ -38,6 +38,7 @@ export class CardComponent implements OnInit {
   }
 
   goToLink(link: string) {
+    console.log('link', link)
     this.router.navigateByUrl(link)
   }
 }

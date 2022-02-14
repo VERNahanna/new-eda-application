@@ -49,6 +49,7 @@ import {CardListComponent} from './shared-components/card-list/card-list.compone
 import {CardComponent} from './shared-components/card/card.component';
 import {PharmaceuticalRawMaterialsModule} from "./pharmaceutical-raw-materials/pharmaceutical-raw-materials.module";
 import {SharedComponentsModule} from "./shared-components/shared-components.module";
+import {CosmeticsProductsModule} from "./cosmetics-products/cosmetics-products.module";
 
 
 registerLocaleData(localeAr, 'ar-Ar', localeArabicExtra);
@@ -109,6 +110,7 @@ const translations = {
       }
     }),
     PharmaceuticalRawMaterialsModule,
+    CosmeticsProductsModule,
     SharedComponentsModule,
   ],
   providers: [DecimalPipe, DatePipe, FormService, CurrencyPipe],
