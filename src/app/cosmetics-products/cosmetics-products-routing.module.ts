@@ -22,6 +22,16 @@ const routes: Routes = [
         data: {animation: 'inner'}
       },
       {
+        path: 'release-services/:departId',
+        component: CosmeticsProductsComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path: 'release-services/:departId/:departSecId',
+        component: CosmeticsProductsComponent,
+        data: {animation: 'inner'}
+      },
+      {
         path: 'new-request',
         component: CustomReleaseComponent,
         data: {animation: 'inner'}

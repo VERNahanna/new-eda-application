@@ -26,6 +26,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatNativeDateModule} from "@angular/material/core";
 import {TranslateModule} from "@ngx-translate/core";
 import {SharedComponentsModule} from "../shared-components/shared-components.module";
+import {CosmeticsProductService} from "./cosmetics-product.service";
 
 
 @NgModule({
@@ -54,6 +55,9 @@ import {SharedComponentsModule} from "../shared-components/shared-components.mod
     MatNativeDateModule,
     TranslateModule,
     SharedComponentsModule
+  ],
+  providers:[
+    CosmeticsProductService
   ]
 })
 export class CosmeticsProductsModule {
