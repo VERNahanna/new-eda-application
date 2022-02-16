@@ -20,9 +20,9 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
-      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
+      newRequestLink: '/pages/pharmaceutical-raw-material/inner/new-request',
+      draftListLink: '/pages/pharmaceutical-raw-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-raw-material/inner/track-request',
       icon: 'fas fa-pills'
     },
     {
@@ -35,9 +35,9 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
-      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
+      newRequestLink: '/pages/pharmaceutical-raw-material/inner/new-request',
+      draftListLink: '/pages/pharmaceutical-raw-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-raw-material/inner/track-request',
       icon: 'fas fa-pills'
     },
     {
@@ -50,9 +50,9 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
-      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
+      newRequestLink: '/pages/pharmaceutical-raw-material/inner/new-request',
+      draftListLink: '/pages/pharmaceutical-raw-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-raw-material/inner/track-request',
       icon: 'fas fa-pills'
     },
     {
@@ -65,9 +65,9 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
-      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
+      newRequestLink: '/pages/pharmaceutical-raw-material/inner/new-request',
+      draftListLink: '/pages/pharmaceutical-raw-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-raw-material/inner/track-request',
       icon: 'fas fa-pills'
     },
     {
@@ -80,9 +80,9 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
         en: 'text1',
         ar: 'الجملة 1'
       },
-      newRequestLink: '/pages/pharmaceutical-row-material/inner/new-request',
-      draftListLink: '/pages/pharmaceutical-row-material/inner/draft-request',
-      trackListLink: '/pages/pharmaceutical-row-material/inner/track-request',
+      newRequestLink: '/pages/pharmaceutical-raw-material/inner/new-request',
+      draftListLink: '/pages/pharmaceutical-raw-material/inner/draft-request',
+      trackListLink: '/pages/pharmaceutical-raw-material/inner/track-request',
       icon: 'fas fa-pills'
     },
   ];

@@ -161,6 +161,20 @@ export class FormService {
         catchError(this.handleError));
   }
 
+  getAllDepartmentsInSys() {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Lookup/GetDepartments`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
   getAllIngredient() {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',

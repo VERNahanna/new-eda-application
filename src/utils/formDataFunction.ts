@@ -14,7 +14,6 @@ export const formDataClass = (req?: any, FormParam?: FormGroup) => {
   }
 };
 
-
 export const convertToSpecialObject = (WhichForm, typeOfMarketing, typeOfRegistration, isExport, Tracktype, id, event) => {
   return {
     ...event,

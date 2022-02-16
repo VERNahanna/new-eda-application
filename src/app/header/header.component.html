@@ -52,7 +52,7 @@
                   <li *ngFor="let item of menuObject;let i =index" role="menuitem">
                     <a class="dropdown-item {{currentLang === 'ar' ? 'text-right' : 'text-left'}}"
                        routerLink="{{item.link}}" routerLinkActive="active">
-                      {{'header.' + item.name | translate}}
+                      {{item.name[currentLang]}}
                     </a>
                   </li>
                   <li class="profile-menu">
@@ -103,7 +103,7 @@
                       <i class="{{item.icon}}"></i>
                     </span>
                     <span *ngIf="item.name">
-                      {{'header.' + item.name | translate}}
+                      {{item.name[currentLang]}}
                     </span>
                   </a>
                   <div *ngIf="item.dropDownStatus" class="btn-group dropdown" dropdown triggers="hover">
@@ -114,20 +114,20 @@
                         <i class="{{item.icon}}"></i>
                       </span>
                       <span *ngIf="item.name">
-                        {{'header.' + item.name | translate}}
+                        {{item.name[currentLang]}}
                       </span>
                       <i class="fas fa-chevron-down"></i>
                     </a>
                     <div class="dropdown-content">
                       <ul *dropdownMenu class="dropdown-menu"
                           role="menu" aria-labelledby="button-basic">
-                        <li *ngFor="let element of item.dropdownLinks" role="menuitem">
+                        <li *ngFor="let element of item?.dropdownLinks" role="menuitem">
                           <a class="dropdown-item  {{currentLang === 'ar' ? 'text-right' : 'text-left'}}"
                              routerLink="{{element.link}}" routerLinkActive="active">
                             <span class="{{currentLang === 'ar' ? 'mr-1':'ml-1'}}">
                               <i class="{{element.icon}}"></i>
                             </span>
-                            {{'header.' + element.name | translate}}
+                            {{element.name[currentLang]}}
                           </a>
                         </li>
                       </ul>

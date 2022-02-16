@@ -19,9 +19,9 @@ const routes: Routes = [
         canActivate: [ApplicationGuard]
       },
       {
-        path: 'pharmaceutical-row-material',
+        path: 'pharmaceutical-raw-material',
         canActivate: [ApplicationGuard],
-        data: {animation: 'pharmaceutical-row-material'},
+        data: {animation: 'pharmaceutical-raw-material'},
         loadChildren: () =>
           import('./pharmaceutical-raw-materials/pharmaceutical-raw-materials.module').then((m) => m.PharmaceuticalRawMaterialsModule),
       },

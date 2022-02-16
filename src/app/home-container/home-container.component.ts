@@ -5,6 +5,7 @@ import {FormService} from '../services/form.service';
 import {distinctUntilChanged, filter} from 'rxjs/operators';
 import {InputService} from '../services/input.service';
 import {Observable, interval} from 'rxjs';
+import {departments} from "../../utils/common-data";
 
 @Component({
   selector: 'app-home-container',
@@ -131,6 +132,12 @@ export class HomeContainerComponent implements OnInit {
       this.unseenCount = res.payload.filter(x => !x.f_seen).map(list => list).length;
     });
 
+    await this.getService.getAllDepartmentsInSys().subscribe((res: any) => {
+      if (res) {
+        console.log('res', res);
+        this.inputService.publish({type: 'departments', payload: departments});
+      }
+    }), error => this.handleError(error);
     this.isLoading = false;
   }
 

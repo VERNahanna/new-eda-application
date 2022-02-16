@@ -43,7 +43,6 @@ export class NotificationListComponent implements OnInit {
 
   seeNotification(id) {
     this.getService.setSeenNotificationByID(id).subscribe(res => {
-      this.isLoading = false;
     }, error => this.handleError(error));
 
 
