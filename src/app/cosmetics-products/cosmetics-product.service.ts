@@ -27,7 +27,6 @@ export class CosmeticsProductService {
   }
 
   getAllServicesBasedOnDeptId(departId, departSecId) {
-    console.log('Token', this.Token)
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       'Token': this.Token

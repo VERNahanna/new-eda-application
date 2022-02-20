@@ -1,10 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {CardsList} from "../../../utils/common-models";
+import {
+  CardsList,
+  DepartmentBEModel,
+  ServicesPerAdmin,
+  ServicesPerAdminAfterIntegrating
+} from "../../../utils/common-models";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {CosmeticsProductService} from "../cosmetics-product.service";
 import {TranslateService} from "@ngx-translate/core";
 import {distinctUntilChanged, filter} from "rxjs/operators";
 import {InputService} from "../../services/input.service";
+import {commonKeysWithId, menuObjectKeys, typeOfRequest} from "../../../utils/common-data";
+import {element} from "protractor";
 
 @Component({
   selector: 'app-cosmetics-products',
@@ -15,160 +22,7 @@ export class CosmeticsProductsComponent implements OnInit {
   routingPath: string;
   departId: string;
   departSecId: string;
-  cosmeticsProductsImportationServices: CardsList[] = [
-    {
-      id: '',
-      name: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-    {
-      id: '',
-      name: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-    {
-      id: '',
-      name: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-    {
-      id: '',
-      name: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-    {
-      id: '',
-      name: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-  ];
-  cosmeticsProductsReleaseServices: CardsList[] = [
-    {
-      id: '',
-      name: {
-        en: 'text 4',
-        ar: 'الجملة41'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-    {
-      id: '',
-      name: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-    {
-      id: '',
-      name: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-    {
-      id: '',
-      name: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-    {
-      id: '',
-      name: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      description: {
-        en: 'text1',
-        ar: 'الجملة 1'
-      },
-      newRequestLink: '/pages/cosmetics-product/inner/new-request',
-      draftListLink: '/pages/cosmetics-product/inner/draft-request',
-      trackListLink: '/pages/cosmetics-product/inner/track-request',
-      icon: 'fas fa-pills'
-    },
-  ];
+  cosmeticsProductsServices: ServicesPerAdminAfterIntegrating[] = [];
 
   alertErrorNotificationStatus: boolean = false;
   alertErrorNotification: any;
@@ -194,9 +48,44 @@ export class CosmeticsProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.services.getAllServicesBasedOnDeptId(this.departId, this.departSecId).subscribe((res: any) => {
-      console.log('res', res);
-    }, error => this.handleError(error));
+    let newList = []
+    this.inputService.getInput$().pipe(
+      filter(x => x.type === 'departments'),
+      distinctUntilChanged()
+    ).subscribe((res: { type: string, payload: DepartmentBEModel[] }) => {
+      res.payload.filter(item => item.id === Number(this.departId)).map((result: DepartmentBEModel) => {
+        result.sections.filter(element => element.id === Number(this.departSecId)).map(row => {
+          row.servicesList?.map(service => {
+            this.cosmeticsProductsServices = [
+              ...this.cosmeticsProductsServices,
+              {
+                code: service.code,
+                id: service.id,
+                name: service.name,
+                description: service.description,
+                newRequestLink: menuObjectKeys[commonKeysWithId[this.departId]].newRequestLink,
+                draftListLink: menuObjectKeys[commonKeysWithId[this.departId]].draftListLink,
+                trackListLink: menuObjectKeys[commonKeysWithId[this.departId]].trackListLink,
+                icon: menuObjectKeys[commonKeysWithId[this.departId]].servicesIcon,
+              }
+            ]
+          });
+        })
+      });
+
+      this.services.getAllServicesBasedOnDeptId(this.departId, this.departSecId).subscribe((res: ServicesPerAdmin[]) => {
+        res.filter(item => item.serviceDto.serviceTypeDto.code === typeOfRequest[this.routingPath]).map(result => {
+          newList.push(...this.cosmeticsProductsServices.filter(item => item.id === result.id).map(element => element = {
+            ...element,
+            serviceDto: result.serviceDto,
+            itemTypeList: result.itemTypeList
+          }));
+        });
+
+        this.cosmeticsProductsServices = newList;
+      }, error => this.handleError(error));
+    });
+
 
     this.inputService.getInput$().pipe(
       filter(x => x.type === 'currentLang'),
