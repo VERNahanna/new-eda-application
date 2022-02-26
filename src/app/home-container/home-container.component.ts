@@ -1,11 +1,10 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {routerTransitionSlide} from 'src/app/animation/routable.animations';
 import {FormService} from '../services/form.service';
 import {distinctUntilChanged, filter} from 'rxjs/operators';
 import {InputService} from '../services/input.service';
-import {Observable, interval} from 'rxjs';
-import {departments} from "../../utils/common-data";
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-home-container',
@@ -29,7 +28,8 @@ export class HomeContainerComponent implements OnInit {
     currencies: [],
     unitOfMeasure: [],
     applicantList: [],
-    itemTypeList: []
+    itemTypeList: [],
+    importReasonList: [],
   };
   alertErrorNotificationStatus: boolean = false;
   alertErrorNotification: any;
@@ -134,8 +134,7 @@ export class HomeContainerComponent implements OnInit {
 
     await this.getService.getAllDepartmentsInSys().subscribe((res: any) => {
       if (res) {
-        console.log('res', res);
-        this.inputService.publish({type: 'departments', payload: departments});
+        this.inputService.publish({type: 'departments', payload: res});
       }
     }), error => this.handleError(error);
     this.isLoading = false;

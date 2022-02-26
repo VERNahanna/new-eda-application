@@ -169,7 +169,6 @@ export class PharmaceuticalRawMaterialsComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.routingPath = event.url.split('/')[4];
-        console.log('routingPath', this.routingPath)
       }
     });
   }

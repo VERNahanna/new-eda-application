@@ -137,7 +137,7 @@ export class CustomReleaseComponent implements OnInit {
   editItemIndex;
   editItemRowStatus = false;
   customImportRelease: any = [];
-
+  serviceId;
   allItemTypeAttachmentFields = {
     PRODUCTS: [
       {
@@ -228,7 +228,7 @@ export class CustomReleaseComponent implements OnInit {
         name: 'Material  Safety Data Sheet',
         fileName: '',
         fileValue: '',
-        required: true,
+        required: false,
         enable: true,
         attachmentTypeStatus: '',
         loadingStatus: false,
@@ -238,7 +238,7 @@ export class CustomReleaseComponent implements OnInit {
         name: 'Source of raw material',
         fileName: '',
         fileValue: '',
-        required: true,
+        required: false,
         enable: true,
         attachmentTypeStatus: '',
         loadingStatus: false,
@@ -268,7 +268,7 @@ export class CustomReleaseComponent implements OnInit {
         name: 'Composition of premix/Colors from manufacturer',
         fileName: '',
         fileValue: '',
-        required: true,
+        required: false,
         enable: true,
         attachmentTypeStatus: '',
         loadingStatus: false,
@@ -278,7 +278,7 @@ export class CustomReleaseComponent implements OnInit {
         name: 'COA',
         fileName: '',
         fileValue: '',
-        required: true,
+        required: false,
         enable: true,
         attachmentTypeStatus: '',
         loadingStatus: false,
@@ -288,7 +288,7 @@ export class CustomReleaseComponent implements OnInit {
         name: 'The approval of the public security authority',
         fileName: '',
         fileValue: '',
-        required: true,
+        required: false,
         enable: true,
         attachmentTypeStatus: '',
         loadingStatus: false,
@@ -298,7 +298,7 @@ export class CustomReleaseComponent implements OnInit {
         name: 'Delegation for importation (Raw Material/Packing Material)',
         fileName: '',
         fileValue: '',
-        required: true,
+        required: false,
         enable: true,
         attachmentTypeStatus: '',
         loadingStatus: false,
@@ -308,7 +308,7 @@ export class CustomReleaseComponent implements OnInit {
         name: 'Supply order (Raw Material/Packing Material)',
         fileName: '',
         fileValue: '',
-        required: true,
+        required: false,
         enable: true,
         attachmentTypeStatus: '',
         loadingStatus: false,
@@ -342,7 +342,7 @@ export class CustomReleaseComponent implements OnInit {
         name: 'Material  Safety Data Sheet',
         fileName: '',
         fileValue: '',
-        required: true,
+        required: false,
         enable: true,
         attachmentTypeStatus: '',
         loadingStatus: false,
@@ -501,6 +501,7 @@ export class CustomReleaseComponent implements OnInit {
     ],
   };
   currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
+  disableItemTypeField: boolean = false;
 
   constructor(private fb: FormBuilder,
               private number: DecimalPipe,
@@ -510,6 +511,10 @@ export class CustomReleaseComponent implements OnInit {
               public translateService: TranslateService,
               private modalService: BsModalService,
               private getService: FormService) {
+    this.route.params.subscribe(res => {
+      this.serviceId = res.serviceId;
+    })
+
     this.getFormAsStarting('', '');
     this.getInvoicesFormAsStarting('', '');
     this.getItemsFormAsStarting('', '');
@@ -594,6 +599,35 @@ export class CustomReleaseComponent implements OnInit {
       this.currentLang = res.payload;
     });
 
+    this.inputService.getInput$().pipe(
+      filter(x => x.type === 'productServices'),
+      distinctUntilChanged()
+    ).subscribe(res => {
+      res.payload.filter(row => row.id === Number(this.serviceId)).map(item => {
+        this.formData.itemTypeList = item.itemTypeList.map(element => {
+          return {
+            code: element.code,
+            id: element.id,
+            name: element.name
+          }
+        });
+        this.formData.importReason = item.itemTypeList.map(element => {
+          return element.importReasons?.map(result => {
+            return {
+              code: result.code,
+              id: result.id,
+              name: result.name
+            }
+          })
+        });
+      });
+
+      if (this.formData.itemTypeList.length === 1) {
+        this.itemType = this.formData.itemTypeList[0];
+        this.disableItemTypeField = true;
+        this.getTermType({value: this.formData.itemTypeList[0]});
+      }
+    });
 
     this.setAllLookupsInObservable();
   }
@@ -619,16 +653,9 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   async getTermType(event): Promise<any> {
-    await this.getService.getImportReasonByItemId(event.value.id).subscribe(res => {
-      console.log('res', res)
-      this.formData.importReason = res;
-    });
-
-    // if (this.itemType === 'premix') {
-    //   this.importReason = this.formData.importReasonList[this.itemType][0].name;
-    //
-    //   this.getTheSelectedValueForImportedReason(this.itemType, {value: this.importReason});
-    // }
+    this.formData.itemTypeList.filter(item => item.id === event.value.id).map(res => {
+      this.formData.importReasonList = this.formData.importReason[this.formData.itemTypeList.indexOf(res)]
+    })
   }
 
   setApplicant(companyProfileID) {
@@ -801,29 +828,29 @@ export class CustomReleaseComponent implements OnInit {
         flagType: this.fb.control(''),
         manufacturingCompany: this.fb.control('', Validators.required),
         manufacturingCountry: this.fb.control('', Validators.required),
-        batchNo: this.importReason === 'premix' ? this.fb.control('', Validators.required) : this.fb.control(''),
+        batchNo: this.importReason === 'PREMIX' ? this.fb.control('', Validators.required) : this.fb.control(''),
         quantity: this.fb.control('', Validators.required),
         uom: this.fb.control('', Validators.required),
         certificateOfOrigin: this.fb.control(''),
         companyManufactureRelationship: this.fb.control(''),
         legalizedHealthCertificate: this.fb.control(''),
-        coa: this.itemType === 'premix' || (this.itemType === 'rawMaterials' && this.importReason !== 'RDSamples') ? this.fb.control('') : this.fb.control(''),
-        coc: this.importReason === 'registeredProduct' ? this.fb.control('') : this.fb.control(''),
+        coa: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason !== 'RAW_MAT_RD') ? this.fb.control('') : this.fb.control(''),
+        coc: this.importReason === 'FINISHED_PRDUCTS' ? this.fb.control('') : this.fb.control(''),
         premixName: this.fb.control(''),
         sourceOfRawMaterial: this.fb.control(''),
-        ingredient: this.importReason === 'Premix' ? this.fb.control('', Validators.required) : this.fb.control(''),
-        concentration: this.importReason === 'Premix' ? this.fb.control('', Validators.required) : this.fb.control(''),
-        function: this.importReason === 'Premix' ? this.fb.control('', Validators.required) : this.fb.control(''),
-        materialSafetyDataSheet: this.itemType === 'premix' || (this.itemType === 'rawMaterials' && this.importReason !== 'RDSamples') ? this.fb.control('') : this.fb.control(''),
-        sourceOfRawMaterialAttach: this.itemType === 'premix' || (this.itemType === 'rawMaterials' && this.importReason !== 'RDSamples') ? this.fb.control('') : this.fb.control(''),
+        ingredient: this.importReason === 'PREMIX' ? this.fb.control('', Validators.required) : this.fb.control(''),
+        concentration: this.importReason === 'PREMIX' ? this.fb.control('', Validators.required) : this.fb.control(''),
+        function: this.importReason === 'PREMIX' ? this.fb.control('', Validators.required) : this.fb.control(''),
+        materialSafetyDataSheet: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason !== 'RAW_MAT_RD') ? this.fb.control('') : this.fb.control(''),
+        sourceOfRawMaterialAttach: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason !== 'RAW_MAT_RD') ? this.fb.control('') : this.fb.control(''),
         declarationOfChemicalTreatment: this.fb.control(''),
-        compositionOfPremixColorsFromManufacturer: this.importReason === 'Premix' ? this.fb.control('') : this.fb.control(''),
-        approvalOfThePublicSecurityAuthority: this.itemType === 'premix' || (this.itemType === 'rawMaterials' && this.importReason !== 'RDSamples') ? this.fb.control('') : this.fb.control(''),
-        delegationForImportation: this.itemType === 'premix' || (this.itemType === 'rawMaterials' && this.importReason === 'localProducts') ? this.fb.control('') : this.fb.control(''),
-        supplyOrder: this.itemType === 'premix' || (this.itemType === 'rawMaterials' && this.importReason === 'localProducts') ? this.fb.control('') : this.fb.control(''),
-        rawMaterialName: this.itemType === 'rawMaterials' ? this.fb.control('') : this.fb.control(''),
-        declarationOfFreeOfSalmonella: this.itemType === 'rawMaterials' && this.importReason !== 'RDSamples' ? this.fb.control('') : this.fb.control(''),
-        packingItemName: this.itemType === 'packagingMaterial' ? this.fb.control('') : this.fb.control(''),
+        compositionOfPremixColorsFromManufacturer: this.importReason === 'PREMIX' ? this.fb.control('') : this.fb.control(''),
+        approvalOfThePublicSecurityAuthority: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason !== 'RAW_MAT_RD') ? this.fb.control('') : this.fb.control(''),
+        delegationForImportation: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason === 'RAW_MAT_FOR_LOCAL') ? this.fb.control('') : this.fb.control(''),
+        supplyOrder: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason === 'RAW_MAT_FOR_LOCAL') ? this.fb.control('') : this.fb.control(''),
+        rawMaterialName: this.itemType === 'RAW_MATERIAL' ? this.fb.control('') : this.fb.control(''),
+        declarationOfFreeOfSalmonella: this.itemType === 'RAW_MATERIAL' && this.importReason !== 'RAW_MAT_RD' ? this.fb.control('') : this.fb.control(''),
+        packingItemName: this.itemType === 'PACKING_MATERIALS' ? this.fb.control('') : this.fb.control(''),
       });
     }
   }
@@ -903,6 +930,7 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   getTheSelectedValueForImportedReason(itemType, event) {
+    console.log('event', event.value.code)
     this.isLoading = true;
 
     setTimeout(() => {
@@ -921,7 +949,7 @@ export class CustomReleaseComponent implements OnInit {
       }
 
       if (item.enabledCondition && item.relatedWithField.includes(importReason.code)) {
-        item.enable = false;
+        item.enable = true;
       } else if (item.enabledCondition && !item.relatedWithField.includes(importReason.code)) {
         item.enable = false;
       }

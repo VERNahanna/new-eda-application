@@ -1,15 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CardsList} from "../../../utils/common-models";
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {CardsList, ServicesPerAdminAfterIntegrating} from "../../../utils/common-models";
 
 @Component({
   selector: 'app-card-list',
   templateUrl: './card-list.component.html',
   styleUrls: ['./card-list.component.scss']
 })
-export class CardListComponent implements OnInit {
-  @Input() data: CardsList[];
+export class CardListComponent implements OnInit, OnChanges {
+  @Input() data: ServicesPerAdminAfterIntegrating[];
 
   constructor() {
+  }
+
+  ngOnChanges(): void {
   }
 
   ngOnInit(): void {

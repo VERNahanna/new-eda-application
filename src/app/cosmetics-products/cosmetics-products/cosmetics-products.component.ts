@@ -44,7 +44,6 @@ export class CosmeticsProductsComponent implements OnInit {
       this.departId = res.departId;
       this.departSecId = res.departSecId;
     })
-
   }
 
   ngOnInit(): void {
@@ -67,23 +66,15 @@ export class CosmeticsProductsComponent implements OnInit {
                 draftListLink: menuObjectKeys[commonKeysWithId[this.departId]].draftListLink,
                 trackListLink: menuObjectKeys[commonKeysWithId[this.departId]].trackListLink,
                 icon: menuObjectKeys[commonKeysWithId[this.departId]].servicesIcon,
+                serviceTypeDto: service.serviceTypeDto,
+                itemTypeList: service.itemtypes,
               }
-            ]
+            ];
+
+            this.inputService.publish({type: 'productServices', payload: this.cosmeticsProductsServices});
           });
         })
       });
-
-      this.services.getAllServicesBasedOnDeptId(this.departId, this.departSecId).subscribe((res: ServicesPerAdmin[]) => {
-        res.filter(item => item.serviceDto.serviceTypeDto.code === typeOfRequest[this.routingPath]).map(result => {
-          newList.push(...this.cosmeticsProductsServices.filter(item => item.id === result.id).map(element => element = {
-            ...element,
-            serviceDto: result.serviceDto,
-            itemTypeList: result.itemTypeList
-          }));
-        });
-
-        this.cosmeticsProductsServices = newList;
-      }, error => this.handleError(error));
     });
 
 

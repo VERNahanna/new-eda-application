@@ -67,19 +67,22 @@ export class HeaderComponent implements OnInit {
             id: item.id,
             name: item.name,
             link: menuObjectKeys[item.code]?.baseLink,
-            dropDownStatus: item.section.length > 0,
+            dropDownStatus: item.sections.length > 0,
             icon: menuObjectKeys[item.code]?.baseIcon,
             description: item.description,
-            dropdownLinks: item.section.map(element => {
+            dropdownLinks: item.sections?.map(element => {
               return {
                 ...element,
-                link: menuObjectKeys[item.code]?.dropdownLinks[element.code].link,
+                link:
+                  menuObjectKeys[item.code]?.dropdownLinks[element.code].link && menuObjectKeys[item.code]?.dropdownLinks[element.code].link !== '#' ?
+                    `${menuObjectKeys[item.code]?.dropdownLinks[element.code].link}/${item.id}/${element.id}` :
+                    menuObjectKeys[item.code]?.dropdownLinks[element.code].link,
                 icon: menuObjectKeys[item.code]?.dropdownLinks[element.code].icon,
               }
             })
           }
         ];
-      })
+      });
     });
   }
 

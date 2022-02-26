@@ -641,6 +641,7 @@
               {{'customRelease.formLabel.itemType' | translate}}
             </mat-label>
             <mat-select [(ngModel)]="itemType"
+                        [disabled]="disableItemTypeField"
                         (selectionChange)="getTermType($event)"
                         required>
               <mat-option *ngFor="let option of formData.itemTypeList" [value]="option">
@@ -649,7 +650,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType">
+        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType && formData.importReasonList.length">
           <mat-form-field appearance="fill">
             <mat-label>
               {{'customRelease.formLabel.importReason' | translate}}
@@ -657,7 +658,7 @@
             <mat-select (selectionChange)="getTheSelectedValueForImportedReason(itemType, $event)"
                         [disabled]="this.itemType === 2"
                         [(ngModel)]="importReason" required>
-              <mat-option *ngFor="let option of formData.importReason" [value]="option">
+              <mat-option *ngFor="let option of formData.importReasonList" [value]="option">
                 {{option.name[currentLang]}}
               </mat-option>
             </mat-select>

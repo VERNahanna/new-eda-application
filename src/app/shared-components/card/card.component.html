@@ -10,7 +10,7 @@
   <h4 class="{{currentLang === 'ar' ? 'text-right':'text-left'}}">{{itemData.description[currentLang]}}</h4>
   <div class="d-flex align-items-center btnContainer">
     <button class="col btn btn-primary {{currentLang === 'ar' ? 'ml-2':'mr-2'}}"
-            (click)="goToLink(itemData.newRequestLink)">
+            (click)="goToLink(itemData.newRequestLink, itemData.id)">
       {{'common.createNewRequest' | translate}}
     </button>
     <button class="col btn btn-primary {{currentLang === 'ar' ? 'ml-2':'mr-2'}}"

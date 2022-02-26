@@ -168,7 +168,7 @@ export class FormService {
     });
     const options = {headers};
 
-    return this.http.get(`${this.secondApiURL}Lookup/GetDepartments`, options)
+    return this.http.get(`${this.secondApiURL}Department/GetDepartmentsData`, options)
       .pipe(map((res: any) => {
           return res;
         }),
