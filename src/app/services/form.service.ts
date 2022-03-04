@@ -42,11 +42,11 @@ export class FormService {
 
     const JSONData = JSON.stringify(newStructure);
 
-    return this.http.get(`${this.apiBaseUrl}LoginApi?username=${data.username}&password=${data.password}`, options)
+    return this.http.post(`${this.secondApiURL}PortalLogin/Login`, JSONData, options)
       .pipe(
         distinctUntilChanged(),
         tap((res: any) => {
-          if (res.Status === '1') {
+          if (res) {
             this.isLoggedIn = true;
           }
           return res;
@@ -61,7 +61,8 @@ export class FormService {
     });
     const options = {headers};
 
-    return this.http.post(`${this.apiBaseUrl}Logout`, '', options)
+
+    return this.http.post(`${this.secondApiURL}PortalLogin/Logout`, {"token": token}, options)
       .pipe(map((res: any) => {
           this.isLoggedIn = false;
           return res;
@@ -309,6 +310,23 @@ export class FormService {
     const options = {headers};
 
     return this.http.get(`${this.apiBaseUrl}Lookups/CompanyProfile?pageNo=${page}&pageSize=15000&companyprofileid=${companyProfile}&searchName=${filterText}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  createProductRequest(data) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+
+    const options = {headers};
+
+    data = JSON.stringify(data);
+
+    return this.http.post(`${this.secondApiURL}Requests/SaveRequest`, data, options)
       .pipe(map((res: any) => {
           return res;
         }),

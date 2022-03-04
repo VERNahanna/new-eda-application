@@ -53,7 +53,7 @@
                            [matAutocomplete]="requestedReleaseTypeList" required>
                     <mat-autocomplete #requestedReleaseTypeList="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptionsForRequestedReleaseType | async"
-                                  [value]="option.name">
+                                  [value]="option.name[this.currentLang]">
                           <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                 placement="top">{{option.name[currentLang]}}</span>
                       </mat-option>
@@ -98,7 +98,7 @@
                            [matAutocomplete]="customPortNameList" required>
                     <mat-autocomplete #customPortNameList="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptionsForCustomPortName | async"
-                                  [value]="option.name">
+                                  [value]="option.name[this.currentLang]">
                           <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                 placement="top">{{option.name[currentLang]}}</span>
                       </mat-option>
@@ -138,7 +138,7 @@
                            [matAutocomplete]="supplierCountryList" required>
                     <mat-autocomplete #supplierCountryList="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptionsForSupplierCountry | async"
-                                  [value]="option.name">
+                                  [value]="option.name[this.currentLang]">
                           <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                 placement="top">{{option.name[currentLang]}}</span>
                       </mat-option>
@@ -201,7 +201,7 @@
                            [matAutocomplete]="measureUnitList" required>
                     <mat-autocomplete #measureUnitList="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptionsForMeasureUnitList | async"
-                                  [value]="option.name">
+                                  [value]="option.name[this.currentLang]">
                           <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                 placement="top">{{option.name[currentLang]}}</span>
                       </mat-option>
@@ -309,7 +309,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 invoiceListTable">
                   <app-table-list [data]="invoiceListTable"
                                   [whichTable]="'invoiceList'">
                   </app-table-list>
@@ -499,7 +499,7 @@
                            [matAutocomplete]="CurrencyList" required>
                     <mat-autocomplete #CurrencyList="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptionsForCurrency | async"
-                                  [value]="option.name">
+                                  [value]="option.name[currentLang]">
                                       <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                             placement="top">{{option.name[currentLang]}}</span>
                       </mat-option>
@@ -539,7 +539,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 itemListTableCont">
                   <app-table-list [data]="itemListTable"
                                   [whichTable]="'itemList'">
                   </app-table-list>
@@ -656,7 +656,7 @@
               {{'customRelease.formLabel.importReason' | translate}}
             </mat-label>
             <mat-select (selectionChange)="getTheSelectedValueForImportedReason(itemType, $event)"
-                        [disabled]="this.itemType === 2"
+                        [disabled]="disableImportReasonField"
                         [(ngModel)]="importReason" required>
               <mat-option *ngFor="let option of formData.importReasonList" [value]="option">
                 {{option.name[currentLang]}}
@@ -664,7 +664,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'premix'">
+        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'PREMIX'">
           <mat-form-field appearance="fill">
             <mat-label>
               {{'customRelease.formLabel.premixName' | translate}}
@@ -676,7 +676,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'rawMaterials'">
+        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'RAW_MATERIAL'">
           <mat-form-field appearance="fill">
             <mat-label>
               {{'customRelease.formLabel.rawMaterialName' | translate}}
@@ -688,7 +688,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'packagingMaterial'">
+        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'PACKING_MATERIALS'">
           <mat-form-field appearance="fill">
             <mat-label>
               {{'customRelease.formLabel.packingItemName' | translate}}
@@ -754,7 +754,7 @@
                         </div>
                       </mat-form-field>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'premix'">
+                    <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'PREMIX'">
                       <mat-form-field class="example-full-width">
                         <mat-label>{{'customRelease.formLabel.sourceOfRawMaterial' | translate}}</mat-label>
                         <input type="text" class="form-control" matInput formControlName="sourceOfRawMaterial"
@@ -789,7 +789,7 @@
                                [matAutocomplete]="manufacturingCompanyList" required>
                         <mat-autocomplete #manufacturingCompanyList="matAutocomplete">
                           <mat-option *ngFor="let option of filteredOptionsForManufacturingCompany | async"
-                                      [value]="option.name">
+                                      [value]="option.name[this.currentLang]">
                               <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                     placement="top">{{option.name[currentLang]}}</span>
                           </mat-option>
@@ -816,7 +816,7 @@
                                [matAutocomplete]="manufacturingCountryList" required>
                         <mat-autocomplete #manufacturingCountryList="matAutocomplete">
                           <mat-option *ngFor="let option of filteredOptionsForManufacturingCountry | async"
-                                      [value]="option.name">
+                                      [value]="option.name[this.currentLang]">
                               <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                     placement="top">{{option.name[currentLang]}}</span>
                           </mat-option>
@@ -875,7 +875,7 @@
                                [matAutocomplete]="UOMList" required>
                         <mat-autocomplete #UOMList="matAutocomplete">
                           <mat-option *ngFor="let option of filteredOptionsForUOM | async"
-                                      [value]="option.name">
+                                      [value]="option.name[this.currentLang]">
                               <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                     placement="top">{{option.name[currentLang]}}</span>
                           </mat-option>
@@ -891,7 +891,7 @@
                       </mat-form-field>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-12"
-                         *ngIf="itemType === 'premix' || itemType === 'rawMaterials'">
+                         *ngIf="itemType === 'PREMIX' || itemType === 'RAW_MATERIAL'">
                       <mat-form-field class="example-full-width inputBesideSelect">
                         <mat-label>{{'customRelease.formLabel.ingredient' | translate}}</mat-label>
                         <input type="text"
@@ -903,7 +903,7 @@
                                [matAutocomplete]="ingredientList" required>
                         <mat-autocomplete #ingredientList="matAutocomplete">
                           <mat-option *ngFor="let option of filteredOptionsForIngredientList | async"
-                                      [value]="option.name">
+                                      [value]="option.name[this.currentLang]">
                               <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                     placement="top">{{option.name[currentLang]}}</span>
                           </mat-option>
@@ -919,7 +919,7 @@
                       </mat-form-field>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-12"
-                         *ngIf="itemType === 'premix' || itemType === 'rawMaterials'">
+                         *ngIf="itemType === 'PREMIX' || itemType === 'RAW_MATERIAL'">
                       <mat-form-field class="example-full-width">
                         <mat-label>{{'customRelease.formLabel.concentrations' | translate}}</mat-label>
                         <input type="text" class="form-control"
@@ -937,7 +937,7 @@
                       </mat-form-field>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-12"
-                         *ngIf="itemType === 'premix' || itemType === 'rawMaterials'">
+                         *ngIf="itemType === 'PREMIX' || itemType === 'RAW_MATERIAL'">
                       <mat-form-field class="example-full-width inputBesideSelect">
                         <mat-label>
                           {{'customRelease.formLabel.function' | translate}}
@@ -951,7 +951,7 @@
                                [matAutocomplete]="functionList" required>
                         <mat-autocomplete #functionList="matAutocomplete">
                           <mat-option *ngFor="let option of filteredOptionsForFunctionList | async"
-                                      [value]="option.name">
+                                      [value]="option.name[this.currentLang]">
                               <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                     placement="top">{{option.name[currentLang]}}</span>
                           </mat-option>

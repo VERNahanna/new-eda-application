@@ -42,11 +42,11 @@ export class NotificationListComponent implements OnInit {
   }
 
   seeNotification(id) {
-    this.getService.setSeenNotificationByID(id).subscribe(res => {
-    }, error => this.handleError(error));
-
-
-    this.inputService.publish({type: 'notificationUnreadCount', payload: this.notificationListRequest.tableBody});
+    // this.getService.setSeenNotificationByID(id).subscribe(res => {
+    // }, error => this.handleError(error));
+    //
+    //
+    // this.inputService.publish({type: 'notificationUnreadCount', payload: this.notificationListRequest.tableBody});
   }
 
 }

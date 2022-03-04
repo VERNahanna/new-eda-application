@@ -10,6 +10,7 @@ import {TabsetComponent} from 'ngx-bootstrap/tabs';
 import {InputService} from '../services/input.service';
 import {BsModalRef, BsModalService, ModalOptions} from 'ngx-bootstrap/modal';
 import {TranslateService} from "@ngx-translate/core";
+import {CustomReleaseModel} from "../../utils/common-models";
 
 @Component({
   selector: 'app-custom-release',
@@ -138,6 +139,7 @@ export class CustomReleaseComponent implements OnInit {
   editItemRowStatus = false;
   customImportRelease: any = [];
   serviceId;
+  serviceTypeId;
   allItemTypeAttachmentFields = {
     PRODUCTS: [
       {
@@ -502,6 +504,12 @@ export class CustomReleaseComponent implements OnInit {
   };
   currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
   disableItemTypeField: boolean = false;
+  disableImportReasonField: boolean = false;
+
+  editInvoiceIndex;
+  editInvoiceRowStatus = false;
+
+  companyId;
 
   constructor(private fb: FormBuilder,
               private number: DecimalPipe,
@@ -513,6 +521,7 @@ export class CustomReleaseComponent implements OnInit {
               private getService: FormService) {
     this.route.params.subscribe(res => {
       this.serviceId = res.serviceId;
+      this.serviceTypeId = res.serviceTypeId;
     })
 
     this.getFormAsStarting('', '');
@@ -586,10 +595,11 @@ export class CustomReleaseComponent implements OnInit {
     });
 
     this.inputService.getInput$().pipe(
-      filter(x => x.type === 'CompanyId'),
+      filter(x => x.type === 'CompanyData'),
       distinctUntilChanged()
     ).subscribe(res => {
-      this.setApplicant(res.payload);
+      this.setApplicant(res.payload.CompanyName);
+      this.companyId = res.payload.companyId;
     });
 
     this.inputService.getInput$().pipe(
@@ -612,13 +622,11 @@ export class CustomReleaseComponent implements OnInit {
           }
         });
         this.formData.importReason = item.itemTypeList.map(element => {
-          return element.importReasons?.map(result => {
-            return {
-              code: result.code,
-              id: result.id,
-              name: result.name
-            }
-          })
+          return [{
+            code: element.importReasons.code,
+            id: element.importReasons.id,
+            name: element.importReasons.name
+          }]
         });
       });
 
@@ -638,6 +646,9 @@ export class CustomReleaseComponent implements OnInit {
     this.filteredOptionsForSupplierCountry = this.filterLookupsFunction('countries', this.regCustomReleaseForm.get('supplierCountry'), this.formData?.countries);
     this.filteredOptionsForMeasureUnitList = this.filterLookupsFunction('unitOfMeasure', this.regCustomReleaseForm.get('measureUnit'), this.formData?.unitOfMeasure);
     this.filteredOptionsForCurrency = this.filterLookupsFunction('currencies', this.regInvoicesForm.get('currency'), this.formData?.currencies);
+    this.filteredOptionsForManufacturingCompany = this.filterLookupsFunction('manufacturingCompany', this.regItemsForm.get('manufacturingCompany'), this.formData?.countries);
+    this.filteredOptionsForManufacturingCountry = this.filterLookupsFunction('manufacturingCountry', this.regItemsForm.get('manufacturingCountry'), this.formData?.countries);
+    this.filteredOptionsForUOM = this.filterLookupsFunction('uom', this.regItemsForm.get('uom'), this.formData?.unitOfMeasure);
   }
 
   nextToNextTab(whichTab) {
@@ -655,13 +666,19 @@ export class CustomReleaseComponent implements OnInit {
   async getTermType(event): Promise<any> {
     this.formData.itemTypeList.filter(item => item.id === event.value.id).map(res => {
       this.formData.importReasonList = this.formData.importReason[this.formData.itemTypeList.indexOf(res)]
+
+      if (this.formData.importReasonList.length === 1) {
+        this.importReason = this.formData.importReasonList[0];
+        this.disableImportReasonField = true;
+        this.getTheSelectedValueForImportedReason(this.itemType, {value: this.formData.importReasonList[0]});
+      }
     })
   }
 
-  setApplicant(companyProfileID) {
-    this.formData.applicantList.filter(option => option.ID === companyProfileID).map(x => this.regCustomReleaseForm.patchValue({
-      applicant: x.NAME
-    }));
+  setApplicant(companyProfileName) {
+    this.regCustomReleaseForm.patchValue({
+      applicant: companyProfileName
+    })
   }
 
   onFileSelect(event, fileControlName) {
@@ -789,7 +806,7 @@ export class CustomReleaseComponent implements OnInit {
         receiptNumber: this.fb.control('', Validators.required),
         groupNumber: this.fb.control('', Validators.required),
         receiptValue: this.fb.control('', Validators.required),
-        invoiceDetails: [],
+        invoiceDetails: this.fb.control([]),
         bolPolicy: this.fb.control(''),
         packingList: this.fb.control(''),
         receipt: this.fb.control(''),
@@ -809,7 +826,7 @@ export class CustomReleaseComponent implements OnInit {
         invoiceValue: this.fb.control('', Validators.required),
         invoiceDate: this.fb.control(null, Validators.required),
         currency: this.fb.control('', Validators.required),
-        itemDetails: [],
+        itemDetails: this.fb.control([]),
         invoice: this.fb.control(''),
       });
     }
@@ -856,39 +873,80 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   saveData() {
-    console.log('form', this.regInvoicesForm.value);
+    const data = this.adaptTheObjectToBE(this.regCustomReleaseForm.value, Number(this.serviceId), Number(this.serviceTypeId));
+
+    this.getService.createProductRequest(data).subscribe(res => {
+      console.log('res', res)
+    })
   }
 
   onSubmit() {
   }
 
-  onSubmitInvoices() {
-    this.hideInvoiceContainer();
+  async onSubmitInvoices(): Promise<any> {
+    const data = this.regInvoicesForm.value;
+    data.currency = await this.checkControllerValueWithListForFormArray(this.regInvoicesForm, this.formData?.currencies, 'currency', data.currency);
+
+    if (this.regInvoicesForm.valid && this.regInvoicesForm.value.itemDetails.length) {
+      if (!this.editInvoiceIndex && this.editInvoiceIndex !== 0) {
+        this.regCustomReleaseForm.value.invoiceDetails.push({...data});
+      } else {
+        this.regCustomReleaseForm.get('invoiceDetails').value[this.editInvoiceIndex] = {
+          ...this.regCustomReleaseForm.get('invoiceDetails').value[this.editInvoiceIndex],
+          ...data
+        };
+
+        this.editInvoiceRowStatus = false;
+        this.editInvoiceIndex = '';
+      }
+
+      this.invoiceListTable.tableBody = this.regCustomReleaseForm.get('invoiceDetails').value;
+
+      this.getInvoicesFormAsStarting('', '');
+      this.hideInvoiceContainer();
+    } else {
+      this.alertErrorNotificationStatus = true;
+      this.alertErrorNotification = {msg: 'please complete the required values which marked with *'};
+    }
   }
 
-  onSubmitItems() {
+  async onSubmitItems(): Promise<any> {
+    const data = {
+      ...this.regItemsForm.value,
+      itemType: this.itemType.name[this.currentLang],
+      importReason: this.importReason.name[this.currentLang],
+    };
+
+    data.manufacturingCompany = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.countries, 'manufacturingCompany', data.manufacturingCompany);
+    data.manufacturingCountry = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.countries, 'manufacturingCountry', data.manufacturingCountry);
+    data.uom = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.unitOfMeasure, 'uom', data.uom);
+    data.premixName = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.premixNameList, 'premixName', data.premixName);
+    data.ingredient = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.ingredient, 'ingredient', data.ingredient);
+    data.function = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.function, 'function', data.function);
+    data.rawMaterialName = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.rawMaterialList, 'rawMaterialName', data.rawMaterialName);
+    data.packingItemName = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.packingMaterialList, 'packingItemName', data.packingItemName);
+
+
     if (this.regItemsForm.valid) {
       if (!this.editItemIndex && this.editItemIndex !== 0) {
-        this.regInvoicesForm.value.itemDetails.push({...this.regItemsForm.value});
+        this.regInvoicesForm.value.itemDetails.push({...data});
       } else {
         this.regInvoicesForm.get('itemDetails').value[this.editItemIndex] = {
           ...this.regInvoicesForm.get('itemDetails').value[this.editItemIndex],
-          ...this.regInvoicesForm.value
+          ...data
         };
         this.editItemRowStatus = false;
         this.editItemIndex = '';
       }
 
-      this.itemListTable.tableBody.push(this.regItemsForm.value);
+      this.itemListTable.tableBody = this.regInvoicesForm.get('itemDetails').value;
 
       this.getItemsFormAsStarting('', '');
+      this.hideItemContainer();
     } else {
       this.alertErrorNotificationStatus = true;
       this.alertErrorNotification = {msg: 'please complete the required values which marked with *'};
     }
-
-
-    this.hideItemContainer();
   }
 
   onClosed() {
@@ -930,7 +988,6 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   getTheSelectedValueForImportedReason(itemType, event) {
-    console.log('event', event.value.code)
     this.isLoading = true;
 
     setTimeout(() => {
@@ -990,6 +1047,86 @@ export class CustomReleaseComponent implements OnInit {
     }
     return list.filter(option => option.name[this.currentLang].toLowerCase().includes(filterValue)).map(x => x);
   }
+
+  adaptTheObjectToBE(data, servicesId?: number, servicesTypeId?: number): any {
+    const myDate = new Date();
+
+    data.invoiceDetails = data.invoiceDetails?.map(option => {
+      option.currency = option.currency ? this.getIdFromLookupByName(this.formData.currencies, option.currency) : '';
+      option.invoiceValue = Number(option.invoiceValue)
+      option.itemDetails = option.itemDetails?.map(item => {
+        item.itemType = item.itemType ? this.getIdFromLookupByName(this.formData.itemTypeList, item.itemType) : '';
+        item.importReason = item.importReason ? this.getIdFromLookupByName(this.formData.importReasonList, item.importReason) : '';
+        item.manufacturingCompany = item.manufacturingCompany ? this.getIdFromLookupByName(this.formData.countries, item.manufacturingCompany) : '';
+        item.manufacturingCountry = item.manufacturingCountry ? this.getIdFromLookupByName(this.formData.countries, item.manufacturingCountry) : '';
+        item.uom = item.uom ? this.getIdFromLookupByName(this.formData.unitOfMeasure, item.uom) : '';
+        item.premixName = item.premixName ? this.getIdFromLookupByName(this.formData.premixNameList, item.premixName) : '';
+        item.ingredient = item.ingredient ? this.getIdFromLookupByName(this.formData.ingredient, item.ingredient) : '';
+        item.function = item.function ? this.getIdFromLookupByName(this.formData.function, item.function) : '';
+        item.rawMaterialName = item.rawMaterialName ? this.getIdFromLookupByName(this.formData.rawMaterialList, item.rawMaterialName) : '';
+        item.packingItemName = item.packingItemName ? this.getIdFromLookupByName(this.formData.packingMaterialList, item.packingItemName) : '';
+
+        item.quantity = Number(item.quantity);
+
+        return item;
+      })
+
+      return option;
+    });
+
+    return {
+      id: data.id ? data.id : 0,
+      estimatedValue: data.estimatedValue ? data.estimatedValue : 0,
+      bolNo: data.bol ? data.bol : '',
+      FWithinIncluded: data.withinIncluded,
+      requestedReleaseType: data.requestedReleaseType ? this.getIdFromLookupByName(this.formData.releaseType, data.requestedReleaseType) : '',
+      applicant: this.companyId,
+      LkupPortsId: data.customPortName ? this.getIdFromLookupByName(this.formData.ports, data.customPortName) : 0,
+      pod: data.pod ? data.pod : '',
+      supplierName: data.supplierName ? data.supplierName : '',
+      supplierCountry: data.supplierCountry ? this.getIdFromLookupByName(this.formData.countries, data.supplierCountry) : 0,
+      carrierName: data.carrierName ? data.carrierName : '',
+      grossWeight: data.grossWeight ? data.grossWeight : 0,
+      LkupUomId: data.measureUnit ? this.getIdFromLookupByName(this.formData.unitOfMeasure, data.measureUnit) : 0,
+      receiptNumber: data.receiptNumber ? data.receiptNumber : '',
+      groupNumber: data.groupNumber ? data.groupNumber : '',
+      receiptValue: data.receiptValue ? Number(data.receiptValue) : 0,
+      LkupServicesId: servicesId,
+      LkupServiceTypeId: servicesTypeId,
+      SyslkupServiceActionId: 100,
+      DueDate: myDate,
+      SubmissionDate: null,
+      FComplete: false,
+      LkupTrackTypeId: 0,
+      LkupReqTypeId: 0,
+      SyslkupWfStatesId: 0,
+      invoiceDetails: data.invoiceDetails && data.invoiceDetails.length ? data.invoiceDetails : [],
+    };
+  };
+
+  checkControllerValueWithListForFormArray(form: FormGroup, list, formControlKey, formControlValue) {
+    let value;
+    if (list.filter(option => option.name[this.currentLang] === formControlValue).length > 0) {
+      list.filter(option => option.name[this.currentLang] === formControlValue).map(x => {
+        value = x.name[this.currentLang];
+      });
+    } else {
+      form.get(formControlKey).patchValue('');
+      value = '';
+    }
+    return value;
+  }
+
+  getIdFromLookupByName(list, value) {
+    let id;
+    list.filter(option => option.name[this.currentLang] === value).map(res => {
+      id = res.id;
+    });
+
+    return id;
+  }
+
+
 }
 
 export interface AttachemntObject {

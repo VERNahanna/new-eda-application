@@ -25,11 +25,11 @@ export interface DepartmentBEModel {
     ar: string,
     en: string
   } | null,
-  section: DepartmentSectionsBEModel[]
+  sections: DepartmentServicesListBEModel[]
 }
 
-export interface DepartmentSectionsBEModel {
-  department: string | null,
+export interface DepartmentServicesListBEModel {
+  servicesList: DepartmentSectionsBEModel[],
   code: string,
   id: number,
   name: {
@@ -40,6 +40,18 @@ export interface DepartmentSectionsBEModel {
     ar: string,
     en: string
   } | null
+}
+
+export interface DepartmentSectionsBEModel {
+  serviceTypeDto: ServiceTypeDto | string | null,
+  code: string,
+  id: number,
+  name: {
+    ar: string,
+    en: string
+  },
+  itemtypes: ItemTypeDTO[],
+  description: { ar: string, en: string } | null
 }
 
 export interface DepartmentIntegratingModel {
@@ -56,7 +68,7 @@ export interface DepartmentIntegratingModel {
     ar: string,
     en: string
   } | null,
-  dropdownLinks: DepartmentSectionsBEModel[]
+  dropdownLinks: DepartmentServicesListBEModel[]
 }
 
 export interface DepartmentSectionsIntegratingModel {
@@ -92,14 +104,168 @@ export interface MenuObjectCommonKeysItem {
   newRequestLink: string,
   draftListLink: string,
   trackListLink: string,
-  dropdownLinks: {
-    IMPORTATION_COSMETICS: {
-      link: string,
-      icon: string
-    },
-    RELEASE_COSMETICS: {
-      link: string,
-      icon: string
-    }
-  }
+  dropdownLinks: any
+}
+
+export interface ServicesPerAdmin {
+  id: number,
+  serviceDto: ServicesDTO,
+  itemTypeList: ItemTypeDTO[]
+}
+
+export interface ItemTypeDTO {
+  importReasons: ServiceTypeDto[],
+  code: string,
+  id: number,
+  name: {
+    ar: string,
+    en: string
+  } | null,
+  description: {
+    ar: string,
+    en: string
+  } | null
+}
+
+export interface ServicesDTO {
+  serviceTypeDto: ServiceTypeDto,
+  code: string,
+  id: number,
+  name: {
+    ar: string,
+    en: string
+  },
+  description: {
+    ar: string,
+    en: string
+  } | null
+}
+
+export interface ServiceTypeDto {
+  code: string,
+  id: number,
+  name: {
+    ar: string,
+    en: string
+  } | null,
+  description: {
+    ar: string,
+    en: string
+  } | null
+}
+
+export interface ImportReasonDTO {
+  code: string,
+  id: number,
+  name: {
+    ar: string,
+    en: string
+  } | null,
+  description: {
+    ar: string,
+    en: string
+  } | null,
+  importReasons: ServiceTypeDto
+}
+
+export interface ServicesPerAdminAfterIntegrating {
+  code: string,
+  id: number,
+  name: {
+    ar: string,
+    en: string
+  },
+  description: {
+    ar: string,
+    en: string
+  } | null,
+  newRequestLink: string,
+  draftListLink: string,
+  trackListLink: string,
+  icon: string,
+  serviceTypeDto?: ServiceTypeDto | string | null,
+  itemTypeList?: ItemTypeDTO[] | null,
+}
+
+export interface CustomReleaseModel {
+  id: number
+  estimatedValue: number,
+  bolNo: string,
+  FWithinIncluded: boolean,
+  requestedReleaseType: string,
+  applicant: string | number,
+  LkupPortsId: number,
+  pod: string,
+  supplierName: string,
+  supplierCountry: string | number,
+  carrierName: string,
+  grossWeight: number,
+  LkupUomId: number,
+  receiptNumber: string,
+  groupNumber: string,
+  receiptValue: number,
+  LkupServicesId: number,
+  LkupServiceTypeId: number,
+  SyslkupServiceActionId: number,
+  DueDate: string | number,
+  SubmissionDate: string | number,
+  FComplete: boolean,
+  LkupTrackTypeId: number,
+  LkupReqTypeId: number,
+  SyslkupWfStatesId: number,
+  bolPolicy: number,
+  packingList: number,
+  receipt: number,
+  exportPledge: number,
+  importersRecord: number,
+  invoice: number,
+  invoiceDetails: CustomReleaseInvoiceModel[]
+}
+
+export interface CustomReleaseInvoiceModel {
+  id: number,
+  BolId: number,
+  invoiceNo: string,
+  FWithinIncluded: boolean,
+  invoiceValue: number,
+  invoiceDate: string,
+  LkupCurrencyId: number,
+  LkupCurrencyName: string,
+  currency: string | number,
+  itemDetails: CustomReleaseItemModel[]
+}
+
+export interface CustomReleaseItemModel {
+  id: number,
+  itemType: string | number,
+  importReason: string | number,
+  NotificationNo: string,
+  shortName: string,
+  ProductEnglishName: string,
+  flagTypeId: number,
+  ManufacturingCountryId: number,
+  ManufacturingCompanyId: number,
+  batchNo: string,
+  quantity: number,
+  uomId: number,
+  certificateOfOrigin: number,
+  companyManufactureRelationship: number,
+  legalizedHealthCertificate: number,
+  coa: number,
+  coc: number,
+  premixName: string,
+  sourceOfRawMaterial: string,
+  IngredientId: number,
+  ConcentrationId: number,
+  function: string | number,
+  materialSafetyDataSheet: number,
+  sourceOfRawMaterialAttach: number,
+  declarationOfChemicalTreatment: number,
+  compositionOfPremixColorsFromManufacturer: number,
+  approvalOfThePublicSecurityAuthority: number,
+  delegationForImportation: number,
+  supplyOrder: number,
+  rawMaterialName: string,
+  declarationOfFreeOfSalmonella: number,
+  packingItemName: string,
 }

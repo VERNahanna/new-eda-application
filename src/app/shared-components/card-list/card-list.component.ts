@@ -8,6 +8,7 @@ import {CardsList, ServicesPerAdminAfterIntegrating} from "../../../utils/common
 })
 export class CardListComponent implements OnInit, OnChanges {
   @Input() data: ServicesPerAdminAfterIntegrating[];
+  @Input() serviceTypeId: number;
 
   constructor() {
   }

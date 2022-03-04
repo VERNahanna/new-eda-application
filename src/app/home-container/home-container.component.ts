@@ -20,6 +20,7 @@ export class HomeContainerComponent implements OnInit {
     importReason: [],
     companyProfile: [],
     ingredient: [],
+    function: [],
     packagingType: [],
     rowMaterial: [],
     productManufacture: {},
@@ -40,17 +41,18 @@ export class HomeContainerComponent implements OnInit {
   currentLang;
 
   constructor(private inputService: InputService, private getService: FormService) {
-    interval(10000).subscribe(x => { // will execute every 30 seconds
-      this.getNotificationNumber();
-    });
+    // interval(10000).subscribe(x => { // will execute every 30 seconds
+    //   this.getNotificationNumber();
+    // });
   }
 
   async ngOnInit(): Promise<any> {
     this.inputService.getInput$().pipe(
-      filter(x => x.type === 'CompanyId'),
+      filter(x => x.type === 'CompanyData'),
       distinctUntilChanged()
     ).subscribe(res => {
-      this.companyProfileId = res.payload;
+      this.companyProfileId = res.payload.companyId;
+      this.username = res.payload.CompanyName;
     });
 
 
@@ -91,11 +93,11 @@ export class HomeContainerComponent implements OnInit {
         this.formData.rowMaterial = res;
       }
     }), error => this.handleError(error);
-    await this.getService.getAllProductManufacture().subscribe((res: any) => {
-      if (res) {
-        this.formData.productManufacture = res;
-      }
-    }), error => this.handleError(error);
+    // await this.getService.getAllProductManufacture().subscribe((res: any) => {
+    //   if (res) {
+    //     this.formData.productManufacture = res;
+    //   }
+    // }), error => this.handleError(error);
     await this.getService.getAllReleaseType().subscribe((res: any) => {
       if (res) {
         this.formData.releaseType = res;
@@ -104,6 +106,7 @@ export class HomeContainerComponent implements OnInit {
     await this.getService.getSharedCountries().subscribe((res: any) => {
       if (res) {
         this.formData.countries = res;
+        this.formData.productManufacture = res;
       }
     }), error => this.handleError(error);
     await this.getService.getSharedCurrencies().subscribe((res: any) => {
@@ -116,13 +119,7 @@ export class HomeContainerComponent implements OnInit {
         this.formData.unitOfMeasure = res;
       }
     }), error => this.handleError(error);
-    await this.getService.getCompanyProfileLookUp(1, this.companyProfileId, '').subscribe((res: any) => {
-      this.formData.applicantList = res;
 
-      this.formData.applicantList.filter(option => option.ID === this.companyProfileId).map(x => {
-        this.username = x.NAME;
-      });
-    }, error => this.handleError(error));
     await this.inputService.publish({type: 'allLookups', payload: this.formData});
 
     await this.inputService.getInput$().pipe(
@@ -156,11 +153,11 @@ export class HomeContainerComponent implements OnInit {
     }, 10000);
   }
 
-  getNotificationNumber() {
-    this.getService.getNotificationLogsList().subscribe((res: any) => {
-      this.unseenCount = res.filter(x => !x.f_seen).map(list => list).length;
-    }, error => this.handleError(error));
-  }
+  // getNotificationNumber() {
+  //   this.getService.getNotificationLogsList().subscribe((res: any) => {
+  //     this.unseenCount = res.filter(x => !x.f_seen).map(list => list).length;
+  //   }, error => this.handleError(error));
+  // }
 
   changeLang(event) {
     this.currentLang = event;

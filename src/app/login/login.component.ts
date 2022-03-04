@@ -37,23 +37,25 @@ export class LoginComponent implements OnInit {
       this.isLoading = true;
       this.getService.loginAPIToken(this.form.value).subscribe((res: any) => {
         if (res) {
-          if (res.Status === '1') {
-            this.isLoading = false;
-            this.alertNotificationStatus = true;
-            this.inputService.publish({type: 'Token', payload: res.Token});
-            this.inputService.publish({type: 'CompanyId', payload: res.Company_Profile_ID});
-            localStorage.setItem('privateData', res.Token);
-            this.router.navigateByUrl('/pages/home');
-          } else {
-            this.isLoading = false;
-            this.alertErrorNotificationStatus = true;
-          }
+          this.isLoading = false;
+          this.alertNotificationStatus = true;
+          this.inputService.publish({type: 'Token', payload: res.token});
+          this.inputService.publish({
+            type: 'CompanyData', payload: {
+              companyId: res.company_Profile_ID,
+              CompanyName: res.companyName,
+              CompanyRoleID: res.companyRoleID,
+            }
+          });
+          localStorage.setItem('privateData', res.Token);
+          this.router.navigateByUrl('/pages/home');
         }
       }, error => this.handleError(error));
     }
   }
 
   handleError(message) {
+    debugger;
     this.isLoading = false;
     this.alertErrorNotificationStatus = true;
     this.alertErrorNotification = {msg: message};

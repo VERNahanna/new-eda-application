@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 })
 export class CardComponent implements OnInit, OnChanges {
   @Input() itemData: ServicesPerAdminAfterIntegrating;
+  @Input() serviceTypeId: number;
   currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
   showCardDetails: boolean;
 
@@ -40,7 +41,7 @@ export class CardComponent implements OnInit, OnChanges {
     this.showCardDetails = false;
   }
 
-  goToLink(link: string, serviceId?: number) {
-    this.router.navigateByUrl(serviceId ? `${link}/${serviceId}` : link)
+  goToLink(link: string, serviceId?: number, serviceTypeId?: number) {
+    this.router.navigateByUrl(serviceId ? `${link}/${serviceId}/${serviceTypeId}` : link)
   }
 }

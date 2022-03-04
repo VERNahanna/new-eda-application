@@ -62,23 +62,23 @@ export class DashboardComponent implements OnInit {
       this.currentLang = res.payload;
     });
 
-    this.getService.getDashboardData().subscribe((res: any) => {
-      this.numberOFAllRequestObject.map(item => {
-        item.numberOfRequest = res[item.id].data.reduce((a, b) => a + b.value, 0) >= 0 ? res[item.id].data.reduce((a, b) => a + b.value, 0) : 0;
-        res[item.id].pieData.map((element, i) => {
-          element.color = this.colorList[i];
-        });
-      });
-
-      this.dataObject = res;
-
-      this.numberOFAllRequestObject.map((x, i) => {
-        this.counter(this.numberCount, 0, x.numberOfRequest, 5000, i);
-      });
-
-      this.isLoading = false;
-      this.selectCharts('track', 0);
-    }, error => this.handleError(error));
+    // this.getService.getDashboardData().subscribe((res: any) => {
+    //   this.numberOFAllRequestObject.map(item => {
+    //     item.numberOfRequest = res[item.id].data.reduce((a, b) => a + b.value, 0) >= 0 ? res[item.id].data.reduce((a, b) => a + b.value, 0) : 0;
+    //     res[item.id].pieData.map((element, i) => {
+    //       element.color = this.colorList[i];
+    //     });
+    //   });
+    //
+    //   this.dataObject = res;
+    //
+    //   this.numberOFAllRequestObject.map((x, i) => {
+    //     this.counter(this.numberCount, 0, x.numberOfRequest, 5000, i);
+    //   });
+    //
+    //   this.isLoading = false;
+    //   this.selectCharts('track', 0);
+    // }, error => this.handleError(error));
   }
 
   counter(id, start, end, duration, index) {

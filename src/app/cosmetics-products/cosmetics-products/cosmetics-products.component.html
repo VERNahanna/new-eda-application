@@ -12,9 +12,11 @@
   </div>
   <div class="col-12 mt-5">
     <app-card-list [data]="cosmeticsProductsServices"
+                   [serviceTypeId]="departSecId"
                    *ngIf="routingPath === 'importation-services'"></app-card-list>
 
     <app-card-list [data]="cosmeticsProductsServices"
+                   [serviceTypeId]="departSecId"
                    *ngIf="routingPath === 'release-services'"></app-card-list>
   </div>
 </div>

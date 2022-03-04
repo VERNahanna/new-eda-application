@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {FormService} from '../services/form.service';
 import {FormBuilder} from '@angular/forms';
@@ -13,7 +13,7 @@ import {menuObjectKeys} from "../../utils/common-data";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnChanges {
 
   @Input() Username;
   @Input() notificationCount;
@@ -38,6 +38,9 @@ export class HeaderComponent implements OnInit {
     translateService.setDefaultLang('en');
 
     this.onResize();
+  }
+
+  ngOnChanges(): void {
   }
 
   ngOnInit(): void {
