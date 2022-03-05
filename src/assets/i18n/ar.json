@@ -107,6 +107,7 @@
       "productNotificationNumber": "رقم تسجيل المنتج",
       "packingItemName": "اسلوب تغليف الصنف",
       "rawMaterialName": "اسم المادة الخام",
+      "sourceOfRowMaterialField": "مصدر المادة الخام",
       "premixName": "اسم المادة سابقة الخلط والتجهيز",
       "importReason": "الغرض من الاستيراد",
       "itemType": "نوع الصنف الوارد",
@@ -144,6 +145,10 @@
     "requestType": "نوع الطلب",
     "requestStatus": "حالة الطلب",
     "submissionDate": "تاريخ الانشاء",
+    "createdDate": "تاريخ الانشاء",
+    "supplierCountry": "بلد المورد",
+    "supplierName": "اسم المورد",
+    "BolNo": "رقم البوليصة",
     "action": "اجراءات"
   }
 }

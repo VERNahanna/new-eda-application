@@ -627,7 +627,9 @@ export class CustomReleaseComponent implements OnInit {
           return [{
             code: element.importReasons.code,
             id: element.importReasons.id,
-            name: element.importReasons.name
+            name: element.importReasons.name,
+            fApprovalRequired: element.importReasons.fApprovalRequired,
+            fNotification: element.importReasons.fNotification,
           }]
         });
       });
@@ -1000,7 +1002,7 @@ export class CustomReleaseComponent implements OnInit {
 
   getTheSelectedValueForImportedReason(itemType, event) {
     this.isLoading = true;
-
+    this.showNotificationNoStatus = event.value.fNotification;
     setTimeout(() => {
       this.getItemsFormAsStarting('', '');
       this.renderingTheItemAttachment(itemType, event.value);

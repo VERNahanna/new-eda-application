@@ -151,7 +151,9 @@ export interface ServiceTypeDto {
   description: {
     ar: string,
     en: string
-  } | null
+  } | null,
+  fApprovalRequired?: boolean | null
+  fNotification?: boolean | null
 }
 
 export interface ImportReasonDTO {
