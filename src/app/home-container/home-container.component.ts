@@ -31,6 +31,7 @@ export class HomeContainerComponent implements OnInit {
     applicantList: [],
     itemTypeList: [],
     importReasonList: [],
+    rawMaterialList: [],
   };
   alertErrorNotificationStatus: boolean = false;
   alertErrorNotification: any;
@@ -81,6 +82,7 @@ export class HomeContainerComponent implements OnInit {
     await this.getService.getAllIngredient().subscribe((res: any) => {
       if (res) {
         this.formData.ingredient = res;
+        this.formData.rawMaterialList = res;
       }
     }), error => this.handleError(error);
     await this.getService.getAllPackagingList().subscribe((res: any) => {

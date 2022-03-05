@@ -1,5 +1,5 @@
 import {Component, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FormService} from '../services/form.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DecimalPipe} from '@angular/common';
@@ -40,6 +40,7 @@ export class CustomReleaseComponent implements OnInit {
   regCustomReleaseForm: FormGroup;
   regInvoicesForm: FormGroup;
   regItemsForm: FormGroup;
+  filteredOptionsForRawMaterialType: Observable<any[]>;
   filteredOptionsForRequestedReleaseType: Observable<LookupState[]>;
   filteredOptionsForCustomPortName: Observable<LookupState[]>;
   filteredOptionsForSupplierCountry: Observable<LookupState[]>;
@@ -131,7 +132,8 @@ export class CustomReleaseComponent implements OnInit {
   itemType;
   importReason;
   premixField;
-  rowMaterialNameField;
+  rowMaterialNameField = new FormControl();
+  sourceOfRowMaterialField;
   packingItemNameField;
   showNotificationNoStatus: boolean = false;
   notificationNo;
@@ -546,7 +548,7 @@ export class CustomReleaseComponent implements OnInit {
             name: 'Premix Batches'
           }
         ],
-        rawMaterialList: [
+        sourceOfRawMaterialList: [
           {
             id: 'animal',
             name: 'Animal'
@@ -641,6 +643,7 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   setAllLookupsInObservable() {
+    this.filteredOptionsForRawMaterialType = this.filterLookupsFunction('rowMaterialNameField', this.rowMaterialNameField, this.formData?.rawMaterialList);
     this.filteredOptionsForRequestedReleaseType = this.filterLookupsFunction('releaseType', this.regCustomReleaseForm.get('requestedReleaseType'), this.formData?.releaseType);
     this.filteredOptionsForCustomPortName = this.filterLookupsFunction('ports', this.regCustomReleaseForm.get('customPortName'), this.formData?.ports);
     this.filteredOptionsForSupplierCountry = this.filterLookupsFunction('countries', this.regCustomReleaseForm.get('supplierCountry'), this.formData?.countries);
@@ -648,6 +651,8 @@ export class CustomReleaseComponent implements OnInit {
     this.filteredOptionsForCurrency = this.filterLookupsFunction('currencies', this.regInvoicesForm.get('currency'), this.formData?.currencies);
     this.filteredOptionsForManufacturingCompany = this.filterLookupsFunction('manufacturingCompany', this.regItemsForm.get('manufacturingCompany'), this.formData?.countries);
     this.filteredOptionsForManufacturingCountry = this.filterLookupsFunction('manufacturingCountry', this.regItemsForm.get('manufacturingCountry'), this.formData?.countries);
+    this.filteredOptionsForIngredientList = this.filterLookupsFunction('ingredient', this.regItemsForm.get('ingredient'), this.formData?.ingredient);
+    this.filteredOptionsForFunctionList = this.filterLookupsFunction('function', this.regItemsForm.get('function'), this.formData?.function);
     this.filteredOptionsForUOM = this.filterLookupsFunction('uom', this.regItemsForm.get('uom'), this.formData?.unitOfMeasure);
   }
 
@@ -665,7 +670,9 @@ export class CustomReleaseComponent implements OnInit {
 
   async getTermType(event): Promise<any> {
     this.formData.itemTypeList.filter(item => item.id === event.value.id).map(res => {
+      debugger;
       this.formData.importReasonList = this.formData.importReason[this.formData.itemTypeList.indexOf(res)]
+      this.importReason = '';
 
       if (this.formData.importReasonList.length === 1) {
         this.importReason = this.formData.importReasonList[0];
@@ -673,6 +680,8 @@ export class CustomReleaseComponent implements OnInit {
         this.getTheSelectedValueForImportedReason(this.itemType, {value: this.formData.importReasonList[0]});
       }
     })
+
+    this.getItemsFormAsStarting('', '');
   }
 
   setApplicant(companyProfileName) {
@@ -806,7 +815,7 @@ export class CustomReleaseComponent implements OnInit {
         receiptNumber: this.fb.control('', Validators.required),
         groupNumber: this.fb.control('', Validators.required),
         receiptValue: this.fb.control('', Validators.required),
-        invoiceDetails: this.fb.control([]),
+        Invoices: this.fb.control([]),
         bolPolicy: this.fb.control(''),
         packingList: this.fb.control(''),
         receipt: this.fb.control(''),
@@ -837,7 +846,7 @@ export class CustomReleaseComponent implements OnInit {
     } else {
       this.regItemsForm = this.fb.group({
         id: 0,
-        itemType: this.fb.control(''),
+        ItemTypeId: this.fb.control(''),
         importReason: this.fb.control(''),
         NotificationNo: this.fb.control(''),
         shortName: this.fb.control(''),
@@ -866,6 +875,7 @@ export class CustomReleaseComponent implements OnInit {
         delegationForImportation: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason === 'RAW_MAT_FOR_LOCAL') ? this.fb.control('') : this.fb.control(''),
         supplyOrder: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason === 'RAW_MAT_FOR_LOCAL') ? this.fb.control('') : this.fb.control(''),
         rawMaterialName: this.itemType === 'RAW_MATERIAL' ? this.fb.control('') : this.fb.control(''),
+        sourceOfRawMaterialName: this.itemType === 'RAW_MATERIAL' ? this.fb.control('') : this.fb.control(''),
         declarationOfFreeOfSalmonella: this.itemType === 'RAW_MATERIAL' && this.importReason !== 'RAW_MAT_RD' ? this.fb.control('') : this.fb.control(''),
         packingItemName: this.itemType === 'PACKING_MATERIALS' ? this.fb.control('') : this.fb.control(''),
       });
@@ -889,10 +899,10 @@ export class CustomReleaseComponent implements OnInit {
 
     if (this.regInvoicesForm.valid && this.regInvoicesForm.value.itemDetails.length) {
       if (!this.editInvoiceIndex && this.editInvoiceIndex !== 0) {
-        this.regCustomReleaseForm.value.invoiceDetails.push({...data});
+        this.regCustomReleaseForm.value.Invoices.push({...data});
       } else {
-        this.regCustomReleaseForm.get('invoiceDetails').value[this.editInvoiceIndex] = {
-          ...this.regCustomReleaseForm.get('invoiceDetails').value[this.editInvoiceIndex],
+        this.regCustomReleaseForm.get('Invoices').value[this.editInvoiceIndex] = {
+          ...this.regCustomReleaseForm.get('Invoices').value[this.editInvoiceIndex],
           ...data
         };
 
@@ -900,7 +910,7 @@ export class CustomReleaseComponent implements OnInit {
         this.editInvoiceIndex = '';
       }
 
-      this.invoiceListTable.tableBody = this.regCustomReleaseForm.get('invoiceDetails').value;
+      this.invoiceListTable.tableBody = this.regCustomReleaseForm.get('Invoices').value;
 
       this.getInvoicesFormAsStarting('', '');
       this.hideInvoiceContainer();
@@ -913,7 +923,7 @@ export class CustomReleaseComponent implements OnInit {
   async onSubmitItems(): Promise<any> {
     const data = {
       ...this.regItemsForm.value,
-      itemType: this.itemType.name[this.currentLang],
+      ItemTypeId: this.itemType.name[this.currentLang],
       importReason: this.importReason.name[this.currentLang],
     };
 
@@ -924,6 +934,7 @@ export class CustomReleaseComponent implements OnInit {
     data.ingredient = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.ingredient, 'ingredient', data.ingredient);
     data.function = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.function, 'function', data.function);
     data.rawMaterialName = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.rawMaterialList, 'rawMaterialName', data.rawMaterialName);
+    data.sourceOfRawMaterialName = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.sourceOfRawMaterialList, 'sourceOfRawMaterialName', data.sourceOfRawMaterialName);
     data.packingItemName = await this.checkControllerValueWithListForFormArray(this.regItemsForm, this.formData?.packingMaterialList, 'packingItemName', data.packingItemName);
 
 
@@ -1020,13 +1031,22 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   filterLookupsFunction(whichLookup, formControlValue, list, index?: any) {
+    debugger;
     if (whichLookup === 'ingrediant') {
       if (formControlValue) {
         return formControlValue.valueChanges
           .pipe(
             startWith(''),
             debounceTime(30),
-            map(state => state ? this.filterInsideList(whichLookup, state, list, index).slice(0, 3000) : list.slice(0, 3000))
+            map(state => state ? this.filterInsideListForDiffModel(whichLookup, state, list, index).slice(0, 3000) : list.slice(0, 3000))
+          );
+      }
+    } else if (whichLookup === 'rowMaterialNameField') {
+      if (formControlValue) {
+        return formControlValue.valueChanges
+          .pipe(
+            startWith(''),
+            map(state => state ? this.filterInsideListForDiffModel(whichLookup, state, list, index).slice(0, 3000) : list.slice(0, 3000))
           );
       }
     } else {
@@ -1048,14 +1068,23 @@ export class CustomReleaseComponent implements OnInit {
     return list.filter(option => option.name[this.currentLang].toLowerCase().includes(filterValue)).map(x => x);
   }
 
+  filterInsideListForDiffModel(lookup, value, list, index?: any): any[] {
+    debugger;
+    let filterValue;
+    if (value) {
+      filterValue = value.toLowerCase() ? value.toLowerCase() : '';
+    }
+    return list.filter(option => option.inciName.toLowerCase().includes(filterValue)).map(x => x);
+  }
+
   adaptTheObjectToBE(data, servicesId?: number, servicesTypeId?: number): any {
     const myDate = new Date();
 
-    data.invoiceDetails = data.invoiceDetails?.map(option => {
+    data.Invoices = data.Invoices?.map(option => {
       option.currency = option.currency ? this.getIdFromLookupByName(this.formData.currencies, option.currency) : '';
       option.invoiceValue = Number(option.invoiceValue)
       option.itemDetails = option.itemDetails?.map(item => {
-        item.itemType = item.itemType ? this.getIdFromLookupByName(this.formData.itemTypeList, item.itemType) : '';
+        item.ItemTypeId = item.ItemTypeId ? this.getIdFromLookupByName(this.formData.itemTypeList, item.ItemTypeId) : '';
         item.importReason = item.importReason ? this.getIdFromLookupByName(this.formData.importReasonList, item.importReason) : '';
         item.manufacturingCompany = item.manufacturingCompany ? this.getIdFromLookupByName(this.formData.countries, item.manufacturingCompany) : '';
         item.manufacturingCountry = item.manufacturingCountry ? this.getIdFromLookupByName(this.formData.countries, item.manufacturingCountry) : '';
@@ -1100,19 +1129,21 @@ export class CustomReleaseComponent implements OnInit {
       LkupTrackTypeId: 0,
       LkupReqTypeId: 0,
       SyslkupWfStatesId: 0,
-      invoiceDetails: data.invoiceDetails && data.invoiceDetails.length ? data.invoiceDetails : [],
+      Invoices: data.Invoices && data.Invoices.length ? data.Invoices : [],
     };
   };
 
   checkControllerValueWithListForFormArray(form: FormGroup, list, formControlKey, formControlValue) {
     let value;
-    if (list.filter(option => option.name[this.currentLang] === formControlValue).length > 0) {
-      list.filter(option => option.name[this.currentLang] === formControlValue).map(x => {
-        value = x.name[this.currentLang];
-      });
-    } else {
-      form.get(formControlKey).patchValue('');
-      value = '';
+    if (formControlValue) {
+      if (list.filter(option => option.name[this.currentLang] === formControlValue).length > 0) {
+        list.filter(option => option.name[this.currentLang] === formControlValue).map(x => {
+          value = x.name[this.currentLang];
+        });
+      } else {
+        form.get(formControlKey).patchValue('');
+        value = '';
+      }
     }
     return value;
   }
@@ -1125,8 +1156,6 @@ export class CustomReleaseComponent implements OnInit {
 
     return id;
   }
-
-
 }
 
 export interface AttachemntObject {

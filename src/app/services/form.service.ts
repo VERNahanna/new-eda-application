@@ -484,7 +484,7 @@ export class FormService {
     });
     const options = {headers};
 
-    return this.http.get(`${this.secondApiURL}Requests/GetDraftRequestsCount/${companyRoleId}`, options)
+    return this.http.get(`${this.secondApiURL}RequestRelease/GetDraftRequestReleasForView/${companyRoleId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),

@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {FormService} from '../../services/form.service';
+import {distinctUntilChanged, filter} from "rxjs/operators";
+import {ActivatedRoute} from "@angular/router";
+import {InputService} from "../../services/input.service";
 
 @Component({
   selector: 'app-filters',
@@ -17,7 +20,8 @@ export class FiltersComponent implements OnInit, OnChanges {
   keysForTrackTypeList;
   @Output() selectedFilteredData = new EventEmitter();
 
-  constructor(private getService: FormService) {
+  constructor(private getService: FormService,
+              private inputService: InputService,) {
   }
 
   ngOnChanges() {
@@ -27,9 +31,6 @@ export class FiltersComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    // this.getService.getTrackTypeLookUp().subscribe((res: any) => {
-    //   this.keysForTrackTypeList = res;
-    // });
   }
 
   setTheFilteredData() {

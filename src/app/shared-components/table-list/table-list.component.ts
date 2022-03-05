@@ -37,30 +37,11 @@ export class TableListComponent implements OnInit, OnChanges {
   keyForFilter;
   keyWordsForFilter;
   staticFilterKey = {
-    'Request Number': 'ID',
-    'Submission date': 'SubmmittionDate',
-    'Saved date': 'SubmmittionDate',
-    'Notification date': 'notificationdate',
-    'Notification time': 'notification_time',
-    'Request Type Name': 'requestTypeName',
-    'Notification id': 'notification_no',
-    'Expired date': 'expirationDate',
-    'Notification comment': 'comments',
-    'Product Name': 'productName',
-    'Product English name': 'NameEN',
-    'Legacy Product English name': 'productEnglishName',
-    'Product Arabic name': 'NameAR',
-    'Legacy Product Arabic name': 'productArabicName',
-    'Status': 'Status',
-    'Track Type': 'Track_type',
-    'Notification': 'NotificationNo',
-    'Notification Number': 'NotificationNo',
-    'Old Notification': 'oldNotificationNo',
-    'Old Notification Number': 'oldNotificationNo',
-    'Batch Number': 'batchNumber',
-    'Production Date': 'productionDate',
-    'Expiration Date': 'expirationDate',
-    'Type Of Notification': 'productTypeName',
+    'BolNo': 'bolNo',
+    'supplierName': 'companyName',
+    'supplierCountry': 'countryName',
+    'requestType': 'releaseType',
+    'createdDate': 'createdDate',
   };
   sortStatus = false;
   alertNotificationStatus: boolean = false;
@@ -105,17 +86,9 @@ export class TableListComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.data) {
-      if (this.data.tableBody.length > 0) {
-        if (this.whichTable !== 'newRequestForDetails' && this.whichTable !== 'newRequestForPackaging' && this.whichTable !== 'productsKitList' && this.whichTable !== 'newIngrediantTable' && this.whichTable !== 'newProductForInvoice') {
-          if (this.whichTable !== 'manufacturing' && this.whichTable !== 'batchTable' && this.whichTable !== 'notificationList') {
-            this.data.tableBody.sort((a, b) => a.notificationdate ? (a.notificationdate > b.notificationdate) ? -1 : 1 : (a.SubmmittionDate > b.SubmmittionDate) ? -1 : 1);
-            // this.data.tableBody.sort((a, b) => (a.requestID > b.requestID) ? -1 : 1);
-            this.data.tableBody.map(x => {
-              x.ID = x.ID ? x.ID.toString() : null;
-              x.NotificationNo = x.NotificationNo ? x.NotificationNo.toString() : '';
-              x.oldNotificationNo = x.oldNotificationNo ? x.oldNotificationNo.toString() : '';
-            });
-          }
+      if (this.data.tableBody && this.data.tableBody?.length > 0) {
+        if (this.whichTable === 'drafted' || this.whichTable === 'notificationList') {
+          this.data.tableBody.sort((a, b) => a.createdDate && b.createdDate ? (a.createdDate > b.createdDate) ? -1 : 1 : -1);
 
           if (this.whichTable === 'notificationList') {
             this.data.tableBody.sort((a, b) => (a.notification_time > b.notification_time) ? -1 : 1);
@@ -126,11 +99,7 @@ export class TableListComponent implements OnInit, OnChanges {
               x.oldNotificationNo = x.oldNotificationNo ? x.oldNotificationNo.toString() : '';
             });
           }
-          if (this.whichTable === 'batchTable') {
-            this.data.tableBody.map(x => {
-              x.productID = x.productID.toString();
-            });
-          }
+
           const tableColumnID = Object.keys(this.data.tableBody[0]).map((x, i) => x);
           this.filterData.filterKey = [];
 
@@ -169,11 +138,20 @@ export class TableListComponent implements OnInit, OnChanges {
     this.contentArray = [];
     this.returnedArray = [];
 
+    console.log('12', this.staticFilterKey[columnName]);
     this.sortStatus = !status;
     if (!this.sortStatus) {
-      this.data.tableBody = this.data.tableBody.sort((a, b) => (a[this.staticFilterKey[columnName]].toLowerCase() > b[this.staticFilterKey[columnName]].toLowerCase()) ? 1 : -1);
+      if (this.staticFilterKey[columnName] === 'createdDate') {
+        this.data.tableBody = this.data.tableBody.sort((a, b) => a.createdDate && b.createdDate ? (a.createdDate > b.createdDate) ? -1 : 1 : -1);
+      } else {
+        this.data.tableBody = this.data.tableBody.sort((a, b) => (a[this.staticFilterKey[columnName]].toLowerCase() > b[this.staticFilterKey[columnName]].toLowerCase()) ? 1 : -1);
+      }
     } else if (this.sortStatus) {
-      this.data.tableBody = this.data.tableBody.sort((a, b) => (a[this.staticFilterKey[columnName]].toLowerCase() < b[this.staticFilterKey[columnName]].toLowerCase()) ? 1 : -1);
+      if (this.staticFilterKey[columnName] === 'createdDate') {
+        this.data.tableBody = this.data.tableBody.sort((a, b) => a.createdDate && b.createdDate ? (a.createdDate < b.createdDate) ? 1 : -1 : -1);
+      } else {
+        this.data.tableBody = this.data.tableBody.sort((a, b) => (a[this.staticFilterKey[columnName]].toLowerCase() < b[this.staticFilterKey[columnName]].toLowerCase()) ? 1 : -1);
+      }
     }
 
     this.contentArray = new Array(this.data.tableBody.length).fill('');
@@ -257,7 +235,7 @@ export class TableListComponent implements OnInit, OnChanges {
     if (event.keyForFilter.id) {
       if (event.filterRow.length > 0) {
         if (event.keyWordsForFilter) {
-          if (event.keyForFilter.id === 'SubmmittionDate' || event.keyForFilter.id === 'productionDate' || event.keyForFilter.id === 'expirationDate') {
+          if (event.keyForFilter.id === 'createdDate') {
             this.dataAfterFilters.map(x => x[event.keyForFilter.id] = new Date(x[event.keyForFilter.id]).toDateString());
             if (this.dataAfterFilters.filter(x => x[event.keyForFilter.id] === event.keyWordsForFilter.toDateString()).length > 0) {
               this.dataAfterFilters = this.dataAfterFilters.filter(x => x[event.keyForFilter.id] === event.keyWordsForFilter.toDateString());
@@ -274,7 +252,7 @@ export class TableListComponent implements OnInit, OnChanges {
         } else {
           event.filterRow.map((x, i) => {
             if (i === 0) {
-              if (this.staticFilterKey[x.columnName] === 'SubmmittionDate' || this.staticFilterKey[x.columnName] === 'productionDate' || this.staticFilterKey[x.columnName] === 'expirationDate') {
+              if (event.keyForFilter.id === 'createdDate') {
                 this.data.tableBody.map(y => y[this.staticFilterKey[x.columnName]] = new Date(y[this.staticFilterKey[x.columnName]]).toDateString());
                 if (this.data.tableBody.filter(y => y[this.staticFilterKey[x.columnName]] === x.keyword.toDateString()).length > 0) {
                   this.dataAfterFilters = this.data.tableBody.filter(y => y[this.staticFilterKey[x.columnName]] === x.keyword.toDateString());
@@ -289,7 +267,7 @@ export class TableListComponent implements OnInit, OnChanges {
                 }
               }
             } else {
-              if (this.staticFilterKey[x.columnName] === 'SubmmittionDate' || this.staticFilterKey[x.columnName] === 'productionDate' || this.staticFilterKey[x.columnName] === 'expirationDate') {
+              if (event.keyForFilter.id === 'createdDate') {
                 this.dataAfterFilters.map(y => y[this.staticFilterKey[x.columnName]] = new Date(y[this.staticFilterKey[x.columnName]]).toDateString());
                 if (this.dataAfterFilters.filter(y => y[this.staticFilterKey[x.columnName]] === x.keyword.toDateString()).length > 0) {
                   this.dataAfterFilters = this.dataAfterFilters.filter(y => y[this.staticFilterKey[x.columnName]] === x.keyword.toDateString());
@@ -308,7 +286,7 @@ export class TableListComponent implements OnInit, OnChanges {
         }
       } else {
         if (event.keyWordsForFilter) {
-          if (event.keyForFilter.id === 'SubmmittionDate' || event.keyForFilter.id === 'productionDate' || event.keyForFilter.id === 'expirationDate') {
+          if (event.keyForFilter.id === 'createdDate') {
             this.data.tableBody.map(x => x[event.keyForFilter.id] = new Date(x[event.keyForFilter.id]).toDateString());
             if (this.data.tableBody.filter(x => x[event.keyForFilter.id] === event.keyWordsForFilter.toDateString()).length > 0) {
               this.dataAfterFilters = this.data.tableBody.filter(x => x[event.keyForFilter.id] === event.keyWordsForFilter.toDateString());

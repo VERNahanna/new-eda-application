@@ -664,7 +664,8 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'PREMIX'">
+
+        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType?.code === 'PREMIX'">
           <mat-form-field appearance="fill">
             <mat-label>
               {{'customRelease.formLabel.premixName' | translate}}
@@ -676,19 +677,38 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'RAW_MATERIAL'">
+        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType?.code === 'RAW_MATERIAL'">
+          <mat-form-field class="example-full-width inputBesideSelect">
+            <mat-label>{{'customRelease.formLabel.rawMaterialName' | translate}}</mat-label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="{{'customRelease.formLabel.rawMaterialName' | translate}}"
+                   aria-label="{{'customRelease.formLabel.rawMaterialName' | translate}}"
+                   matInput
+                   [formControl]="rowMaterialNameField"
+                   [matAutocomplete]="rowMaterialNameList" required>
+            <mat-autocomplete #rowMaterialNameList="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptionsForRawMaterialType | async"
+                          [value]="option.inciName">
+                              <span class="tooltipContainer" tooltip="{{option.inciName}}"
+                                    placement="top">{{option.inciName}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType?.code === 'RAW_MATERIAL'">
           <mat-form-field appearance="fill">
             <mat-label>
-              {{'customRelease.formLabel.rawMaterialName' | translate}}
+              {{'customRelease.formLabel.sourceOfRowMaterialField' | translate}}
             </mat-label>
-            <mat-select [(ngModel)]="rowMaterialNameField" required>
-              <mat-option *ngFor="let option of formData.rawMaterialList" [value]="option.id">
+            <mat-select [(ngModel)]="sourceOfRowMaterialField" required>
+              <mat-option *ngFor="let option of formData.sourceOfRawMaterialList" [value]="option.id">
                 {{option.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'PACKING_MATERIALS'">
+        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType?.code === 'PACKING_MATERIALS'">
           <mat-form-field appearance="fill">
             <mat-label>
               {{'customRelease.formLabel.packingItemName' | translate}}
@@ -754,7 +774,7 @@
                         </div>
                       </mat-form-field>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType === 'PREMIX'">
+                    <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType?.code === 'PREMIX'">
                       <mat-form-field class="example-full-width">
                         <mat-label>{{'customRelease.formLabel.sourceOfRawMaterial' | translate}}</mat-label>
                         <input type="text" class="form-control" matInput formControlName="sourceOfRawMaterial"
@@ -885,82 +905,6 @@
                           class="alert alert-danger">
                           <div
                             *ngIf="regItemsForm.get('uom').errors.required">
-                            {{'common.validationStatement.required' | translate}}
-                          </div>
-                        </div>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-12"
-                         *ngIf="itemType === 'PREMIX' || itemType === 'RAW_MATERIAL'">
-                      <mat-form-field class="example-full-width inputBesideSelect">
-                        <mat-label>{{'customRelease.formLabel.ingredient' | translate}}</mat-label>
-                        <input type="text"
-                               class="form-control"
-                               placeholder="{{'customRelease.formLabel.ingredient' | translate}}"
-                               aria-label="{{'customRelease.formLabel.ingredient' | translate}}"
-                               matInput
-                               formControlName="ingredient"
-                               [matAutocomplete]="ingredientList" required>
-                        <mat-autocomplete #ingredientList="matAutocomplete">
-                          <mat-option *ngFor="let option of filteredOptionsForIngredientList | async"
-                                      [value]="option.name[this.currentLang]">
-                              <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
-                                    placement="top">{{option.name[currentLang]}}</span>
-                          </mat-option>
-                        </mat-autocomplete>
-                        <div
-                          *ngIf="regItemsForm.get('ingredient').invalid && (regItemsForm.get('ingredient').dirty || regItemsForm.get('ingredient').touched)"
-                          class="alert alert-danger">
-                          <div
-                            *ngIf="regItemsForm.get('ingredient').errors.required">
-                            {{'common.validationStatement.required' | translate}}
-                          </div>
-                        </div>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-12"
-                         *ngIf="itemType === 'PREMIX' || itemType === 'RAW_MATERIAL'">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>{{'customRelease.formLabel.concentrations' | translate}}</mat-label>
-                        <input type="text" class="form-control"
-                               matInput formControlName="concentration"
-                               placeholder="{{'customRelease.formLabel.concentrations' | translate}}"
-                               required>
-                        <div
-                          *ngIf="regItemsForm.get('concentration').invalid && (regItemsForm.get('concentration').dirty || regItemsForm.get('concentration').touched)"
-                          class="alert alert-danger">
-                          <div
-                            *ngIf="regItemsForm.get('concentration').errors.required">
-                            {{'common.validationStatement.required' | translate}}
-                          </div>
-                        </div>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-12"
-                         *ngIf="itemType === 'PREMIX' || itemType === 'RAW_MATERIAL'">
-                      <mat-form-field class="example-full-width inputBesideSelect">
-                        <mat-label>
-                          {{'customRelease.formLabel.function' | translate}}
-                        </mat-label>
-                        <input type="text"
-                               class="form-control"
-                               placeholder="{{'customRelease.formLabel.function' | translate}}"
-                               aria-label="{{'customRelease.formLabel.function' | translate}}"
-                               matInput
-                               formControlName="function"
-                               [matAutocomplete]="functionList" required>
-                        <mat-autocomplete #functionList="matAutocomplete">
-                          <mat-option *ngFor="let option of filteredOptionsForFunctionList | async"
-                                      [value]="option.name[this.currentLang]">
-                              <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
-                                    placement="top">{{option.name[currentLang]}}</span>
-                          </mat-option>
-                        </mat-autocomplete>
-                        <div
-                          *ngIf="regItemsForm.get('function').invalid && (regItemsForm.get('function').dirty || regItemsForm.get('function').touched)"
-                          class="alert alert-danger">
-                          <div
-                            *ngIf="regItemsForm.get('function').errors.required">
                             {{'common.validationStatement.required' | translate}}
                           </div>
                         </div>

@@ -1,8 +1,17 @@
+<div *ngIf="data.tableBody && data.tableBody.length > 0">
+  <div
+    *ngIf="whichTable === 'drafted'">
+    <app-filters [filterData]="filterData"
+                 [removeFilterKey]="removeFilterKey"
+                 (selectedFilteredData)="setTheFilteredData($event)"></app-filters>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-xs-12 col-12">
     <div class="content-wrapper">
       <div class="table-responsive mt-5">
-        <table class="table table-sm table-ordered" *ngIf="data && data.tableBody.length > 0">
+        <table class="table table-sm table-ordered" *ngIf="data.tableBody && data.tableBody.length > 0">
           <tr class="headerRow">
             <th class="{{currentLang === 'ar' ? 'text-right' : 'text-left'}}"
                 *ngFor="let request of data.tableHeader; let i = index">
@@ -14,7 +23,7 @@
           </tr>
           <tr
             *ngFor="let request of this.dataAfterFilters.length> 0 ? this.dataAfterFilters : returnedArray && returnedArray.length > 0 ? returnedArray : data.tableBody; let i = index">
-            <td colspan="8" *ngIf="whichTable === 'drafted'">
+            <td colspan="6" *ngIf="whichTable === 'drafted'">
               <mat-accordion>
                 <mat-expansion-panel class="areaContainer" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
                   <mat-expansion-panel-header>
@@ -22,21 +31,19 @@
                       <div class="table-responsive">
                         <table class="table table-sm tableDetailsCont">
                           <tr>
-                            <!--                            <td class="hide">{{request.ID}}</td>-->
-                            <!--                            <td>{{request.SubmmittionDate | date}}</td>-->
-                            <!--                            <td>{{request.productTypeName}}</td>-->
-                            <!--                            <td class="hide"><span class="ellipsisSpan" tooltip="{{request.NameEN}}"-->
-                            <!--                                                   placement="right">{{request.NameEN}}</span></td>-->
-                            <!--                            <td class="hide">{{request.flagTrackName}}</td>-->
-                            <!--                            <td class="hide">{{request.Track_type}}</td>-->
-                            <!--                            <td>-->
-                            <!--                              <span (click)="editProduct(request)">-->
-                            <!--                                <i class="fa fa-edit"></i>-->
-                            <!--                              </span>-->
-                            <!--                              <span class="ml-2" (click)="deleteProduct(request)">-->
-                            <!--                                <i class="fa fa-trash"></i>-->
-                            <!--                              </span>-->
-                            <!--                            </td>-->
+                            <td class="hide">{{request.bolNo}}</td>
+                            <td>{{request.companyName}}</td>
+                            <td>{{request.countryName}}</td>
+                            <td class="hide">{{request.releaseType}}</td>
+                            <td class="hide">{{request.createdDate | date}}</td>
+                            <td>
+                              <span (click)="editProduct(request)">
+                                <i class="fa fa-edit"></i>
+                              </span>
+                              <span class="ml-2" (click)="deleteProduct(request)">
+                                                            <i class="fa fa-trash"></i>
+                                                          </span>
+                            </td>
                           </tr>
                         </table>
                       </div>
@@ -328,7 +335,7 @@
                     <mat-panel-title>
                       <table class="table table-sm tableDetailsCont">
                         <tr>
-                          <td>{{request.itemType}}</td>
+                          <td>{{request.ItemTypeId}}</td>
                           <td>{{request.importReason}}</td>
                           <td>{{request.manufacturingCompany}}</td>
                           <td>{{request.quantity}}</td>
@@ -432,7 +439,7 @@
         </table>
 
         <!-- table For Empty Data -->
-        <table class="table table-sm table-ordered" *ngIf="data && data.tableBody.length === 0">
+        <table class="table table-sm table-ordered" *ngIf="data.tableBody && data.tableBody.length === 0">
           <tr class="headerRow">
             <th class="{{currentLang === 'ar' ? 'text-right' : 'text-left'}}"
                 *ngFor="let request of data.tableHeader; let i = index">
@@ -443,14 +450,14 @@
             </th>
           </tr>
           <tr class="text-center">
-            <td colspan="8" *ngIf="whichTable === 'drafted'">
+            <td colspan="6" *ngIf="whichTable === 'drafted'">
               <mat-accordion>
                 <mat-expansion-panel class="areaContainer" hideToggle>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       <table class="table table-sm tableDetailsCont">
                         <tr>
-                          <td colspan="8">{{'tables.emptyRows' | translate}}</td> <!--  -->
+                          <td colspan="6">{{'tables.emptyRows' | translate}}</td> <!--  -->
                         </tr>
                       </table>
                     </mat-panel-title>
@@ -526,7 +533,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex align-items-center mt-3" *ngIf="data && data.tableBody.length > 0">
+    <div class="d-flex align-items-center mt-3" *ngIf="data.tableBody && data.tableBody.length > 0">
       <pagination *ngIf="contentArray.length > 0"
                   [totalItems]="contentArray.length"
                   [maxSize]="30"

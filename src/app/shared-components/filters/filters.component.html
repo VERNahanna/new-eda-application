@@ -10,14 +10,14 @@
             <mat-label>Which column do you want to search in ?</mat-label>
             <mat-select [(ngModel)]="keyForFilter" (selectionChange)="keyWordsForFilter = ''; setTheFilteredData();">
               <mat-option *ngFor="let item of filterData.filterKey" [value]="item">
-                {{item.name}}
+                {{'tables.' + item.name | translate}}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
           <mat-form-field class="example-full-width inputBesideSelect"
-                          *ngIf="keyForFilter && (keyForFilter.id !== 'SubmmittionDate' && keyForFilter.id !== 'Track_type' && keyForFilter.id !== 'productionDate' && keyForFilter.id !== 'expirationDate')">
+                          *ngIf="keyForFilter && keyForFilter.id !== 'createdDate'">
             <mat-label>Your keywords for search</mat-label>
             <input type="text" class="form-control" matInput
                    (keyup)="setTheFilteredData()"
@@ -25,16 +25,16 @@
                    [(ngModel)]="keyWordsForFilter"
                    placeholder="Product Name">
           </mat-form-field>
-          <mat-form-field appearance="fill" *ngIf="keyForFilter && keyForFilter.id === 'Track_type'">
-            <mat-label>Which Track type do you want to search in ?</mat-label>
-            <mat-select [(ngModel)]="keyWordsForFilter" (selectionChange)="setTheFilteredData()">
-              <mat-option *ngFor="let item of keysForTrackTypeList" [value]="item.NAME">
-                {{item.NAME}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+<!--          <mat-form-field appearance="fill" *ngIf="keyForFilter && keyForFilter.id === 'requestType'">-->
+          <!--            <mat-label>Which Track type do you want to search in ?</mat-label>-->
+          <!--            <mat-select [(ngModel)]="keyWordsForFilter" (selectionChange)="setTheFilteredData()">-->
+          <!--              <mat-option *ngFor="let item of keysForTrackTypeList" [value]="item.NAME">-->
+          <!--                {{item.NAME}}-->
+          <!--              </mat-option>-->
+          <!--            </mat-select>-->
+          <!--          </mat-form-field>-->
           <mat-form-field appearance="fill"
-                          *ngIf="keyForFilter && (keyForFilter.id === 'SubmmittionDate' || keyForFilter.id === 'productionDate' || keyForFilter.id === 'expirationDate')">
+                          *ngIf="keyForFilter &&keyForFilter.id === 'createdDate'">
             <mat-label>Choose a date</mat-label>
             <input matInput [matDatepicker]="picker" [(ngModel)]="keyWordsForFilter"
                    (change)="setTheFilteredData()"
