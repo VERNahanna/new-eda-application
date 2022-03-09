@@ -490,7 +490,45 @@ export class FormService {
         }),
         catchError(this.handleError));
   }
+  getCompanyDraftRequestsCount(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
 
+    return this.http.get(`${this.secondApiURL}RequestRelease/GetDraftRequestReleasCount/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+  getCompanyApprovedRequestsCount(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}RequestRelease/GetApprovedRequestReleasCount/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+  getCompanyPendingRequestsCount(companyRoleId) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}RequestRelease/GetPendingRequestReleasCount/${companyRoleId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
   getAllApprovedRequestCount(companyRoleId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
@@ -498,7 +536,7 @@ export class FormService {
     });
     const options = {headers};
 
-    return this.http.get(`${this.secondApiURL}Requests/GetApprovedRequestsCount/${companyRoleId}`, options)
+    return this.http.get(`${this.secondApiURL}RequestRelease/GetApprovedRequestReleasForView/${companyRoleId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
@@ -512,7 +550,7 @@ export class FormService {
     });
     const options = {headers};
 
-    return this.http.get(`${this.secondApiURL}Requests/GetRejectedRequestsCount/${companyRoleId}`, options)
+    return this.http.get(`${this.secondApiURL}RequestRelease/GetRejectedRequestReleasForView/${companyRoleId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),
@@ -526,7 +564,7 @@ export class FormService {
     });
     const options = {headers};
 
-    return this.http.get(`${this.secondApiURL}Requests/GetPendingRequestsCount​/${companyRoleId}`, options)
+    return this.http.get(`${this.secondApiURL}RequestRelease/GetPendingRequestReleasForView/${companyRoleId}`, options)
       .pipe(map((res: any) => {
           return res;
         }),

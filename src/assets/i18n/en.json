@@ -150,8 +150,16 @@
     "supplierCountry": "Supplier country",
     "supplierName": "Supplier name",
     "BolNo": "BOL number",
-    "action": "Action"
+    "action": "Action",
+    "requestId": "Request id",
+    "createdBy": "Created by",
+    "status": "Status"
   },
   "alerts": {
+  },
+  "tabs": {
+    "inProgress": "In progress",
+    "approvedRequest": "Approved request",
+    "rejectedRequests": "Rejected request"
   }
 }

@@ -88,21 +88,21 @@
                       <div class="table-responsive">
                         <table class="table table-sm tableDetailsCont">
                           <tr>
-                            <!--                            <td class="hide">{{request.ID}}</td>-->
-                            <!--                            <td>{{request.SubmmittionDate | date}}</td>-->
-                            <!--                            <td>{{request.productTypeName}}</td>-->
-                            <!--                            <td class="hide"><span class="ellipsisSpan" tooltip="{{request.NameEN}}"-->
-                            <!--                                                   placement="right">{{request.NameEN}}</span></td>-->
-                            <!--                            <td class="hide">{{request.flagTrackName}}</td>-->
-                            <!--                            <td class="hide">{{request.Track_type}}</td>-->
-                            <!--                            <td>-->
-                            <!--                              <span (click)="editProduct(request)">-->
-                            <!--                                <i class="fa fa-edit"></i>-->
-                            <!--                              </span>-->
-                            <!--                              <span class="ml-2" (click)="deleteProduct(request)">-->
-                            <!--                                <i class="fa fa-trash"></i>-->
-                            <!--                              </span>-->
-                            <!--                            </td>-->
+                            <td>{{request.requestId}}</td>
+                            <td>{{request.bolNo}}</td>
+                            <td>{{request.companyName}}</td>
+                            <td>{{request.countryName}}</td>
+                            <td>{{request.createdBy}}</td>
+                            <td>{{request.submitDate | date}}</td>
+                            <td>{{request.status}}</td>
+                            <td>
+                              <span (click)="editProduct(request)">
+                                <i class="fa fa-edit"></i>
+                              </span>
+                              <span class="ml-2" (click)="deleteProduct(request)">
+                                <i class="fa fa-trash"></i>
+                              </span>
+                            </td>
                           </tr>
                         </table>
                       </div>
@@ -110,30 +110,30 @@
                   </mat-expansion-panel-header>
                   <div class="detailsContainer pt-4">
                     <div class="row">
-                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
-                      <!--                        <label class="label">Request id :</label>-->
-                      <!--                        <span>{{request.ID}}</span>-->
-                      <!--                      </div>-->
-                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
-                      <!--                        <label class="label">Saved date :</label>-->
-                      <!--                        <span>{{request.SubmmittionDate}}</span>-->
-                      <!--                      </div>-->
-                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
-                      <!--                        <label class="label">Product English name :</label>-->
-                      <!--                        <span>{{request.NameEN}}</span>-->
-                      <!--                      </div>-->
-                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
-                      <!--                        <label class="label">Type Of Notification :</label>-->
-                      <!--                        <span>{{request.productTypeName}}</span>-->
-                      <!--                      </div>-->
-                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
-                      <!--                        <label class="label">Type Of Request :</label>-->
-                      <!--                        <span>{{request.flagTrackName}}</span>-->
-                      <!--                      </div>-->
-                      <!--                      <div class="col-12 col-sm-6 col-md-4">-->
-                      <!--                        <label class="label">Track Type :</label>-->
-                      <!--                        <span>{{request.Track_type}}</span>-->
-                      <!--                      </div>-->
+                      <div class="col-12 col-sm-6 col-md-4">
+                        <label class="label">{{'tables.requestId' |translate}} :</label>
+                        <span>{{request.requestId}}</span>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4">
+                        <label class="label">{{'tables.bolNo' |translate}} :</label>
+                        <span>{{request.bolNo}}</span>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4">
+                        <label class="label">{{'tables.companyName' |translate}} :</label>
+                        <span>{{request.companyName}}</span>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4">
+                        <label class="label">{{'tables.countryName' |translate}} :</label>
+                        <span>{{request.countryName}}</span>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4">
+                        <label class="label">{{'tables.createdBy' |translate}} :</label>
+                        <span>{{request.createdBy}}</span>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4">
+                        <label class="label">{{'tables.submitDate' |translate}} :</label>
+                        <span>{{request.submitDate | date}}</span>
+                      </div>
                     </div>
                   </div>
                 </mat-expansion-panel>
