@@ -1,0 +1,32 @@
+<tabset class="tabs {{currentLang === 'ar' ? 'arabicTabs':''}}" type="pills" #formTabs>
+  <tab [heading]="'In Progress' | translate">
+
+      <div class="col-12 mt-5">
+        <div class="tableContainer">
+          <app-table-list [data]="trackList"
+                          [whichTable]="'track'"></app-table-list>
+        </div>
+      </div>
+
+    
+    <alert type="danger" dismissible="true" class="AlertForAllRequests" (onClosed)="onClosedErrorAlert()"
+           *ngIf="alertErrorNotificationStatus">
+      <strong>Error Message</strong> <br> {{alertErrorNotification.msg}}
+    </alert>
+  </tab>
+  <tab [heading]="'Approved Requests' | translate">
+    <div class="tableContainer">
+      <app-table-list [data]="approvedList"
+                      [whichTable]="'track'"></app-table-list>
+    </div>
+  </tab>
+  <tab [heading]="'Rejected Requests' | translate">
+    <div class="tableContainer">
+      <app-table-list [data]="rejectedList"
+                      [whichTable]="'track'"></app-table-list>
+    </div>
+  </tab>
+</tabset>
+
+
+<app-loader-component [loadingStatus]="isLoading"></app-loader-component>
