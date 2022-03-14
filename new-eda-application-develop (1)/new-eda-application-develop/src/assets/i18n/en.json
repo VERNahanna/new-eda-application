@@ -73,6 +73,7 @@
       "receiptValue": "Receipt Value",
       "estimatedValue": "Fee For The Service",
       "invoiceNo": "Invoice No.",
+      "InvoiceApprovalNo":"Importation Approval No.",
       "invoiceValue": "Invoice Value",
       "invoiceDate": "Invoice date",
       "countryOfOrigin": "Country of origin",
@@ -114,7 +115,9 @@
       "premixName": "Premix name",
       "importReason": "Import reason",
       "itemType": "Item Type",
-      "bolPolicy": "bol Policy"
+      "bolPolicy": "bol Policy",
+      "InvApprovalNo":"Invoice Importation Approval Number",
+      "InvoiceItemName":"Invoice Item Name"
     },
     "specificStatement": {
       "addingInvoicesData": "** Please add invoices data",

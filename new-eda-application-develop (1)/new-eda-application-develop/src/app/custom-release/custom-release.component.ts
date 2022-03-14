@@ -114,6 +114,16 @@ export class CustomReleaseComponent implements OnInit {
       enable: true,
       attachmentTypeStatus: '',
       loadingStatus: false,
+    },
+    {
+      id: 'InvApprovalNo',
+      name: 'Invoice Importation Approval Number',
+      fileName: '',
+      fileValue: '',
+      required: false,
+      enable: true,
+      attachmentTypeStatus: '',
+      loadingStatus: false,
     }
   ];
   ItemAttachmentFields: AttachemntObject[] = [];
@@ -193,7 +203,7 @@ export class CustomReleaseComponent implements OnInit {
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
-      {
+/*       {
         id: 'coc',
         name: 'COC',
         fileName: '',
@@ -205,7 +215,7 @@ export class CustomReleaseComponent implements OnInit {
         relatedWithField: ['FINISHED_PRDUCTS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
-      },
+      }, */
     ],
     PREMIX: [
       {
@@ -814,8 +824,6 @@ export class CustomReleaseComponent implements OnInit {
         applicant: this.fb.control('', Validators.required),
         customPortName: this.fb.control('', Validators.required),
         pod: this.fb.control(''),
-        supplierName: this.fb.control(''),
-        supplierCountry: this.fb.control(''),
         carrierName: this.fb.control(''),
         grossWeight: this.fb.control('', Validators.required),
         measureUnit: this.fb.control('', Validators.required),
@@ -828,6 +836,7 @@ export class CustomReleaseComponent implements OnInit {
         receipt: this.fb.control(''),
         exportPledge: this.fb.control(''),
         importersRecord: this.fb.control(''),
+        supplierCountry: this.fb.control('')
       });
     }
   }
@@ -838,12 +847,16 @@ export class CustomReleaseComponent implements OnInit {
       this.regInvoicesForm = this.fb.group({
         id: 0,
         invoiceNo: this.fb.control('', Validators.required),
+        InvoiceApprovalNo: this.fb.control('', Validators.required),
+        supplierName: this.fb.control(''),
+        supplierCountry: this.fb.control(''),
         withinIncluded: this.fb.control(false),
         invoiceValue: this.fb.control('', Validators.required),
         invoiceDate: this.fb.control(null, Validators.required),
         currency: this.fb.control('', Validators.required),
         itemDetails: this.fb.control([]),
         invoice: this.fb.control(''),
+        InvApprovalNo: this.fb.control('')
       });
     }
   }
@@ -854,11 +867,12 @@ export class CustomReleaseComponent implements OnInit {
       this.regItemsForm = this.fb.group({
         id: 0,
         ItemTypeId: this.fb.control(''),
+        InvoiceItemName: this.fb.control(''),
         importReason: this.fb.control(''),
         NotificationNo: this.fb.control(''),
         shortName: this.fb.control(''),
         ProductEnglishName: this.fb.control('', Validators.required),
-        flagType: this.fb.control(''),
+        // flagType: this.fb.control(''),
         manufacturingCompany: this.fb.control('', Validators.required),
         manufacturingCountry: this.fb.control('', Validators.required),
         batchNo: this.importReason === 'PREMIX' ? this.fb.control('', Validators.required) : this.fb.control(''),
@@ -868,7 +882,7 @@ export class CustomReleaseComponent implements OnInit {
         companyManufactureRelationship: this.fb.control(''),
         legalizedHealthCertificate: this.fb.control(''),
         coa: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason !== 'RAW_MAT_RD') ? this.fb.control('') : this.fb.control(''),
-        coc: this.importReason === 'FINISHED_PRDUCTS' ? this.fb.control('') : this.fb.control(''),
+        // coc: this.importReason === 'FINISHED_PRDUCTS' ? this.fb.control('') : this.fb.control(''),
         premixName: this.fb.control(''),
         sourceOfRawMaterial: this.fb.control(''),
         ingredient: this.importReason === 'PREMIX' ? this.fb.control('', Validators.required) : this.fb.control(''),

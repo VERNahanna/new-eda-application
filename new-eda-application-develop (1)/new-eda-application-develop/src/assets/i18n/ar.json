@@ -78,6 +78,7 @@
       "receipt": "الإيصال",
       "exportPledge": "تعهد التصدير",
       "importersRecord": "سجل المستوردين",
+      "InvApprovalNo":"رقم الموافقه الاستيراديه للفاتوره",
       "invoice": "الفاتوة التجارية",
       "certificateOfOrigin": "شهادة المنشأ",
       "companyManufactureRelationship": "علاقة الشركة المصنعة",
@@ -111,7 +112,8 @@
       "premixName": "اسم المادة سابقة الخلط والتجهيز",
       "importReason": "الغرض من الاستيراد",
       "itemType": "نوع الصنف الوارد",
-      "bolPolicy": "البوليصة"
+      "bolPolicy": "البوليصة",
+      "InvoiceItemName":"اسم الصنف كما ورد بالفاتوره"
     },
     "specificStatement": {
       "addingInvoicesData": "** الرجاء إضافة بيانات الفواتير",
