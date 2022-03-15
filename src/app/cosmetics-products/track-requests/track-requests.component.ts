@@ -76,7 +76,6 @@ export class TrackRequestsComponent implements OnInit {
 
   getTrackProductsList() {
     this.getService.getAllPendingRequestCount(this.CompanyRoleID).subscribe((res: any) => {
-      console.log('res', res);
       this.trackList = {
         tableHeader: ['requestId', 'BolNo', 'companyName', 'companyCountry', 'created By', 'submissionDate', 'status', 'action'],
         tableBody: res

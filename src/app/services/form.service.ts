@@ -424,7 +424,7 @@ export class FormService {
     });
     const options = {headers};
 
-    return this.http.get(`${this.secondApiURL}Requests/${requestId}`, options)
+    return this.http.post(`${this.secondApiURL}Requests/DeleteRequest/${requestId}`, {}, options)
       .pipe(map((res: any) => {
           return res;
         }),

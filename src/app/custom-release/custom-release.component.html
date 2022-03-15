@@ -840,7 +840,7 @@
                         </div>
                       </mat-form-field>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-4 col-sm-6 col-12" *ngIf="selectedReleaseTypeId !== 2">
                       <mat-form-field class="example-full-width">
                         <mat-label>{{'customRelease.formLabel.batchNo' | translate}}</mat-label>
                         <input type="text" class="form-control" matInput formControlName="batchNo"

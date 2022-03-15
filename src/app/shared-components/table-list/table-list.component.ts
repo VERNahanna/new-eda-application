@@ -138,7 +138,6 @@ export class TableListComponent implements OnInit, OnChanges {
     this.contentArray = [];
     this.returnedArray = [];
 
-    console.log('12', this.staticFilterKey[columnName]);
     this.sortStatus = !status;
     if (!this.sortStatus) {
       if (this.staticFilterKey[columnName] === 'createdDate') {
@@ -256,17 +255,10 @@ export class TableListComponent implements OnInit, OnChanges {
   }
 
   deleteProduct(request) {
-    const editFrom = this.route.snapshot.routeConfig.path;
-    if (editFrom === 'tell_do_variation') {
-      this.removeDraftProduct.emit(request);
-    } else if (editFrom === 'do_tell_variation') {
-      this.removeDraftProduct.emit(request);
-    } else if (editFrom === 'registration') {
-      this.removeDraftProduct.emit(Number(request.ID));
-    } else if (editFrom === 're-registration') {
-      this.removeDraftProduct.emit(Number(request.ID));
-    } else if (editFrom === 'legacy') {
-      this.removeDraftProduct.emit(Number(request.ID));
+    const editFrom = this.router.url.split('/')[2];
+
+    if (editFrom === 'cosmetics-product') {
+      this.removeDraftProduct.emit(request.requestId);
     }
 
 

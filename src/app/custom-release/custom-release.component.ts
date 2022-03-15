@@ -220,66 +220,6 @@ export class CustomReleaseComponent implements OnInit {
         loadingStatus: false,
       },
       {
-        id: 'companyManufactureRelationship',
-        name: 'Company Manufacture Relationship',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: true,
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'materialSafetyDataSheet',
-        name: 'Material  Safety Data Sheet',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: true,
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'sourceOfRawMaterialAttach',
-        name: 'Source of raw material',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: true,
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'legalizedHealthCertificate',
-        name: 'legalized Health Certificate',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: true,
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'declarationOfChemicalTreatment',
-        name: 'Declaration of chemical treatment',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: true,
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'compositionOfPremixColorsFromManufacturer',
-        name: 'Composition of premix/Colors from manufacturer',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: true,
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
         id: 'coa',
         name: 'COA',
         fileName: '',
@@ -300,18 +240,8 @@ export class CustomReleaseComponent implements OnInit {
         loadingStatus: false,
       },
       {
-        id: 'delegationForImportation',
-        name: 'Delegation for importation (Raw Material/Packing Material)',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: true,
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'supplyOrder',
-        name: 'Supply order (Raw Material/Packing Material)',
+        id: 'packingList',
+        name: 'Packing list',
         fileName: '',
         fileValue: '',
         required: false,
@@ -328,89 +258,6 @@ export class CustomReleaseComponent implements OnInit {
         fileValue: '',
         required: false,
         enable: true,
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'companyManufactureRelationship',
-        name: 'Company Manufacture Relationship',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: false,
-        enabledCondition: true,
-        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'materialSafetyDataSheet',
-        name: 'Material  Safety Data Sheet',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: true,
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'sourceOfRawMaterialAttach',
-        name: 'Source of raw material',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        requiredWithImportReasonCondition: true,
-        enable: false,
-        enabledCondition: true,
-        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'declarationOfChemicalTreatment',
-        name: 'Declaration of chemical treatment',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: false,
-        enabledCondition: true,
-        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'legalizedHealthCertificate',
-        name: 'legalized Health Certificate',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: false,
-        enabledCondition: true,
-        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'declarationOfFreeOfSalmonella',
-        name: 'Declaration free of salmonella',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: false,
-        enabledCondition: true,
-        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'compositionOfPremixColorsFromManufacturer',
-        name: 'Composition of premix/Colors from manufacturer',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        enable: false,
-        enabledCondition: true,
-        relatedWithField: ['RAW_MAT_FOR_LOCAL'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -441,28 +288,14 @@ export class CustomReleaseComponent implements OnInit {
         loadingStatus: false,
       },
       {
-        id: 'delegationForImportation',
-        name: 'Delegation for importation (Raw Material/Packing Material)',
+        id: 'packingList',
+        name: 'Packing list',
         fileName: '',
         fileValue: '',
         required: false,
-        requiredWithImportReasonCondition: true,
         enable: false,
         enabledCondition: true,
-        relatedWithField: ['RAW_MAT_FOR_LOCAL'],
-        attachmentTypeStatus: '',
-        loadingStatus: false,
-      },
-      {
-        id: 'supplyOrder',
-        name: 'Supply order (Raw Material/Packing Material)',
-        fileName: '',
-        fileValue: '',
-        required: false,
-        requiredWithImportReasonCondition: true,
-        enable: false,
-        enabledCondition: true,
-        relatedWithField: ['RAW_MAT_FOR_LOCAL'],
+        relatedWithField: ['RAW_MAT_FOR_LOCAL', 'RAW_MAT_FOR_EXPORT', 'RAW_MAT_IMPORTERS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
@@ -512,7 +345,7 @@ export class CustomReleaseComponent implements OnInit {
 
   editInvoiceIndex;
   editInvoiceRowStatus = false;
-
+  selectedReleaseTypeId;
   companyId;
   companyName;
 
@@ -524,6 +357,11 @@ export class CustomReleaseComponent implements OnInit {
               public translateService: TranslateService,
               private modalService: BsModalService,
               private getService: FormService) {
+
+    this.getFormAsStarting('', '');
+    this.getInvoicesFormAsStarting('', '');
+    this.getItemsFormAsStarting('', '');
+
     this.route.params.subscribe(res => {
       this.serviceId = res.serviceId;
       this.serviceTypeId = res.serviceTypeId;
@@ -534,10 +372,6 @@ export class CustomReleaseComponent implements OnInit {
         })
       }
     });
-
-    this.getFormAsStarting('', '');
-    this.getInvoicesFormAsStarting('', '');
-    this.getItemsFormAsStarting('', '');
   }
 
   ngOnInit(): void {
@@ -666,6 +500,13 @@ export class CustomReleaseComponent implements OnInit {
         this.getTermType({value: this.formData.itemTypeList[0]});
       }
     });
+
+
+    this.regCustomReleaseForm.get('releaseTypeId').valueChanges.subscribe(res => {
+      this.selectedReleaseTypeId = this.getIdFromLookupByName(this.formData?.releaseType, res);
+
+      this.renderingTheItemAttachment(this.itemType, this.importReason);
+    })
 
     this.setAllLookupsInObservable();
   }
@@ -825,7 +666,6 @@ export class CustomReleaseComponent implements OnInit {
 
   getFormAsStarting(data, fromWhere?: string) {
     if (data) {
-      console.log('data', data);
 
       this.formData.releaseType.filter(item => item.id === data.releaseTypeId).map(x => data.releaseTypeId = x.name[this.currentLang]);
       this.formData.ports.filter(item => item.id === data.LkupPortsId).map(x => data.LkupPortsId = x.name[this.currentLang]);
@@ -855,8 +695,6 @@ export class CustomReleaseComponent implements OnInit {
 
         }) : null;
       }, 500);
-
-      console.log('data', data);
 
       this.regCustomReleaseForm.patchValue({
         ...data
@@ -931,7 +769,7 @@ export class CustomReleaseComponent implements OnInit {
         ProductEnglishName: this.fb.control('', Validators.required),
         manufacturingCompany: this.fb.control('', Validators.required),
         manufacturingCountry: this.fb.control('', Validators.required),
-        batchNo: this.importReason === 'PREMIX' ? this.fb.control('', Validators.required) : this.fb.control(''),
+        batchNo: this.selectedReleaseTypeId !== 2 && this.importReason === 'PREMIX' ? this.fb.control('', Validators.required) : this.fb.control(''),
         quantity: this.fb.control('', Validators.required),
         uom: this.fb.control('', Validators.required),
         certificateOfOrigin: this.fb.control(''),
@@ -1096,7 +934,16 @@ export class CustomReleaseComponent implements OnInit {
       }
 
       if (item.enabledCondition && item.relatedWithField.includes(importReason.code)) {
-        item.enable = true;
+        debugger;
+        if (item.id === 'coa') {
+          if (this.selectedReleaseTypeId !== 2) {
+            item.enable = true;
+          } else {
+            item.enable = false;
+          }
+        } else {
+          item.enable = true
+        }
       } else if (item.enabledCondition && !item.relatedWithField.includes(importReason.code)) {
         item.enable = false;
       }
@@ -1108,8 +955,8 @@ export class CustomReleaseComponent implements OnInit {
   applyProduct(notificationNumber) {
     if (notificationNumber) {
       this.getService.getProductWithNotificationNumberList(notificationNumber).subscribe((res: any) => {
-        console.log('res', res);
         if (res) {
+          console.log('res', res);
         }
         this.isLoading = false;
       }, error => this.handleError(error));
