@@ -134,6 +134,7 @@ export class CustomReleaseComponent implements OnInit {
   premixField;
   rowMaterialNameField = new FormControl();
   sourceOfRowMaterialField;
+  typeOfRegistrationField;
   packingItemNameField;
   showNotificationNoStatus: boolean = false;
   notificationNo;
@@ -142,6 +143,7 @@ export class CustomReleaseComponent implements OnInit {
   customImportRelease: any = [];
   serviceId;
   serviceTypeId;
+  serviceTypeName;
   allItemTypeAttachmentFields = {
     PRODUCTS: [
       {
@@ -512,6 +514,7 @@ export class CustomReleaseComponent implements OnInit {
   editInvoiceRowStatus = false;
 
   companyId;
+  companyName;
 
   constructor(private fb: FormBuilder,
               private number: DecimalPipe,
@@ -524,7 +527,13 @@ export class CustomReleaseComponent implements OnInit {
     this.route.params.subscribe(res => {
       this.serviceId = res.serviceId;
       this.serviceTypeId = res.serviceTypeId;
-    })
+      this.serviceTypeName = " " + res.serviceTypeName;
+      if (res.id) {
+        this.getService.getRequestWithId(res.id).subscribe(res => {
+          this.getFormAsStarting(res);
+        })
+      }
+    });
 
     this.getFormAsStarting('', '');
     this.getInvoicesFormAsStarting('', '');
@@ -592,6 +601,22 @@ export class CustomReleaseComponent implements OnInit {
             name: 'Wool'
           }
         ],
+        typeOfRegistrationList: [
+          {
+            id: 'notified',
+            name: {
+              en: 'Notified',
+              ar: ''
+            }
+          },
+          {
+            id: 'oldRegistration',
+            name: {
+              en: 'Old Registration',
+              ar: ''
+            }
+          },
+        ]
       };
       this.isLoading = false;
     });
@@ -600,6 +625,7 @@ export class CustomReleaseComponent implements OnInit {
       filter(x => x.type === 'CompanyData'),
       distinctUntilChanged()
     ).subscribe(res => {
+      this.companyName = res.payload.CompanyName;
       this.setApplicant(res.payload.CompanyName);
       this.companyId = res.payload.companyId;
     });
@@ -646,10 +672,10 @@ export class CustomReleaseComponent implements OnInit {
 
   setAllLookupsInObservable() {
     this.filteredOptionsForRawMaterialType = this.filterLookupsFunction('rowMaterialNameField', this.rowMaterialNameField, this.formData?.rawMaterialList);
-    this.filteredOptionsForRequestedReleaseType = this.filterLookupsFunction('releaseType', this.regCustomReleaseForm.get('requestedReleaseType'), this.formData?.releaseType);
-    this.filteredOptionsForCustomPortName = this.filterLookupsFunction('ports', this.regCustomReleaseForm.get('customPortName'), this.formData?.ports);
-    this.filteredOptionsForSupplierCountry = this.filterLookupsFunction('countries', this.regCustomReleaseForm.get('supplierCountry'), this.formData?.countries);
-    this.filteredOptionsForMeasureUnitList = this.filterLookupsFunction('unitOfMeasure', this.regCustomReleaseForm.get('measureUnit'), this.formData?.unitOfMeasure);
+    this.filteredOptionsForRequestedReleaseType = this.filterLookupsFunction('releaseType', this.regCustomReleaseForm.get('releaseTypeId'), this.formData?.releaseType);
+    this.filteredOptionsForCustomPortName = this.filterLookupsFunction('ports', this.regCustomReleaseForm.get('LkupPortsId'), this.formData?.ports);
+    this.filteredOptionsForSupplierCountry = this.filterLookupsFunction('countries', this.regCustomReleaseForm.get('supplierCountryId'), this.formData?.countries);
+    this.filteredOptionsForMeasureUnitList = this.filterLookupsFunction('unitOfMeasure', this.regCustomReleaseForm.get('lkupUomId'), this.formData?.unitOfMeasure);
     this.filteredOptionsForCurrency = this.filterLookupsFunction('currencies', this.regInvoicesForm.get('currency'), this.formData?.currencies);
     this.filteredOptionsForManufacturingCompany = this.filterLookupsFunction('manufacturingCompany', this.regItemsForm.get('manufacturingCompany'), this.formData?.countries);
     this.filteredOptionsForManufacturingCountry = this.filterLookupsFunction('manufacturingCountry', this.regItemsForm.get('manufacturingCountry'), this.formData?.countries);
@@ -659,6 +685,7 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   nextToNextTab(whichTab) {
+
     let activeTabIndex;
     whichTab.tabs.filter(x => x.active).map(y => activeTabIndex = whichTab.tabs.indexOf(y));
     activeTabIndex + 1 <= whichTab.tabs.length - 1 ? whichTab.tabs[activeTabIndex + 1].active = true : null;
@@ -672,7 +699,6 @@ export class CustomReleaseComponent implements OnInit {
 
   async getTermType(event): Promise<any> {
     this.formData.itemTypeList.filter(item => item.id === event.value.id).map(res => {
-      debugger;
       this.formData.importReasonList = this.formData.importReason[this.formData.itemTypeList.indexOf(res)]
       this.importReason = '';
 
@@ -797,26 +823,76 @@ export class CustomReleaseComponent implements OnInit {
     }, {emitEvent: false});
   }
 
-  getFormAsStarting(data, fromWhere) {
+  getFormAsStarting(data, fromWhere?: string) {
     if (data) {
+      console.log('data', data);
+
+      this.formData.releaseType.filter(item => item.id === data.releaseTypeId).map(x => data.releaseTypeId = x.name[this.currentLang]);
+      this.formData.ports.filter(item => item.id === data.LkupPortsId).map(x => data.LkupPortsId = x.name[this.currentLang]);
+      this.formData.countries.filter(item => item.id === data.supplierCountryId).map(x => data.supplierCountryId = x.name[this.currentLang]);
+      this.formData.unitOfMeasure.filter(item => item.id === data.lkupUomId).map(x => data.lkupUomId = x.name[this.currentLang]);
+
+
+      data.Invoices ? data.Invoices.map(x => {
+        this.formData.currencies.filter(option => option.id === x.currency).map(item => x.currency = item.name[this.currentLang]);
+        //itemDetails
+        x.itemDetails ? x.itemDetails.map(item => {
+          this.formData.countries.filter(option => option.id === x.manufacturingCompany).map(item => x.manufacturingCompany = item.name[this.currentLang]);
+          this.formData.countries.filter(option => option.id === x.manufacturingCountry).map(item => x.manufacturingCountry = item.name[this.currentLang]);
+          this.formData.unitOfMeasure.filter(option => option.id === x.uom).map(item => x.uom = item.name[this.currentLang]);
+          this.formData.unitOfMeasure.filter(option => option.id === x.uom).map(item => x.uom = item.name[this.currentLang]);
+        }) : null;
+      }) : null;
+
+      setTimeout(() => {
+        this.invoiceListTable.tableBody = [];
+        data.Invoices ? data.Invoices.map((x, i) => {
+          this.invoiceListTable.tableBody = [...this.invoiceListTable.tableBody, x];
+
+          x.itemDetails ? x.itemDetails.map((item, i) => {
+            this.itemListTable.tableBody = [...this.itemListTable.tableBody, item];
+          }) : null;
+
+        }) : null;
+      }, 500);
+
+      console.log('data', data);
+
+      this.regCustomReleaseForm.patchValue({
+        ...data
+      });
+
+      this.setApplicant(this.companyName);
+
+      data.receiptValue === 0 ? this.regCustomReleaseForm.get('receiptValue').patchValue('') : null;
     } else {
+      const myDate = new Date();
+
       this.regCustomReleaseForm = this.fb.group({
         id: 0,
+        releaseTypeId: this.fb.control('', Validators.required),
+        bolNo: this.fb.control('', Validators.required),
         estimatedValue: 0,
-        bol: this.fb.control('', Validators.required),
-        withinIncluded: this.fb.control(false),
-        requestedReleaseType: this.fb.control('', Validators.required),
+        fWithinIncluded: this.fb.control(false),
         applicant: this.fb.control('', Validators.required),
-        customPortName: this.fb.control('', Validators.required),
+        LkupPortsId: this.fb.control('', Validators.required),
         pod: this.fb.control(''),
         supplierName: this.fb.control(''),
-        supplierCountry: this.fb.control(''),
-        carrierName: this.fb.control(''),
+        supplierCountryId: this.fb.control(''),
         grossWeight: this.fb.control('', Validators.required),
-        measureUnit: this.fb.control('', Validators.required),
+        lkupUomId: this.fb.control('', Validators.required),
         receiptNumber: this.fb.control('', Validators.required),
         groupNumber: this.fb.control('', Validators.required),
         receiptValue: this.fb.control('', Validators.required),
+        carrierName: this.fb.control(''),
+        lkupServicesId: null,
+        lkupServiceTypeId: null,
+        syslkupServiceActionId: null,
+        dueDate: myDate,
+        companyRolesId: null,
+        lkupTrackTypeId: null,
+        fComplete: false,
+        syslkupWfStatesId: null,
         Invoices: this.fb.control([]),
         bolPolicy: this.fb.control(''),
         packingList: this.fb.control(''),
@@ -833,7 +909,7 @@ export class CustomReleaseComponent implements OnInit {
       this.regInvoicesForm = this.fb.group({
         id: 0,
         invoiceNo: this.fb.control('', Validators.required),
-        withinIncluded: this.fb.control(false),
+        fWithinIncluded: this.fb.control(false),
         invoiceValue: this.fb.control('', Validators.required),
         invoiceDate: this.fb.control(null, Validators.required),
         currency: this.fb.control('', Validators.required),
@@ -853,7 +929,6 @@ export class CustomReleaseComponent implements OnInit {
         NotificationNo: this.fb.control(''),
         shortName: this.fb.control(''),
         ProductEnglishName: this.fb.control('', Validators.required),
-        flagType: this.fb.control(''),
         manufacturingCompany: this.fb.control('', Validators.required),
         manufacturingCountry: this.fb.control('', Validators.required),
         batchNo: this.importReason === 'PREMIX' ? this.fb.control('', Validators.required) : this.fb.control(''),
@@ -888,7 +963,9 @@ export class CustomReleaseComponent implements OnInit {
     const data = this.adaptTheObjectToBE(this.regCustomReleaseForm.value, Number(this.serviceId), Number(this.serviceTypeId));
 
     this.getService.createProductRequest(data).subscribe(res => {
-      console.log('res', res)
+      if (res) {
+        this.getFormAsStarting(res);
+      }
     })
   }
 
@@ -1029,11 +1106,17 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   applyProduct(notificationNumber) {
-
+    if (notificationNumber) {
+      this.getService.getProductWithNotificationNumberList(notificationNumber).subscribe((res: any) => {
+        console.log('res', res);
+        if (res) {
+        }
+        this.isLoading = false;
+      }, error => this.handleError(error));
+    }
   }
 
   filterLookupsFunction(whichLookup, formControlValue, list, index?: any) {
-    debugger;
     if (whichLookup === 'ingrediant') {
       if (formControlValue) {
         return formControlValue.valueChanges
@@ -1071,7 +1154,6 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   filterInsideListForDiffModel(lookup, value, list, index?: any): any[] {
-    debugger;
     let filterValue;
     if (value) {
       filterValue = value.toLowerCase() ? value.toLowerCase() : '';
@@ -1107,29 +1189,29 @@ export class CustomReleaseComponent implements OnInit {
 
     return {
       id: data.id ? data.id : 0,
+      releaseTypeId: data.releaseTypeId ? this.getIdFromLookupByName(this.formData.releaseType, data.requestedReleaseType) : '',
+      bolNo: data.bolNo ? data.bolNo : '',
       estimatedValue: data.estimatedValue ? data.estimatedValue : 0,
-      bolNo: data.bol ? data.bol : '',
-      FWithinIncluded: data.withinIncluded,
-      requestedReleaseType: data.requestedReleaseType ? this.getIdFromLookupByName(this.formData.releaseType, data.requestedReleaseType) : '',
+      FWithinIncluded: data.fWithinIncluded,
       applicant: this.companyId,
-      LkupPortsId: data.customPortName ? this.getIdFromLookupByName(this.formData.ports, data.customPortName) : 0,
+      LkupPortsId: data.LkupPortsId ? this.getIdFromLookupByName(this.formData.ports, data.LkupPortsId) : 0,
       pod: data.pod ? data.pod : '',
       supplierName: data.supplierName ? data.supplierName : '',
-      supplierCountry: data.supplierCountry ? this.getIdFromLookupByName(this.formData.countries, data.supplierCountry) : 0,
+      supplierCountryId: data.supplierCountryId ? this.getIdFromLookupByName(this.formData.countries, data.supplierCountryId) : 0,
       carrierName: data.carrierName ? data.carrierName : '',
       grossWeight: data.grossWeight ? data.grossWeight : 0,
-      LkupUomId: data.measureUnit ? this.getIdFromLookupByName(this.formData.unitOfMeasure, data.measureUnit) : 0,
+      LkupUomId: data.lkupUomId ? this.getIdFromLookupByName(this.formData.unitOfMeasure, data.lkupUomId) : 0,
       receiptNumber: data.receiptNumber ? data.receiptNumber : '',
       groupNumber: data.groupNumber ? data.groupNumber : '',
       receiptValue: data.receiptValue ? Number(data.receiptValue) : 0,
-      LkupServicesId: servicesId,
-      LkupServiceTypeId: servicesTypeId,
+      LkupServicesId: data.lkupServicesId ? data.lkupServicesId : servicesId,
+      LkupServiceTypeId: data.lkupServiceTypeId ? data.lkupServiceTypeId : servicesTypeId,
       SyslkupServiceActionId: 100,
-      DueDate: myDate,
+      DueDate: data.dueDate ? data.dueDate : myDate,
       SubmissionDate: null,
-      FComplete: false,
-      LkupTrackTypeId: 0,
-      LkupReqTypeId: 0,
+      FComplete: data.FComplete ? data.FComplete : false,
+      LkupTrackTypeId: data.lkupTrackTypeId ? data.lkupTrackTypeId : 0,
+      LkupReqTypeId: data.LkupReqTypeId ? data.LkupReqTypeId : 0,
       SyslkupWfStatesId: 0,
       Invoices: data.Invoices && data.Invoices.length ? data.Invoices : [],
     };

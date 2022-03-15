@@ -159,78 +159,6 @@ export class TableListComponent implements OnInit, OnChanges {
     this.returnedArray = this.contentArray.slice(0, 10);
   }
 
-  removeDetailsRowFunction(i, requestID) {
-    if (requestID) {
-      this.deletedIdsListForDetailsRow.push(requestID);
-      this.removeDetailsRowIDs.emit(this.deletedIdsListForDetailsRow);
-    }
-
-    this.removeDetailsRowOutput.emit(i);
-  }
-
-  removePackagingRowFunction(i, requestID) {
-    this.removePackagingRowOutput.emit(i);
-
-    if (requestID) {
-      this.deletedIdsListForPackaging.push(requestID);
-      this.removePackagingRowIDs.emit(this.deletedIdsListForPackaging);
-    }
-  }
-
-  editPackagingRowFunction(i) {
-    this.editPackagingRowIDs.emit(i);
-  }
-
-  removeManufacturingRowFunction(i, requestID) {
-    this.removeManufacturingRowOutput.emit(i);
-
-    if (requestID) {
-      this.deletedIdsListForManufacturing.push(requestID);
-      this.removeManufacturingRowIDs.emit(this.deletedIdsListForManufacturing);
-    }
-  }
-
-  editManufacturingRowFunction(i) {
-    this.editManufacturingRowIDs.emit(i);
-  }
-
-  removeIngrediantDetailsRowFunction(childIndex, i, indexRow, idRequest) {
-    this.removeIngrediantDetailsRowOutput.emit({childIndex, indexRow, i});
-
-    if (idRequest) {
-      this.deletedIdsListForIngrediant.push(idRequest);
-      this.removeIngrediantDetailsIDs.emit(this.deletedIdsListForIngrediant);
-    }
-  }
-
-  removeIngrediantDetailsRows(index) {
-    this.removeIngrediantRowOutput.emit(index);
-  }
-
-  copyDetailsRowFunction(index, row) {
-    this.copyDetailedRowOutput.emit(row);
-  }
-
-  editIngrediantDetailsRows(index) {
-    this.editIngrediantRowOutput.emit(index);
-  }
-
-  removeProductInInvoicesRowsFunction(index) {
-    this.removeProductInInvoicesRows.emit(index);
-  }
-
-  editProductInInvoicesRowsFunction(index) {
-    this.editProductInInvoicesRows.emit(index);
-  }
-
-  removeProductFromKitFunction(index) {
-    this.removeProductFromKit.emit(index);
-  }
-
-  editDetailedRowFunction(i) {
-    this.editDetailedRowOutput.emit(i);
-  }
-
   setTheFilteredData(event) {
     if (event.keyForFilter.id) {
       if (event.filterRow.length > 0) {
@@ -320,25 +248,10 @@ export class TableListComponent implements OnInit, OnChanges {
   }
 
   editProduct(request) {
-    const isTrackProduct = this.route.snapshot.routeConfig.data.animation;
-    const editFrom = this.route.snapshot.routeConfig.path;
+    const editFrom = this.router.url.split('/')[2];
 
-    if (editFrom === 'tell_do_variation') {
-      this.router.navigate([`/new-request/tell_do_variation/${Number(request.ID)}/${isTrackProduct === 'track-request' ? 'Track' : isTrackProduct === 'rejected-request' ? 'FinalReject' : 'Request'}/${isTrackProduct === 'track-request' ? true : false}`]);
-    } else if (editFrom === 'do_tell_variation') {
-      this.router.navigate([`/new-request/do_tell_variation/${Number(request.ID)}/${isTrackProduct === 'track-request' ? 'Track' : isTrackProduct === 'rejected-request' ? 'FinalReject' : 'Request'}/${isTrackProduct === 'track-request' ? true : false}`]);
-    } else if (editFrom === 'registration') {
-      this.router.navigate([`/new-request/registration/${Number(request.ID)}/${isTrackProduct === 'track-request' ? 'Track' : isTrackProduct === 'rejected-request' ? this.rejectedType === 'Final' ? 'FinalReject' : 'CanBeAppealed' : 'Request'}`]);
-    } else if (editFrom === 're-registration') {
-      this.router.navigate([`/new-request/reregistration/${Number(request.ID)}/${isTrackProduct === 'track-request' ? 'Track' : isTrackProduct === 'rejected-request' ? this.rejectedType === 'Final' ? 'FinalReject' : 'CanBeAppealed' : 'Request'}`]);
-    } else if (editFrom === 'legacy-products') {
-      this.router.navigate([`/legacy-form/${Number(request.oldProductID)}/${isTrackProduct === 'track-request' ? 'Track' : 'Request'}`]);
-    } else if (editFrom === 'legacy') {
-      this.router.navigate([`/legacy-form/${Number(request.OLD_PRODUCT_ID)}/${isTrackProduct === 'track-request' ? 'Track' : 'Request'}`]);
-    } else if (editFrom === 'approved-product') {
-      this.router.navigate([`/new-request/registration/${Number(request.ID)}/${request.canEdit ? this.approvedType : 'approvedProduct'}`]);
-    } else if (editFrom === 'rejected-product') {
-      this.router.navigate([`/new-request/registration/${Number(request.ID)}/FinalReject`]);
+    if (editFrom === 'cosmetics-product') {
+      this.router.navigate([`/pages/cosmetics-product/inner/new-request/${request.requestId}`]);
     }
   }
 

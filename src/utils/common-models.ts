@@ -114,7 +114,7 @@ export interface ServicesPerAdmin {
 }
 
 export interface ItemTypeDTO {
-  importReasons: ServiceTypeDto[],
+  importReasons: ServiceTypeDto,
   code: string,
   id: number,
   name: {
@@ -194,7 +194,7 @@ export interface CustomReleaseModel {
   estimatedValue: number,
   bolNo: string,
   FWithinIncluded: boolean,
-  requestedReleaseType: string,
+  releaseTypeId: string,
   applicant: string | number,
   LkupPortsId: number,
   pod: string,

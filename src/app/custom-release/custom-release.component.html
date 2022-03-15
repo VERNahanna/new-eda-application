@@ -22,13 +22,13 @@
                 <div class="col-lg-4 col-sm-6 col-12">
                   <mat-form-field class="example-full-width">
                     <mat-label>{{'customRelease.formLabel.bol' | translate}}</mat-label>
-                    <input type="text" class="form-control" matInput formControlName="bol"
+                    <input type="text" class="form-control" matInput formControlName="bolNo"
                            placeholder="{{'customRelease.formLabel.bol' | translate}}" required>
                     <div
-                      *ngIf="regCustomReleaseForm.get('bol').invalid && (regCustomReleaseForm.get('bol').dirty || regCustomReleaseForm.get('bol').touched)"
+                      *ngIf="regCustomReleaseForm.get('bolNo').invalid && (regCustomReleaseForm.get('bolNo').dirty || regCustomReleaseForm.get('bolNo').touched)"
                       class="alert alert-danger">
                       <div
-                        *ngIf="regCustomReleaseForm.get('bol').errors.required">
+                        *ngIf="regCustomReleaseForm.get('bolNo').errors.required">
                         {{'common.validationStatement.required' | translate}}
                       </div>
                     </div>
@@ -37,7 +37,7 @@
                 <div class="col-lg-4 col-sm-6 col-12">
                   <section class="example-section mt-4 {{currentLang === 'ar' ? 'text-right':'text-left'}}">
                     <mat-checkbox class="example-margin"
-                                  formControlName="withinIncluded">
+                                  formControlName="fWithinIncluded">
                       {{'customRelease.formLabel.withinIncluded' | translate}}
                     </mat-checkbox>
                   </section>
@@ -49,7 +49,7 @@
                            class="form-control"
                            placeholder="{{'customRelease.formLabel.requestedReleaseType' | translate}}"
                            matInput
-                           formControlName="requestedReleaseType"
+                           formControlName="releaseTypeId"
                            [matAutocomplete]="requestedReleaseTypeList" required>
                     <mat-autocomplete #requestedReleaseTypeList="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptionsForRequestedReleaseType | async"
@@ -59,10 +59,10 @@
                       </mat-option>
                     </mat-autocomplete>
                     <div
-                      *ngIf="regCustomReleaseForm.get('requestedReleaseType').invalid && (regCustomReleaseForm.get('requestedReleaseType').dirty || regCustomReleaseForm.get('requestedReleaseType').touched)"
+                      *ngIf="regCustomReleaseForm.get('releaseTypeId').invalid && (regCustomReleaseForm.get('releaseTypeId').dirty || regCustomReleaseForm.get('releaseTypeId').touched)"
                       class="alert alert-danger">
                       <div
-                        *ngIf="regCustomReleaseForm.get('requestedReleaseType').errors.required">
+                        *ngIf="regCustomReleaseForm.get('releaseTypeId').errors.required">
                         {{'common.validationStatement.required' | translate}}
                       </div>
                     </div>
@@ -94,7 +94,7 @@
                            class="form-control"
                            placeholder="{{'customRelease.formLabel.customPortName' | translate}}"
                            matInput
-                           formControlName="customPortName"
+                           formControlName="LkupPortsId"
                            [matAutocomplete]="customPortNameList" required>
                     <mat-autocomplete #customPortNameList="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptionsForCustomPortName | async"
@@ -104,10 +104,10 @@
                       </mat-option>
                     </mat-autocomplete>
                     <div
-                      *ngIf="regCustomReleaseForm.get('customPortName').invalid && (regCustomReleaseForm.get('customPortName').dirty || regCustomReleaseForm.get('customPortName').touched)"
+                      *ngIf="regCustomReleaseForm.get('LkupPortsId').invalid && (regCustomReleaseForm.get('LkupPortsId').dirty || regCustomReleaseForm.get('LkupPortsId').touched)"
                       class="alert alert-danger">
                       <div
-                        *ngIf="regCustomReleaseForm.get('customPortName').errors.required">
+                        *ngIf="regCustomReleaseForm.get('LkupPortsId').errors.required">
                         {{'common.validationStatement.required' | translate}}
                       </div>
                     </div>
@@ -134,7 +134,7 @@
                            class="form-control"
                            placeholder="{{'customRelease.formLabel.supplierCountry' | translate}}"
                            matInput
-                           formControlName="supplierCountry"
+                           formControlName="supplierCountryId"
                            [matAutocomplete]="supplierCountryList" required>
                     <mat-autocomplete #supplierCountryList="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptionsForSupplierCountry | async"
@@ -197,7 +197,7 @@
                            class="form-control"
                            placeholder="{{'customRelease.formLabel.measureUnit' | translate}}"
                            matInput
-                           formControlName="measureUnit"
+                           formControlName="lkupUomId"
                            [matAutocomplete]="measureUnitList" required>
                     <mat-autocomplete #measureUnitList="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptionsForMeasureUnitList | async"
@@ -207,10 +207,10 @@
                       </mat-option>
                     </mat-autocomplete>
                     <div
-                      *ngIf="regCustomReleaseForm.get('measureUnit').invalid && (regCustomReleaseForm.get('measureUnit').dirty || regCustomReleaseForm.get('measureUnit').touched)"
+                      *ngIf="regCustomReleaseForm.get('lkupUomId').invalid && (regCustomReleaseForm.get('lkupUomId').dirty || regCustomReleaseForm.get('lkupUomId').touched)"
                       class="alert alert-danger">
                       <div
-                        *ngIf="regCustomReleaseForm.get('measureUnit').errors.required">
+                        *ngIf="regCustomReleaseForm.get('lkupUomId').errors.required">
                         {{'common.validationStatement.required' | translate}}
                       </div>
                     </div>
@@ -440,7 +440,7 @@
                 <div class="col-lg-4 col-sm-6 col-12">
                   <section class="example-section {{currentLang === 'ar' ? 'text-right':'text-left'}} mt-4">
                     <mat-checkbox class="example-margin"
-                                  formControlName="withinIncluded">
+                                  formControlName="fWithinIncluded">
                       {{'customRelease.formLabel.withinIncluded' | translate}}
                     </mat-checkbox>
                   </section>
@@ -650,21 +650,6 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType && formData.importReasonList.length">
-          <mat-form-field appearance="fill">
-            <mat-label>
-              {{'customRelease.formLabel.importReason' | translate}}
-            </mat-label>
-            <mat-select (selectionChange)="getTheSelectedValueForImportedReason(itemType, $event)"
-                        [disabled]="disableImportReasonField"
-                        [(ngModel)]="importReason" required>
-              <mat-option *ngFor="let option of formData.importReasonList" [value]="option">
-                {{option.name[currentLang]}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
         <div class="col-lg-4 col-sm-6 col-12" *ngIf="itemType?.code === 'PREMIX'">
           <mat-form-field appearance="fill">
             <mat-label>
@@ -720,7 +705,19 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12" *ngIf="importReason && showNotificationNoStatus">
+        <div class="col-lg-4 col-sm-6 col-12">
+          <mat-form-field appearance="fill">
+            <mat-label>
+              {{'customRelease.formLabel.typeOfRegistration' | translate}}
+            </mat-label>
+            <mat-select [(ngModel)]="typeOfRegistrationField" required>
+              <mat-option *ngFor="let option of formData.typeOfRegistrationList" [value]="option.id">
+                {{option.name[currentLang]}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-12" *ngIf="typeOfRegistrationField === 'notified'">
           <div class="row">
             <div class="col-6 getProductByNotificationNumber">
               <mat-form-field class="example-full-width">
@@ -787,14 +784,6 @@
                             {{'common.validationStatement.required' | translate}}
                           </div>
                         </div>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>{{'customRelease.formLabel.flagType' | translate}}</mat-label>
-                        <input type="text" class="form-control" matInput formControlName="flagType"
-                               disabled="true"
-                               placeholder="{{'customRelease.formLabel.flagType' | translate}}">
                       </mat-form-field>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-12">

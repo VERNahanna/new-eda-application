@@ -71,6 +71,12 @@ export class CosmeticsProductsComponent implements OnInit {
               }
             ];
 
+            service?.itemtypes.map(x => {
+              console.log('x', x)
+              console.log('x', x.code)
+              console.log('x?.importReasons', x?.importReasons?.fNotification)
+            })
+
             this.inputService.publish({type: 'productServices', payload: this.cosmeticsProductsServices});
           });
         })

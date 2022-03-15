@@ -62,6 +62,7 @@
       "customPortName": "Custom Port name",
       "pod": "POD",
       "supplierName": "Supplier Name",
+      "typeOfRegistration": "Type of Registration",
       "supplierCountry": "Supplier Country",
       "carrierName": "Carrier name",
       "grossWeight": "Gross weight",

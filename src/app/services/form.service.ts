@@ -490,6 +490,7 @@ export class FormService {
         }),
         catchError(this.handleError));
   }
+
   getCompanyDraftRequestsCount(companyRoleId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
@@ -503,6 +504,7 @@ export class FormService {
         }),
         catchError(this.handleError));
   }
+
   getCompanyApprovedRequestsCount(companyRoleId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
@@ -516,6 +518,7 @@ export class FormService {
         }),
         catchError(this.handleError));
   }
+
   getCompanyPendingRequestsCount(companyRoleId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
@@ -529,6 +532,7 @@ export class FormService {
         }),
         catchError(this.handleError));
   }
+
   getAllApprovedRequestCount(companyRoleId) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
@@ -627,6 +631,33 @@ export class FormService {
         catchError(this.handleError));
   }
 
+  getProductWithNotificationNumberList(notificationNumber) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Product/GetProductByNotificationsNumber/${notificationNumber}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+
+  getRequestWithId(id) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}RequestRelease/GetRequestData/${id}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
 
   // getTrackTypeLookUp() {
   //   const headers = new HttpHeaders({
