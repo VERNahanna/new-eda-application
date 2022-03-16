@@ -1,10 +1,10 @@
-import {Component, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnDestroy, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FormService} from '../services/form.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DecimalPipe} from '@angular/common';
 import {catchError, debounceTime, distinctUntilChanged, filter, map, startWith} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {TabsetComponent} from 'ngx-bootstrap/tabs';
 import {InputService} from '../services/input.service';
@@ -17,7 +17,7 @@ import {CustomReleaseModel} from "../../utils/common-models";
   templateUrl: './custom-release.component.html',
   styleUrls: ['./custom-release.component.scss']
 })
-export class CustomReleaseComponent implements OnInit {
+export class CustomReleaseComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = false;
   alertNotificationStatus: boolean = false;
@@ -31,15 +31,19 @@ export class CustomReleaseComponent implements OnInit {
     keyboard: false,
     class: 'modal-xl packagingModal',
   };
-  @ViewChild('successSubmissionModal') modalDetailedTemplate: TemplateRef<any>;
+  @ViewChild('successSubmissionModal') modalSuccessionTemplate: TemplateRef<any>;
   dataInAnyError: any;
   @ViewChild('formTabs', {static: false}) formTabs: TabsetComponent;
   @ViewChild('invoicesTabs', {static: false}) invoicesTabs: TabsetComponent;
   @ViewChild('itemsStepsTabs', {static: false}) itemsStepsTabs: TabsetComponent;
+  @ViewChild('packagingModal') modalTemplate: TemplateRef<any>;
+  @ViewChild('detailedModal') modalDetailedTemplate: TemplateRef<any>;
   activeTabIndex;
   regCustomReleaseForm: FormGroup;
   regInvoicesForm: FormGroup;
   regItemsForm: FormGroup;
+  regPackagingForProduct: FormGroup;
+  regDetailedForProduct: FormGroup;
   filteredOptionsForRawMaterialType: Observable<any[]>;
   filteredOptionsForRequestedReleaseType: Observable<LookupState[]>;
   filteredOptionsForCustomPortName: Observable<LookupState[]>;
@@ -51,6 +55,8 @@ export class CustomReleaseComponent implements OnInit {
   filteredOptionsForUOM: Observable<LookupState[]>;
   filteredOptionsForIngredientList: Observable<LookupState[]>;
   filteredOptionsForFunctionList: Observable<LookupState[]>;
+  filteredOptionsForIngradiant: Observable<LookupState[]>;
+  filteredOptionsForFunction: Observable<LookupState[]>;
   formData = null;
   attachmentFields: AttachemntObject[] = [
     {
@@ -125,6 +131,14 @@ export class CustomReleaseComponent implements OnInit {
   };
   itemListTable = {
     tableHeader: ['itemType', 'importReason', 'manufacturingCompany', 'quantity', 'batchNo', 'Actions'],
+    tableBody: []
+  };
+  detailsListTable = {
+    tableHeader: ['colour', 'fragrance', 'flavor', 'barCode'],
+    tableBody: []
+  };
+  packagingListTable = {
+    tableHeader: ['choose', 'volumes', 'unitOfMeasure', 'typeOfPackaging'],
     tableBody: []
   };
   invoiceContainerDisplayStatus: boolean = false;
@@ -342,12 +356,19 @@ export class CustomReleaseComponent implements OnInit {
   currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
   disableItemTypeField: boolean = false;
   disableImportReasonField: boolean = false;
-
+  editIndex;
+  editDetailedRowStatus = false;
+  editPackagingIndex;
+  editPackagingRowStatus = false;
   editInvoiceIndex;
   editInvoiceRowStatus = false;
   selectedReleaseTypeId;
   companyId;
   companyName;
+  arrayOfObservablesForIngredient: Observable<LookupState[]>[] = [];
+  arrayOfObservablesForFunction: Observable<LookupState[]>[] = [];
+  subscription: Subscription;
+  showDetailsTab: boolean = false;
 
   constructor(private fb: FormBuilder,
               private number: DecimalPipe,
@@ -361,6 +382,8 @@ export class CustomReleaseComponent implements OnInit {
     this.getFormAsStarting('', '');
     this.getInvoicesFormAsStarting('', '');
     this.getItemsFormAsStarting('', '');
+    this.getPackagingFormAsStarting('');
+    this.getDetailedFormAsStarting('');
 
     this.route.params.subscribe(res => {
       this.serviceId = res.serviceId;
@@ -666,7 +689,6 @@ export class CustomReleaseComponent implements OnInit {
 
   getFormAsStarting(data, fromWhere?: string) {
     if (data) {
-
       this.formData.releaseType.filter(item => item.id === data.releaseTypeId).map(x => data.releaseTypeId = x.name[this.currentLang]);
       this.formData.ports.filter(item => item.id === data.LkupPortsId).map(x => data.LkupPortsId = x.name[this.currentLang]);
       this.formData.countries.filter(item => item.id === data.supplierCountryId).map(x => data.supplierCountryId = x.name[this.currentLang]);
@@ -741,8 +763,12 @@ export class CustomReleaseComponent implements OnInit {
     }
   }
 
-  getInvoicesFormAsStarting(data, fromWhere) {
+  getInvoicesFormAsStarting(data, fromWhere?: string) {
     if (data) {
+      console.log('data', data);
+      this.formData.currencies.filter(item => item.id === data.currency).map(x => data.currency = x.name[this.currentLang]);
+
+      this.regInvoicesForm.patchValue({...data})
     } else {
       this.regInvoicesForm = this.fb.group({
         id: 0,
@@ -757,8 +783,15 @@ export class CustomReleaseComponent implements OnInit {
     }
   }
 
-  getItemsFormAsStarting(data, fromWhere) {
+  getItemsFormAsStarting(data, fromWhere?: string) {
     if (data) {
+      this.formData.itemTypeList.filter(item => item.id === data.ItemTypeId).map(x => this.itemType = x.name[this.currentLang]);
+      this.formData.importReasonList.filter(item => item.id === data.importReason).map(x => this.importReason = x.name[this.currentLang]);
+      this.formData.countries.filter(item => item.id === data.manufacturingCompany).map(x => data.manufacturingCompany = x.name[this.currentLang]);
+      this.formData.countries.filter(item => item.id === data.manufacturingCountry).map(x => data.manufacturingCountry = x.name[this.currentLang]);
+      this.formData.unitOfMeasure.filter(item => item.id === data.uom).map(x => data.uom = x.name[this.currentLang]);
+
+      this.regItemsForm.patchValue({...data})
     } else {
       this.regItemsForm = this.fb.group({
         id: 0,
@@ -793,6 +826,50 @@ export class CustomReleaseComponent implements OnInit {
         sourceOfRawMaterialName: this.itemType === 'RAW_MATERIAL' ? this.fb.control('') : this.fb.control(''),
         declarationOfFreeOfSalmonella: this.itemType === 'RAW_MATERIAL' && this.importReason !== 'RAW_MAT_RD' ? this.fb.control('') : this.fb.control(''),
         packingItemName: this.itemType === 'PACKING_MATERIALS' ? this.fb.control('') : this.fb.control(''),
+        packagingTable: this.fb.control([]),
+        detailsTable: this.fb.control([]),
+      });
+    }
+  }
+
+  getPackagingFormAsStarting(data) {
+    if (data) {
+
+    } else {
+      this.regPackagingForProduct = this.fb.group({
+        APPWORKS_GUID: null,
+        APPWORKS_ID: null,
+        volumesID: this.fb.control(''),
+        volumes: this.fb.control('', [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]),
+        unitOfMeasure: this.fb.control('', Validators.required),
+        typeOfPackaging: this.fb.control('', Validators.required),
+        packagingDescription: this.fb.control(''),
+        isCartonBox: this.fb.control(''),
+      });
+    }
+  }
+
+  getDetailedFormAsStarting(data) {
+    if (data) {
+
+    } else {
+      this.regDetailedForProduct = this.fb.group({
+        APPWORKS_GUID: null,
+        APPWORKS_ID: null,
+        DetailsID: this.fb.control(''),
+        PRODUCT_ID: this.fb.control(''),
+        colour: this.fb.control(''),
+        fragrance: this.fb.control(''),
+        flavor: this.fb.control(''),
+        barCode: this.fb.control(''),
+        ingrediantDetails: this.fb.array([this.fb.group({
+          APPWORKS_GUID: null,
+          APPWORKS_ID: null,
+          Ingredient_ID: this.fb.control(''),
+          ingrediant: this.fb.control('', Validators.required),
+          concentrations: this.fb.control('', [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]),
+          function: this.fb.control('', Validators.required),
+        })])
       });
     }
   }
@@ -909,10 +986,50 @@ export class CustomReleaseComponent implements OnInit {
 
   hideInvoiceContainer() {
     this.invoiceContainerDisplayStatus = false;
+
+    this.getInvoicesFormAsStarting('')
   }
 
   hideItemContainer() {
     this.itemContainerDisplayStatus = false;
+
+    this.getItemsFormAsStarting('')
+  }
+
+  editItem(event) {
+    this.showItemContainer();
+
+    this.editItemIndex = event.index;
+    this.editItemRowStatus = true;
+
+    this.getItemsFormAsStarting(event.data);
+  }
+
+  deleteItem(i) {
+    this.regInvoicesForm.get('itemDetails').value.splice(i, 1);
+
+    this.itemListTable.tableBody = [];
+    this.regInvoicesForm.get('itemDetails').value.map((x, i) => {
+      this.itemListTable.tableBody = [...this.itemListTable.tableBody, x];
+    });
+  }
+
+  editInvoice(event) {
+    this.showInvoiceContainer();
+
+    this.editInvoiceIndex = event.index;
+    this.editInvoiceRowStatus = true;
+
+    this.getInvoicesFormAsStarting(event.data);
+  }
+
+  deleteInvoice(i) {
+    this.regInvoicesForm.get('itemDetails').value.splice(i, 1);
+
+    this.itemListTable.tableBody = [];
+    this.regInvoicesForm.get('itemDetails').value.map((x, i) => {
+      this.itemListTable.tableBody = [...this.itemListTable.tableBody, x];
+    });
   }
 
   getTheSelectedValueForImportedReason(itemType, event) {
@@ -956,7 +1073,25 @@ export class CustomReleaseComponent implements OnInit {
     if (notificationNumber) {
       this.getService.getProductWithNotificationNumberList(notificationNumber).subscribe((res: any) => {
         if (res) {
-          console.log('res', res);
+          this.showDetailsTab = true;
+
+          // if ingredientDetailsDto of productDetailsDto is object
+          const detailsArray = res.productDetailsDto.map(item => {
+            return {
+              ...item,
+              ingredientDetailsDto: item.ingredientDetailsDto ? [item.ingredientDetailsDto] : []
+            }
+          });
+
+          this.regItemsForm.patchValue({
+            shortName: res.shortName,
+            ProductEnglishName: res.englishName,
+            manufacturingCompany: res.manufacturingCompanyId,
+            manufacturingCountry: res.manufacturingCountryId,
+          });
+
+          this.packagingListTable.tableBody = res.productVolumesDto;
+          this.detailsListTable.tableBody = detailsArray;
         }
         this.isLoading = false;
       }, error => this.handleError(error));
@@ -1086,6 +1221,33 @@ export class CustomReleaseComponent implements OnInit {
     });
 
     return id;
+  }
+
+  getIdFromLookupByNameWithDiffModel(list, value) {
+    let id;
+    list.filter(option => option.inciName === value).map(res => {
+      id = res.id;
+    });
+
+    return id;
+  }
+
+  ngOnDestroy() {
+    if (this.subscription && !this.subscription.closed) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, this.modalOptions);
+  }
+
+  choosePackagingData(event: { index: number, data: any }) {
+    this.regItemsForm.get('packagingTable').patchValue([event.data]);
+  }
+
+  chooseDetailsData(event: { index: number, data: any }) {
+    this.regItemsForm.get('detailsTable').patchValue([event.data]);
   }
 }
 

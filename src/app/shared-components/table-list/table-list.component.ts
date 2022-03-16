@@ -51,32 +51,19 @@ export class TableListComponent implements OnInit, OnChanges {
 
 
   @Input() removeFilterKey;
-  @Output() removeDetailsRowOutput = new EventEmitter();
-  @Output() removeDetailsRowIDs = new EventEmitter();
-  @Output() removePackagingRowOutput = new EventEmitter();
-  @Output() removePackagingRowIDs = new EventEmitter();
-  @Output() editPackagingRowIDs = new EventEmitter();
-  @Output() removeManufacturingRowOutput = new EventEmitter();
-  @Output() removeManufacturingRowIDs = new EventEmitter();
-  @Output() editManufacturingRowIDs = new EventEmitter();
-  @Output() removeIngrediantDetailsRowOutput = new EventEmitter();
-  @Output() removeIngrediantDetailsIDs = new EventEmitter();
-  @Output() removeIngrediantRowOutput = new EventEmitter();
-  @Output() editIngrediantRowOutput = new EventEmitter();
-  @Output() removeProductFromKit = new EventEmitter();
-  @Output() editDetailedRowOutput = new EventEmitter();
-  @Output() copyDetailedRowOutput = new EventEmitter();
   @Output() seenNotification = new EventEmitter();
   @Output() editProductInInvoicesRows = new EventEmitter();
   @Output() removeProductInInvoicesRows = new EventEmitter();
   @Output() removeDraftProduct = new EventEmitter();
+  @Output() choosePackagingRow = new EventEmitter();
+  @Output() chooseDetailsRowOutput = new EventEmitter();
+  @Output() editItemData = new EventEmitter();
+  @Output() deleteItemData = new EventEmitter();
+  @Output() editInvoiceData = new EventEmitter();
+  @Output() deleteInvoiceData = new EventEmitter();
 
   contentArray = [];
   returnedArray: string[];
-  deletedIdsListForPackaging = [];
-  deletedIdsListForManufacturing = [];
-  deletedIdsListForDetailsRow = [];
-  deletedIdsListForIngrediant = [];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -280,5 +267,29 @@ export class TableListComponent implements OnInit, OnChanges {
 
   seenNotificationFunction(id) {
     this.seenNotification.emit(id);
+  }
+
+  choosePackingRow(index, request) {
+    this.choosePackagingRow.emit({index, data: request})
+  }
+
+  chooseDetailsRow(index, request) {
+    this.chooseDetailsRowOutput.emit({index, data: request})
+  }
+
+  editInvoice(index, request) {
+    this.editInvoiceData.emit({index, data: request})
+  }
+
+  deleteInvoice(index, request) {
+    this.deleteInvoiceData.emit(index)
+  }
+
+  editItem(index, request) {
+    this.editItemData.emit({index, data: request})
+  }
+
+  deleteItem(index, request) {
+    this.deleteItemData.emit(index)
   }
 }

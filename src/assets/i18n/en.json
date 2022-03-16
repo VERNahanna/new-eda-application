@@ -154,7 +154,15 @@
     "action": "Action",
     "requestId": "Request id",
     "createdBy": "Created by",
-    "status": "Status"
+    "status": "Status",
+    "colour": "Colour",
+    "fragrance": "Fragrance",
+    "flavor": "Flavor",
+    "barCode": "BarCode",
+    "volumes": "Volumes",
+    "unitOfMeasure": "Unit of measure",
+    "typeOfPackaging": "type of packaging",
+    "choose": "Choose"
   },
   "alerts": {
   },

@@ -311,6 +311,8 @@
                 </div>
                 <div class="col-12 invoiceListTable">
                   <app-table-list [data]="invoiceListTable"
+                                  (editInvoiceData)="editInvoice($event)"
+                                  (deleteInvoiceData)="deleteInvoice($event)"
                                   [whichTable]="'invoiceList'">
                   </app-table-list>
                 </div>
@@ -541,6 +543,8 @@
                 </div>
                 <div class="col-12 itemListTableCont">
                   <app-table-list [data]="itemListTable"
+                                  (editItemData)="editItem($event)"
+                                  (deleteItemData)="deleteItem($event)"
                                   [whichTable]="'itemList'">
                   </app-table-list>
                 </div>
@@ -745,7 +749,8 @@
                 (keydown.enter)="$event.preventDefault()"
                 (ngSubmit)="onSubmitItems()" novalidate xmlns="http://www.w3.org/1999/html"
                 autocomplete="off">
-            <tabset class="tabs {{currentLang === 'ar' ? 'arabicTabs':''}}" type="pills" #itemsStepsTabs>
+            <tabset class="tabs {{showDetailsTab ? 'detailsTabs':''}} {{currentLang === 'ar' ? 'arabicTabs':''}}"
+                    type="pills" #itemsStepsTabs>
               <tab [heading]="'customRelease.wizardSteps.itemsDetails' | translate">
                 <div class="mt-5">
                   <div class="row mt-3">
@@ -898,6 +903,49 @@
                           </div>
                         </div>
                       </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <tab heading="Packaging/Ingredient Data" *ngIf="showDetailsTab">
+                <div class="mt-5">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="d-flex flex-column">
+                        <div class="row">
+                          <div class="col-12 col-sm-8">
+                            <app-title [smallTitle]="true" [title]="'Packaging data'"></app-title>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="RequestingTable newRequestForPackaging">
+                        <app-table-list [data]="packagingListTable"
+                                        (choosePackagingRow)="choosePackagingData($event)"
+                                        [whichTable]="'newRequestForPackaging'"></app-table-list>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-5">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="d-flex flex-column">
+                        <div class="row">
+                          <div class="col-12 col-sm-8">
+                            <app-title [smallTitle]="true" [title]="'Ingredients data'"></app-title>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="RequestingTable newRequestForDetails">
+                        <app-table-list [data]="detailsListTable"
+                                        (choosePackagingRow)="chooseDetailsData($event)"
+                                        [whichTable]="'newRequestForDetails'"></app-table-list>
+                      </div>
                     </div>
                   </div>
                 </div>
