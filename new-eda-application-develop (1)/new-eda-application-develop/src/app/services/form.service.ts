@@ -339,7 +339,7 @@ export class FormService {
     });
 
     const options = {headers};
-debugger;
+
     data = JSON.stringify(data);
 
     return this.http.post(`${this.secondApiURL}Requests/SubmitRequest`, data, options)
@@ -838,7 +838,20 @@ debugger;
         }),
         catchError(this.handleError));
   }
+  getPremixList()
+  {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
 
+    return this.http.get(`${this.secondApiURL}premix/GetPremixList`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
   //
   // getVariablesPricesLookUp() {
   //   const headers = new HttpHeaders({

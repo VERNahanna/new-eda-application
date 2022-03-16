@@ -12,7 +12,7 @@
             [ngClass]="{'text-right': screenWidth > 960, 'd-flex flex-column flex-sm-row': screenWidth <= 960, 'mt-5': screenWidth <= 960 && screenWidth > 640}">
             <div class="TitleContainer"
                  [ngClass]="{'w-100 w-sm-85': screenWidth <= 960 }">
-              <div class="d-flex align-items-center justify-content-space-evenly">
+              <div class="d-flex align-items-center">
                 <div class="col-lg-3">
                   <h2>{{'header.partnerTitles.centralAdministration' | translate}}</h2>
                 </div>
@@ -22,25 +22,24 @@
                 <div class="col-lg-3">
                   <h2>{{'header.partnerTitles.EServices' | translate}}</h2>
                 </div>
+                <a class="{{currentLang === 'ar' ? 'mr-auto':'ml-auto'}} notification"
+                   routerLink="/pages/notification-list">
+                  <div class="bellContainer">
+                    <i class="fas fa-bell"></i>
 
-              <a class="{{currentLang === 'ar' ? 'mr-auto':'ml-auto'}} notification"
-              routerLink="/pages/notification-list">
-             <div class="bellContainer">
-               <i class="fas fa-bell"></i>
-
-               <span class="notificationCountClass">{{notificationCount}}</span>
-             </div>
-           </a>
-           <div class="changeLang {{currentLang === 'ar' ? 'mr-4':'ml-4'}}">
-             <select class="form-control" #langauge (change)="translateSite(langauge.value)">
-          
-               <option *ngFor="let localization of translateService.getLangs()" [value]="localization"
-                       [selected]="localization === localization.currentLang">
-                 {{ localization.toUpperCase() }}
-               </option>
-             </select>
-           </div>
-          </div>
+                    <span class="notificationCountClass">{{notificationCount}}</span>
+                  </div>
+                </a>
+                <div class="changeLang {{currentLang === 'ar' ? 'mr-4':'ml-4'}}">
+                  <select class="form-control" #langauge (change)="translateSite(langauge.value)">
+               
+                    <option *ngFor="let localization of translateService.getLangs()" [value]="localization"
+                            [selected]="localization === localization.currentLang">
+                      {{ localization.toUpperCase() }}
+                    </option>
+                  </select>
+                </div>
+              </div>
             </div>
             <div
               class="btn-group mx-auto {{currentLang === 'ar' ? ' mr-sm-auto':'ml-sm-auto'}} dropdown forResponsiveMenu"
@@ -161,6 +160,16 @@
                   <ul *dropdownMenu
                       class="dropdown-menu dropdown-menu-right"
                       role="menu" aria-labelledby="button-basic">
+					  <li role="menuitem">
+                          <a class="dropdown-item  {{currentLang === 'ar' ? 'text-right' : 'text-left'}}"
+                          routerLink="/pages/cosmetics-product/inner/premix-list" routerLinkActive="active">
+                         <span class="{{currentLang === 'ar' ? 'mr-1':'ml-1'}}">   <i class="fas fa-dolly-flatbed"></i></span>
+                      New Premix
+                       </a>
+                        </li>
+					   <li role="menuitem">
+                        <a class="dropdown-item" >My Account</a>
+                      </li>
                     <li role="menuitem">
                       <a class="dropdown-item" (click)="logoutFunction()">Logout</a>
                     </li>

@@ -659,6 +659,7 @@ export class CustomReleaseComponent implements OnInit {
   }
 
   setAllLookupsInObservable() {
+    
     this.filteredOptionsForRawMaterialType = this.filterLookupsFunction('rowMaterialNameField', this.rowMaterialNameField, this.formData?.rawMaterialList);
     this.filteredOptionsForRequestedReleaseType = this.filterLookupsFunction('releaseType', this.regCustomReleaseForm.get('requestedReleaseType'), this.formData?.releaseType);
     this.filteredOptionsForCustomPortName = this.filterLookupsFunction('ports', this.regCustomReleaseForm.get('customPortName'), this.formData?.ports);
@@ -1109,6 +1110,8 @@ export class CustomReleaseComponent implements OnInit {
 
     data.Invoices = data.Invoices?.map(option => {
       option.currency = option.currency ? this.getIdFromLookupByName(this.formData.currencies, option.currency) : '';
+      option.supplierName= data.supplierName ? data.supplierName : '';
+      option.supplierCountry= data.supplierCountry ? this.getIdFromLookupByName(this.formData.countries, data.supplierCountry) : 0;
       option.invoiceValue = Number(option.invoiceValue)
       option.itemDetails = option.itemDetails?.map(item => {
         item.ItemTypeId = item.ItemTypeId ? this.getIdFromLookupByName(this.formData.itemTypeList, item.ItemTypeId) : '';
@@ -1139,8 +1142,8 @@ export class CustomReleaseComponent implements OnInit {
       applicant: this.companyId,
       LkupPortsId: data.customPortName ? this.getIdFromLookupByName(this.formData.ports, data.customPortName) : 0,
       pod: data.pod ? data.pod : '',
-      supplierName: data.supplierName ? data.supplierName : '',
-      supplierCountry: data.supplierCountry ? this.getIdFromLookupByName(this.formData.countries, data.supplierCountry) : 0,
+      // supplierName: data.supplierName ? data.supplierName : '',
+      // supplierCountry: data.supplierCountry ? this.getIdFromLookupByName(this.formData.countries, data.supplierCountry) : 0,
       carrierName: data.carrierName ? data.carrierName : '',
       grossWeight: data.grossWeight ? data.grossWeight : 0,
       LkupUomId: data.measureUnit ? this.getIdFromLookupByName(this.formData.unitOfMeasure, data.measureUnit) : 0,

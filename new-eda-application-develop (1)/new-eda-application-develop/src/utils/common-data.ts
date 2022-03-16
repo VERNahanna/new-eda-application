@@ -106,6 +106,10 @@ export const menuObjectKeys: MenuObjectCommonKeys = {
       RELEASE_COSMETICS: {
         link: '/pages/cosmetics-product/inner/release-services',
         icon: 'fas fa-dolly-flatbed'
+      },
+      NEW_PREMIX: {
+        link: '/pages/cosmetics-product/inner/premix-list',
+        icon: 'fas fa-dolly-flatbed'
       }
     }
   },

@@ -50,6 +50,8 @@ import {CardComponent} from './shared-components/card/card.component';
 import {PharmaceuticalRawMaterialsModule} from "./pharmaceutical-raw-materials/pharmaceutical-raw-materials.module";
 import {SharedComponentsModule} from "./shared-components/shared-components.module";
 import {CosmeticsProductsModule} from "./cosmetics-products/cosmetics-products.module";
+import { PremixListComponent } from './Premix/premix-list/premix-list.component';
+import { CreateOrEditPremixComponent } from './Premix/create-or-edit-premix/create-or-edit-premix.component';
 
 
 registerLocaleData(localeAr, 'ar-Ar', localeArabicExtra);
@@ -78,6 +80,7 @@ const translations = {
     CustomReleaseComponent,
     DashboardComponent,
     ChartsComponentComponent,
+
   ],
   imports: [
     BrowserModule,

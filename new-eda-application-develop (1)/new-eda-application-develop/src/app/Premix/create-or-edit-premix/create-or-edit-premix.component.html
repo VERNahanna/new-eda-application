@@ -1,0 +1,213 @@
+<div class="row">
+    <div class="col-12">  <app-title [title]="'premix.AddNewPremix' | translate" [bigTitle]="true"></app-title></div>
+
+    <div class="col-12 mt-5 formTableContainer">
+      <div class="formTable">
+        <form class="mt-2" name="form" class="example-form" method="post"[formGroup]="PremixForm"
+              (keydown.enter)="$event.preventDefault()"    (ngSubmit)="onSubmit()" novalidate xmlns="http://www.w3.org/1999/html"autocomplete="off">
+
+              <div class="mt-5">
+                <div class="row">
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width inputBesideSelect">
+                      <mat-label>
+                        {{'premix.name' | translate}}
+                      </mat-label>
+                      <input type="text" class="form-control" matInput formControlName="premixName"
+                             placeholder="{{'premix.name' | translate}}" required>
+                      <div
+                        *ngIf="PremixForm.get('premixName').invalid && (PremixForm.get('premixName').dirty || PremixForm.get('premixName').touched)"
+                        class="alert alert-danger">
+                        <div
+                          *ngIf="PremixForm.get('premixName').errors.required">
+                          {{'common.validationStatement.required' | translate}}
+                        </div>
+                      </div>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width inputBesideSelect">
+                      <mat-label>
+                        {{'premix.notificationNumber' | translate}}
+                      </mat-label>
+                      <input type="text" class="form-control" matInput formControlName="notificationNumber"
+                             placeholder="{{'premix.notificationNumber' | translate}}" required>
+                      <div
+                        *ngIf="PremixForm.get('notificationNumber').invalid && (PremixForm.get('notificationNumber').dirty || PremixForm.get('notificationNumber').touched)"
+                        class="alert alert-danger">
+                        <div
+                          *ngIf="PremixForm.get('notificationNumber').errors.required">
+                          {{'common.validationStatement.required' | translate}}
+                        </div>
+                      </div>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width inputBesideSelect">
+                      <mat-label>
+                        {{'premix.originCompany' | translate}}
+                      </mat-label>
+                      <input type="text" class="form-control" matInput formControlName="originCompany"
+                             placeholder="{{'premix.originCompany' | translate}}" required>
+                      <div
+                        *ngIf="PremixForm.get('originCompany').invalid && (PremixForm.get('originCompany').dirty || PremixForm.get('originCompany').touched)"
+                        class="alert alert-danger">
+                        <div
+                          *ngIf="PremixForm.get('originCompany').errors.required">
+                          {{'common.validationStatement.required' | translate}}
+                        </div>
+                      </div>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width inputBesideSelect">
+                      <mat-label>
+                        {{'premix.supplierCompany' | translate}}
+                      </mat-label>
+                      <input type="text" class="form-control" matInput formControlName="supplierCompany"
+                             placeholder="{{'premix.supplierCompany' | translate}}" required>
+                      <div
+                        *ngIf="PremixForm.get('supplierCompany').invalid && (PremixForm.get('supplierCompany').dirty || PremixForm.get('supplierCompany').touched)"
+                        class="alert alert-danger">
+                        <div
+                          *ngIf="PremixForm.get('supplierCompany').errors.required">
+                          {{'common.validationStatement.required' | translate}}
+                        </div>
+                      </div>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>{{'customRelease.formLabel.supplierCountry' | translate}}</mat-label>
+                      <input type="text"
+                             class="form-control"
+                             placeholder="{{'customRelease.formLabel.supplierCountry' | translate}}"
+                             matInput
+                             formControlName="supplierCountry"
+                             [matAutocomplete]="supplierCountryList" required>
+                      <mat-autocomplete #supplierCountryList="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptionsForSupplierCountry | async"
+                                    [value]="option.name[this.currentLang]">
+                            <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
+                                  placement="top">{{option.name[currentLang]}}</span>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>{{'premix.originCountry' | translate}}</mat-label>
+                      <input type="text"
+                             class="form-control"
+                             placeholder="{{'premix.originCountry' | translate}}"
+                             matInput
+                             formControlName="originCountry"
+                             [matAutocomplete]="originCountryList" required>
+                      <mat-autocomplete #originCountryList="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptionsForOriginCountry | async"
+                                    [value]="option.name[this.currentLang]">
+                            <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
+                                  placement="top">{{option.name[currentLang]}}</span>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+<!--Premix Ingredients list -->
+                <div class="col-12">
+                    <app-title [smallTitle]="true"
+                            [title]="'premix.Ingredients' | translate"></app-title>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width inputBesideSelect">
+                      <mat-label>{{'customRelease.formLabel.rawMaterialName' | translate}}</mat-label>
+                      <input type="text"
+                             class="form-control"
+                             placeholder="{{'customRelease.formLabel.rawMaterialName' | translate}}"
+              
+                             matInput
+                             [formControl]="rowMaterialNameField"
+                             [matAutocomplete]="rowMaterialNameList" required>
+                      <mat-autocomplete #rowMaterialNameList="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptionsForRawMaterialType | async"
+                                    [value]="option.inciName">
+                                        <span class="tooltipContainer" tooltip="{{option.inciName}}"
+                                              placement="top">{{option.inciName}}</span>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width inputBesideSelect">
+                      <mat-label>
+                        {{'premix.concentration' | translate}}
+                      </mat-label>
+                      <input type="text" class="form-control" matInput
+                             pattern="^(\d{1,3}(,\d{3})|\d)*(\.\d+)?$"
+                             (change)="getDecimalValue(PremixForm.get('concentration').value, '')"
+                             formControlName="concentration"
+                             placeholder="{{'premix.concentration' | translate}}" required>
+                      <div
+                        *ngIf="PremixForm.get('concentration').invalid && (PremixForm.get('concentration').dirty || PremixForm.get('concentration').touched)"
+                        class="alert alert-danger">
+                        <div
+                          *ngIf="PremixForm.get('concentration').errors.required">
+                          {{'common.validationStatement.required' | translate}}
+                        </div>
+                        <div
+                          *ngIf="PremixForm.get('concentration').errors.pattern">
+                          {{'common.validationStatement.decimalNumberMessage' | translate}}
+                        </div>
+                      </div>
+                    </mat-form-field>
+                  </div>
+<!--Ingredients List-->
+<!--**************** Save -->
+
+                    <div class="row buttonContainer btm-out">
+                        <div class="col-12 d-flex flex-column flex-md-row mt-3">
+                
+                        <div class="{{currentLang === 'ar'? 'mr-md-auto' :'ml-md-auto'}}">
+                            <button type="button"
+                                    class="btn btn-primary btn-sm {{currentLang === 'ar'? 'ml-3' :'mr-3'}} bottomButtons"
+                                    [disabled]="false"
+                                    (click)="SavePremix()">
+                            {{'common.save' | translate}}
+                            </button>
+
+                        </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+        </form>
+      </div>
+    </div>
+</div>
+<ng-template #successSubmissionModal>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{'common.successfulSubmission' | translate}}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeSuccessSubmissionModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modalContainer">
+        <h2>
+          <span>
+            <i class="fas fa-check-circle"></i>
+          </span>
+        </h2>
+        <h3>
+          {{'common.submissionMessage' | translate}}
+        </h3>
+        <h3>
+          {{'common.' + dataInAnyError.NotificationNo ? 'submissionWithNotificationNumber' : 'submissionWithId' | translate}}
+          <b>{{ dataInAnyError.NotificationNo ? dataInAnyError.NotificationNo : dataInAnyError.id}}</b>
+        </h3>
+      </div>
+    </div>
+  </ng-template>
+  
+
+  <app-loader-component [loadingStatus]="isLoading"></app-loader-component>
+  

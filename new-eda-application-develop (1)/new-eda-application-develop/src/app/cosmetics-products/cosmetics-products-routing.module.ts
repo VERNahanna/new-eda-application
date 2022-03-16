@@ -5,6 +5,8 @@ import {CosmeticsProductsComponent} from "./cosmetics-products/cosmetics-product
 import {CustomReleaseComponent} from "../custom-release/custom-release.component";
 import {DraftRequestsComponent} from "./draft-requests/draft-requests.component";
 import {TrackRequestsComponent} from "./track-requests/track-requests.component";
+import { PremixListComponent } from '../Premix/premix-list/premix-list.component';
+import { CreateOrEditPremixComponent } from '../Premix/create-or-edit-premix/create-or-edit-premix.component';
 
 const routes: Routes = [
   {
@@ -56,6 +58,18 @@ const routes: Routes = [
         component: TrackRequestsComponent,
         data: {animation: 'inner'}
       }
+      ,
+      {
+        path: 'premix-list',
+        component: PremixListComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path:'createOrEdit-premix',
+        component: CreateOrEditPremixComponent,
+        data: {animation: 'inner'}
+      }
+
     ]
   },
 ];

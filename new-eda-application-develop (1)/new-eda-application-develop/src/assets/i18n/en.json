@@ -21,6 +21,17 @@
       "EServices": "Admin of EICR"
     }
   },
+  "premix":{
+    "notificationNumber":"Notification Number",
+    "name":"Premix Name",
+    "originCompany":"Origin Company",
+    "originCountry":"Origin Country",
+    "supplierCompany":"Supplier Company",
+    "supplierCountry":"Supplier Country",
+    "AddNewPremix":"Create New Premix",
+    "Ingredients":"Ingredients",
+    "concentration":"Concentration"
+  },
   "common": {
     "requests": "requests",
     "request": "request",
@@ -48,7 +59,7 @@
   },
   "customRelease": {
     "wizardSteps": {
-      "releaseRequest": "Release Request",
+      "releaseRequest": "Request",
       "requestDetails": "Request Details",
       "billOfLading": "Bill of lading",
       "attachments": "Attachments",

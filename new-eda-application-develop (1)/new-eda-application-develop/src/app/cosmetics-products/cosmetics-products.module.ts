@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-
 import {CosmeticsProductsRoutingModule} from './cosmetics-products-routing.module';
 import {DraftRequestsComponent} from './draft-requests/draft-requests.component';
 import {TrackRequestsComponent} from './track-requests/track-requests.component';
@@ -27,10 +26,13 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {TranslateModule} from "@ngx-translate/core";
 import {SharedComponentsModule} from "../shared-components/shared-components.module";
 import {CosmeticsProductService} from "./cosmetics-product.service";
+import { PremixListComponent } from '../Premix/premix-list/premix-list.component';
+import { CreateOrEditPremixComponent } from '../Premix/create-or-edit-premix/create-or-edit-premix.component';
 
 
 @NgModule({
-  declarations: [DraftRequestsComponent, TrackRequestsComponent, CosmeticsProductsContainerComponent, CosmeticsProductsComponent],
+  declarations: [DraftRequestsComponent, TrackRequestsComponent, CosmeticsProductsContainerComponent, CosmeticsProductsComponent    , PremixListComponent,
+    CreateOrEditPremixComponent],
   imports: [
     CommonModule,
     CosmeticsProductsRoutingModule,
