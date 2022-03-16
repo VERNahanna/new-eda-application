@@ -328,6 +328,10 @@ body {
   padding: 0.1em 0;
 }
 
+.mat-form-field-ripple {
+  display: none;
+}
+
 /* ------------------------------------ Tabs ----------------------------------- */
 .tabs {
   .nav-pills {

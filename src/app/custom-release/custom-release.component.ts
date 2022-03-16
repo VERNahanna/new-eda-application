@@ -765,7 +765,6 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
 
   getInvoicesFormAsStarting(data, fromWhere?: string) {
     if (data) {
-      console.log('data', data);
       this.formData.currencies.filter(item => item.id === data.currency).map(x => data.currency = x.name[this.currentLang]);
 
       this.regInvoicesForm.patchValue({...data})
@@ -1051,7 +1050,6 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
       }
 
       if (item.enabledCondition && item.relatedWithField.includes(importReason.code)) {
-        debugger;
         if (item.id === 'coa') {
           if (this.selectedReleaseTypeId !== 2) {
             item.enable = true;
@@ -1070,6 +1068,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
   }
 
   applyProduct(notificationNumber) {
+    this.isLoading = true;
     if (notificationNumber) {
       this.getService.getProductWithNotificationNumberList(notificationNumber).subscribe((res: any) => {
         if (res) {

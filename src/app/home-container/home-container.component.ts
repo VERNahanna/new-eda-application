@@ -48,6 +48,7 @@ export class HomeContainerComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<any> {
+    this.isLoading = true;
     this.inputService.getInput$().pipe(
       filter(x => x.type === 'CompanyData'),
       distinctUntilChanged()
@@ -55,9 +56,6 @@ export class HomeContainerComponent implements OnInit {
       this.companyProfileId = res.payload.companyId;
       this.username = res.payload.CompanyName;
     });
-
-
-    this.isLoading = true;
 
     await this.getService.getAllPortsLookUp().subscribe((res: any) => {
       if (res) {
@@ -135,8 +133,9 @@ export class HomeContainerComponent implements OnInit {
       if (res) {
         this.inputService.publish({type: 'departments', payload: res});
       }
+
+      this.isLoading = false;
     }), error => this.handleError(error);
-    this.isLoading = false;
   }
 
   prepareRoute(outlet: RouterOutlet) {
