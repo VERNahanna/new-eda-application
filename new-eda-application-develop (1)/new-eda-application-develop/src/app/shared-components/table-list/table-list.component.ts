@@ -71,6 +71,8 @@ export class TableListComponent implements OnInit, OnChanges {
   @Output() removeProductInInvoicesRows = new EventEmitter();
   @Output() deleteDraftRequest = new EventEmitter();
   @Output() removeDraftProduct = new EventEmitter();
+  @Output() removeIngredientfromPremix = new EventEmitter();
+  @Output() removePremix = new EventEmitter();
   
   contentArray = [];
   returnedArray: string[];
@@ -381,5 +383,15 @@ export class TableListComponent implements OnInit, OnChanges {
   deleteDraftrequest(requestId: number )
   {
     this.removeDraftProduct.emit(requestId);
+  }
+
+  removeIngredientfromPremixList(ingredient)
+  {
+    this.removeIngredientfromPremix.emit(ingredient);
+  }
+
+  removePremixfunction(premix)
+  {
+    this.removePremix.emit(premix);
   }
 }

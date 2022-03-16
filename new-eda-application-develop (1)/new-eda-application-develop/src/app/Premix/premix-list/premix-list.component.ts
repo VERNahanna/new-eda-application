@@ -35,13 +35,13 @@ export class PremixListComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = false;
 
-    /* this.getService.getPremixList().subscribe((res: any) => {
+     this.getService.getPremixList().subscribe((res: any) => {
       this.premixList = {
-        tableHeader: ['Id', 'Premix Name','Notification No','Origin Name','Origin Country','Supplier Name' ,'Supplier Country','Actions'],
+        tableHeader: ['id', 'name','notificationNo','originName','supplierName' ,'action'],
         tableBody: res
       };
       this.isLoading = false;
-    }, error => this.handleError(error)); */
+    }, error => this.handleError(error)); 
   }
 
   handleError(message) {
@@ -54,5 +54,18 @@ export class PremixListComponent implements OnInit {
     setTimeout(() => {
       this.alertErrorNotificationStatus = false;
     }, 2000);
+  }
+  removePremix(premix)
+  {
+ 
+    this.getService.removePremix(premix.id).subscribe((res: any) => {
+    }, error => this.handleError(error)); 
+    this.getService.getPremixList().subscribe((res: any) => {
+      this.premixList = {
+        tableHeader: ['id', 'name','notificationNo','originName','supplierName' ,'action'],
+        tableBody: res
+      };
+      this.isLoading = false;
+    }, error => this.handleError(error)); 
   }
 }

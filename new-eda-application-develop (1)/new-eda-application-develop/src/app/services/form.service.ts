@@ -838,6 +838,22 @@ export class FormService {
         }),
         catchError(this.handleError));
   }
+  AddNewPremix(data) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+   
+    const options = {headers};
+
+    data = JSON.stringify(data);
+
+    return this.http.post(`${this.secondApiURL}Premix/AddPremix`, data, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
   getPremixList()
   {
     const headers = new HttpHeaders({
@@ -846,11 +862,40 @@ export class FormService {
     });
     const options = {headers};
 
-    return this.http.get(`${this.secondApiURL}premix/GetPremixList`, options)
+    return this.http.get(`${this.secondApiURL}Premix/GetPremixList`, options)
       .pipe(map((res: any) => {
           return res;
         }),
         catchError(this.handleError));
+  }
+  getPremixListofFunctions()
+  {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+
+    return this.http.get(`${this.secondApiURL}Premix/GetListOfFunction`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
+  removePremix(id)
+  {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+ 
+return this.http.post(`${this.secondApiURL}Premix/DeltePremix/${id}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+   
   }
   //
   // getVariablesPricesLookUp() {
