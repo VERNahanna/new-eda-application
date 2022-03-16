@@ -7,6 +7,7 @@
     "pharmaceuticalProducts": "Pharmaceutical Products",
     "biologicalProducts": "Biological Products",
     "narcotics": "Narcotics",
+    "detergentsAndPesticides": "Detergents and Pesticides",
     "detergentsAndPesticides": "DISINFECTANTS_PESTICIDES",
     "cosmeticsProducts": "Cosmetics Products",
     "pharmaceuticalExemption": "Pharmaceutical Exemption",
@@ -75,6 +76,7 @@
       "customPortName": "Custom Port name",
       "pod": "Port of Departure",
       "supplierName": "Supplier Name",
+      "typeOfRegistration": "Type of Registration",
       "supplierCountry": "Supplier Country",
       "carrierName": "Carrier name",
       "grossWeight": "Gross weight",
@@ -166,8 +168,24 @@
     "supplierCountry": "Supplier country",
     "supplierName": "Supplier name",
     "BolNo": "BOL number",
-    "action": "Action"
+    "action": "Action",
+    "requestId": "Request id",
+    "createdBy": "Created by",
+    "status": "Status",
+    "colour": "Colour",
+    "fragrance": "Fragrance",
+    "flavor": "Flavor",
+    "barCode": "BarCode",
+    "volumes": "Volumes",
+    "unitOfMeasure": "Unit of measure",
+    "typeOfPackaging": "type of packaging",
+    "choose": "Choose"
   },
   "alerts": {
+  },
+  "tabs": {
+    "inProgress": "In progress",
+    "approvedRequest": "Approved request",
+    "rejectedRequests": "Rejected request"
   }
 }

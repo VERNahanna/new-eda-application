@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(message) {
-  
     this.isLoading = false;
     this.alertErrorNotificationStatus = true;
     this.alertErrorNotification = {msg: message};

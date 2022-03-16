@@ -34,8 +34,7 @@ export class HeaderComponent implements OnInit, OnChanges {
               private router: Router,
               public translateService: TranslateService,
               private route: ActivatedRoute) {
-    translateService.addLangs(['en', 'ar']); 
-    translateService.addLangs(['en']);
+    translateService.addLangs(['en', 'ar']);
     translateService.setDefaultLang('en');
 
     this.onResize();
@@ -121,6 +120,4 @@ export class HeaderComponent implements OnInit, OnChanges {
 
     this.selectedLanguage.emit(language);
   }
-  public RedirectToHome()
-  {this.router.navigate(['/pages/home']);}
 }

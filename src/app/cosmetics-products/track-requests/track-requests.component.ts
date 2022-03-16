@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
-import { FormService } from 'src/app/services/form.service';
-import { InputService } from 'src/app/services/input.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormService} from "../../services/form.service";
+import {TranslateService} from "@ngx-translate/core";
+import {InputService} from "../../services/input.service";
+import {distinctUntilChanged, filter} from "rxjs/operators";
+import {TabsetComponent} from "ngx-bootstrap/tabs";
 
 @Component({
   selector: 'app-track-requests',
@@ -9,80 +11,90 @@ import { InputService } from 'src/app/services/input.service';
   styleUrls: ['./track-requests.component.scss']
 })
 export class TrackRequestsComponent implements OnInit {
-
   isLoading: boolean = false;
   alertNotificationStatus: boolean = false;
   alertNotification: any;
   alertErrorNotificationStatus: boolean = false;
   alertErrorNotification: any;
-  currentLang = 'en';
+  currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
   CompanyRoleID;
-  trackList = {
-    tableHeader: ['Request Id','Bol Number', 'company Name', 'country Name', 'created By', 'submit Date', 'status', 'action'],
-    tableBody: []
-  };
-  approvedList = {
-    tableHeader: ['Request Id','Bol Number', 'company Name', 'country Name', 'created By', 'submit Date', 'status', 'action'],
-    tableBody: []
-  };
-
-  rejectedList = {
-    tableHeader: ['Request Id','Bol Number', 'company Name', 'country Name', 'created By', 'submit Date', 'status', 'action'],
-    tableBody: []
-  };
+  trackList = {};
+  approvedList = {};
+  rejectedList = {};
+  @ViewChild('formTabs', {static: false}) formTabs: TabsetComponent;
 
   constructor(private getService: FormService,
-    private inputService: InputService) {
+              public translateService: TranslateService,
+              private inputService: InputService) {
   }
 
   ngOnInit(): void {
-
+    this.isLoading = true;
     this.inputService.getInput$().pipe(
       filter(x => x.type === 'CompanyData'),
       distinctUntilChanged()
     ).subscribe(res => {
       this.CompanyRoleID = res.payload.CompanyRoleID;
     });
-    
-    this.isLoading = true;
-    this.getDraftProductsList();
-    this. getApprovedRequestsList();
-    this.getRejectedRequestsList();
+
+    this.inputService.getInput$().pipe(
+      filter(x => x.type === 'currentLang'),
+      distinctUntilChanged()
+    ).subscribe(res => {
+      this.currentLang = res.payload;
+    });
+
+    this.setActivatedTab({target: {id: 'inProgress'}});
   }
-  getDraftProductsList() {
+
+  setActivatedTab(event) {
+    switch (event.target.id.split('-')[0]) {
+      case 'inProgress':
+        this.getTrackProductsList();
+        break;
+      case 'approvedRequest':
+        this.getApprovedRequestsList();
+        break;
+      case 'rejectedRequests':
+        this.getRejectedRequestsList();
+        break;
+      default:
+        return;
+    }
+
+    this.isLoading = false;
+  }
+
+  getTrackProductsList() {
     this.getService.getAllPendingRequestCount(this.CompanyRoleID).subscribe((res: any) => {
-      
       this.trackList = {
-        tableHeader: ['Request Id','Bol Number', 'company Name', 'country Name', 'created By', 'submit Date', 'status', 'action'],
+        tableHeader: ['requestId', 'BolNo', 'companyName', 'companyCountry', 'createdBy', 'submissionDate', 'status', 'action'],
         tableBody: res
       };
       this.isLoading = false;
     }, error => this.handleError(error));
   }
-/**Approved  Requests Tab*/
+
   getApprovedRequestsList() {
     this.getService.getAllApprovedRequestCount(this.CompanyRoleID).subscribe((res: any) => {
-      
       this.approvedList = {
-        tableHeader: ['Request Id','Bol Number', 'company Name', 'country Name', 'created By', 'submit Date', 'status', 'action'],
+        tableHeader: ['requestId', 'BolNo', 'companyName', 'companyCountry', 'createdBy', 'submissionDate', 'status', 'action'],
         tableBody: res
       };
       this.isLoading = false;
     }, error => this.handleError(error));
   }
 
-  /**Rejected  Requests Tab*/
   getRejectedRequestsList() {
     this.getService.getAllRejectedRequestCount(this.CompanyRoleID).subscribe((res: any) => {
-      
+
       this.rejectedList = {
-        tableHeader: ['Request Id','Bol Number', 'company Name', 'country Name', 'created By', 'submit Date', 'status', 'action'],
+        tableHeader: ['requestId', 'BolNo', 'companyName', 'companyCountry', 'createdBy', 'submissionDate', 'status', 'action'],
         tableBody: res
       };
       this.isLoading = false;
     }, error => this.handleError(error));
   }
-
 
   onClosedErrorAlert() {
     setTimeout(() => {
@@ -90,7 +102,6 @@ export class TrackRequestsComponent implements OnInit {
     }, 2000);
   }
 
-  
   handleError(message) {
     this.alertErrorNotificationStatus = true;
     this.alertErrorNotification = {msg: message};

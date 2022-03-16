@@ -39,6 +39,11 @@ const routes: Routes = [
         data: {animation: 'inner'}
       },
       {
+        path: 'new-request/:id',
+        component: CustomReleaseComponent,
+        data: {animation: 'inner'}
+      },
+      {
         path: 'new-request/:serviceId/:serviceTypeId',
         component: CustomReleaseComponent,
         data: {animation: 'inner'}

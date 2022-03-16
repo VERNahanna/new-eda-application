@@ -328,6 +328,10 @@ body {
   padding: 0.1em 0;
 }
 
+.mat-form-field-ripple {
+  display: none;
+}
+
 /* ------------------------------------ Tabs ----------------------------------- */
 .tabs {
   .nav-pills {
@@ -394,6 +398,14 @@ body {
   .nav-pills {
     .nav-item {
       width: 49%;
+    }
+  }
+
+  .detailsTabs {
+    .nav-pills {
+      .nav-item {
+        width: 32%;
+      }
     }
   }
 }
@@ -602,6 +614,7 @@ button span.ellipsisSpan {
     }
   }
 }
+
 .draftList {
   .table {
     tr {
@@ -631,6 +644,7 @@ button span.ellipsisSpan {
     }
   }
 }
+
 .invoiceListTable {
   .table {
     tr {
@@ -652,6 +666,92 @@ button span.ellipsisSpan {
 
       th:nth-child(5), td:nth-child(5) {
         width: 10% !important;
+      }
+    }
+  }
+}
+
+.newRequestForPackaging {
+  .table {
+    tr {
+      th:first-child, td:first-child {
+        width: 25% !important;
+      }
+
+      th:nth-child(2), td:nth-child(2) {
+        width: 25% !important;
+      }
+
+      th:nth-child(3), td:nth-child(3) {
+        width: 25% !important;
+      }
+
+      th:nth-child(4), td:nth-child(4) {
+        width: 25% !important;
+      }
+    }
+  }
+}
+
+.newRequestForDetails {
+  .table {
+    tr {
+      th:first-child, td:first-child {
+        width: 20% !important;
+      }
+
+      th:nth-child(2), td:nth-child(2) {
+        width: 20% !important;
+      }
+
+      th:nth-child(3), td:nth-child(3) {
+        width: 20% !important;
+      }
+
+      th:nth-child(4), td:nth-child(4) {
+        width: 20% !important;
+      }
+
+      th:nth-child(5), td:nth-child(5) {
+        width: 20% !important;
+      }
+    }
+  }
+}
+
+.trackTable {
+  .table {
+    tr {
+      th:first-child, td:first-child {
+        width: 11% !important;
+      }
+
+      th:nth-child(2), td:nth-child(2) {
+        width: 11% !important;
+      }
+
+      th:nth-child(3), td:nth-child(3) {
+        width: 11% !important;
+      }
+
+      th:nth-child(4), td:nth-child(4) {
+        width: 11% !important;
+      }
+
+      th:nth-child(5), td:nth-child(5) {
+        width: 11% !important;
+      }
+
+      th:nth-child(6), td:nth-child(6) {
+        width: 11% !important;
+      }
+
+      th:nth-child(7), td:nth-child(7) {
+        width: 11% !important;
+      }
+
+      th:nth-child(8), td:nth-child(8) {
+        width: 11% !important;
       }
     }
   }

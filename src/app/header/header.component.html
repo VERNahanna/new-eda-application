@@ -2,7 +2,7 @@
   <div class="row d-flex align-items-center justify-content-center">
     <div class="col-lg-2 col-md-4 col-sm-12">
       <div class="logo">
-        <img src="assets/img/logo.png" (click)="RedirectToHome()">
+        <img src="assets/img/logo.png" routerLink="/pages/home">
       </div>
     </div>
     <div class="col-lg-10 col-md-8 col-sm-12">
@@ -13,13 +13,9 @@
             <div class="TitleContainer"
                  [ngClass]="{'w-100 w-sm-85': screenWidth <= 960 }">
               <div class="d-flex align-items-center">
-                <div class="col-lg-3">
+                <div class="d-flex align-items-start justify-content-center p-3">
                   <h2>{{'header.partnerTitles.centralAdministration' | translate}}</h2>
-                </div>
-                <div class="col-lg-3">
                   <h2>{{'header.partnerTitles.generalDirectorate' | translate}}</h2>
-                </div>
-                <div class="col-lg-3">
                   <h2>{{'header.partnerTitles.EServices' | translate}}</h2>
                 </div>
                 <a class="{{currentLang === 'ar' ? 'mr-auto':'ml-auto'}} notification"
@@ -32,11 +28,12 @@
                 </a>
                 <div class="changeLang {{currentLang === 'ar' ? 'mr-4':'ml-4'}}">
                   <select class="form-control" #langauge (change)="translateSite(langauge.value)">
-               
+
                     <option *ngFor="let localization of translateService.getLangs()" [value]="localization"
                             [selected]="localization === localization.currentLang">
                       {{ localization.toUpperCase() }}
                     </option>
+
                   </select>
                 </div>
               </div>

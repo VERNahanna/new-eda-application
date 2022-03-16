@@ -51,33 +51,19 @@ export class TableListComponent implements OnInit, OnChanges {
 
 
   @Input() removeFilterKey;
-  @Output() removeDetailsRowOutput = new EventEmitter();
-  @Output() removeDetailsRowIDs = new EventEmitter();
-  @Output() removePackagingRowOutput = new EventEmitter();
-  @Output() removePackagingRowIDs = new EventEmitter();
-  @Output() editPackagingRowIDs = new EventEmitter();
-  @Output() removeManufacturingRowOutput = new EventEmitter();
-  @Output() removeManufacturingRowIDs = new EventEmitter();
-  @Output() editManufacturingRowIDs = new EventEmitter();
-  @Output() removeIngrediantDetailsRowOutput = new EventEmitter();
-  @Output() removeIngrediantDetailsIDs = new EventEmitter();
-  @Output() removeIngrediantRowOutput = new EventEmitter();
-  @Output() editIngrediantRowOutput = new EventEmitter();
-  @Output() removeProductFromKit = new EventEmitter();
-  @Output() editDetailedRowOutput = new EventEmitter();
-  @Output() copyDetailedRowOutput = new EventEmitter();
   @Output() seenNotification = new EventEmitter();
   @Output() editProductInInvoicesRows = new EventEmitter();
   @Output() removeProductInInvoicesRows = new EventEmitter();
-  @Output() deleteDraftRequest = new EventEmitter();
   @Output() removeDraftProduct = new EventEmitter();
-  
+  @Output() choosePackagingRow = new EventEmitter();
+  @Output() chooseDetailsRowOutput = new EventEmitter();
+  @Output() editItemData = new EventEmitter();
+  @Output() deleteItemData = new EventEmitter();
+  @Output() editInvoiceData = new EventEmitter();
+  @Output() deleteInvoiceData = new EventEmitter();
+
   contentArray = [];
   returnedArray: string[];
-  deletedIdsListForPackaging = [];
-  deletedIdsListForManufacturing = [];
-  deletedIdsListForDetailsRow = [];
-  deletedIdsListForIngrediant = [];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -88,7 +74,7 @@ export class TableListComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.data) {
       if (this.data.tableBody && this.data.tableBody?.length > 0) {
-        if (this.whichTable === 'drafted' || this.whichTable === 'notificationList'||this.whichTable==='track') {
+        if (this.whichTable === 'drafted' || this.whichTable === 'track' || this.whichTable === 'notificationList') {
           this.data.tableBody.sort((a, b) => a.createdDate && b.createdDate ? (a.createdDate > b.createdDate) ? -1 : 1 : -1);
 
           if (this.whichTable === 'notificationList') {
@@ -139,7 +125,6 @@ export class TableListComponent implements OnInit, OnChanges {
     this.contentArray = [];
     this.returnedArray = [];
 
-    console.log('12', this.staticFilterKey[columnName]);
     this.sortStatus = !status;
     if (!this.sortStatus) {
       if (this.staticFilterKey[columnName] === 'createdDate') {
@@ -158,78 +143,6 @@ export class TableListComponent implements OnInit, OnChanges {
     this.contentArray = new Array(this.data.tableBody.length).fill('');
     this.contentArray = this.contentArray.map((v: string, i: number) => this.data.tableBody[i]);
     this.returnedArray = this.contentArray.slice(0, 10);
-  }
-
-  removeDetailsRowFunction(i, requestID) {
-    if (requestID) {
-      this.deletedIdsListForDetailsRow.push(requestID);
-      this.removeDetailsRowIDs.emit(this.deletedIdsListForDetailsRow);
-    }
-
-    this.removeDetailsRowOutput.emit(i);
-  }
-
-  removePackagingRowFunction(i, requestID) {
-    this.removePackagingRowOutput.emit(i);
-
-    if (requestID) {
-      this.deletedIdsListForPackaging.push(requestID);
-      this.removePackagingRowIDs.emit(this.deletedIdsListForPackaging);
-    }
-  }
-
-  editPackagingRowFunction(i) {
-    this.editPackagingRowIDs.emit(i);
-  }
-
-  removeManufacturingRowFunction(i, requestID) {
-    this.removeManufacturingRowOutput.emit(i);
-
-    if (requestID) {
-      this.deletedIdsListForManufacturing.push(requestID);
-      this.removeManufacturingRowIDs.emit(this.deletedIdsListForManufacturing);
-    }
-  }
-
-  editManufacturingRowFunction(i) {
-    this.editManufacturingRowIDs.emit(i);
-  }
-
-  removeIngrediantDetailsRowFunction(childIndex, i, indexRow, idRequest) {
-    this.removeIngrediantDetailsRowOutput.emit({childIndex, indexRow, i});
-
-    if (idRequest) {
-      this.deletedIdsListForIngrediant.push(idRequest);
-      this.removeIngrediantDetailsIDs.emit(this.deletedIdsListForIngrediant);
-    }
-  }
-
-  removeIngrediantDetailsRows(index) {
-    this.removeIngrediantRowOutput.emit(index);
-  }
-
-  copyDetailsRowFunction(index, row) {
-    this.copyDetailedRowOutput.emit(row);
-  }
-
-  editIngrediantDetailsRows(index) {
-    this.editIngrediantRowOutput.emit(index);
-  }
-
-  removeProductInInvoicesRowsFunction(index) {
-    this.removeProductInInvoicesRows.emit(index);
-  }
-
-  editProductInInvoicesRowsFunction(index) {
-    this.editProductInInvoicesRows.emit(index);
-  }
-
-  removeProductFromKitFunction(index) {
-    this.removeProductFromKit.emit(index);
-  }
-
-  editDetailedRowFunction(i) {
-    this.editDetailedRowOutput.emit(i);
   }
 
   setTheFilteredData(event) {
@@ -321,41 +234,18 @@ export class TableListComponent implements OnInit, OnChanges {
   }
 
   editProduct(request) {
-    const isTrackProduct = this.route.snapshot.routeConfig.data.animation;
-    const editFrom = this.route.snapshot.routeConfig.path;
+    const editFrom = this.router.url.split('/')[2];
 
-    if (editFrom === 'tell_do_variation') {
-      this.router.navigate([`/new-request/tell_do_variation/${Number(request.ID)}/${isTrackProduct === 'track-request' ? 'Track' : isTrackProduct === 'rejected-request' ? 'FinalReject' : 'Request'}/${isTrackProduct === 'track-request' ? true : false}`]);
-    } else if (editFrom === 'do_tell_variation') {
-      this.router.navigate([`/new-request/do_tell_variation/${Number(request.ID)}/${isTrackProduct === 'track-request' ? 'Track' : isTrackProduct === 'rejected-request' ? 'FinalReject' : 'Request'}/${isTrackProduct === 'track-request' ? true : false}`]);
-    } else if (editFrom === 'registration') {
-      this.router.navigate([`/new-request/registration/${Number(request.ID)}/${isTrackProduct === 'track-request' ? 'Track' : isTrackProduct === 'rejected-request' ? this.rejectedType === 'Final' ? 'FinalReject' : 'CanBeAppealed' : 'Request'}`]);
-    } else if (editFrom === 're-registration') {
-      this.router.navigate([`/new-request/reregistration/${Number(request.ID)}/${isTrackProduct === 'track-request' ? 'Track' : isTrackProduct === 'rejected-request' ? this.rejectedType === 'Final' ? 'FinalReject' : 'CanBeAppealed' : 'Request'}`]);
-    } else if (editFrom === 'legacy-products') {
-      this.router.navigate([`/legacy-form/${Number(request.oldProductID)}/${isTrackProduct === 'track-request' ? 'Track' : 'Request'}`]);
-    } else if (editFrom === 'legacy') {
-      this.router.navigate([`/legacy-form/${Number(request.OLD_PRODUCT_ID)}/${isTrackProduct === 'track-request' ? 'Track' : 'Request'}`]);
-    } else if (editFrom === 'approved-product') {
-      this.router.navigate([`/new-request/registration/${Number(request.ID)}/${request.canEdit ? this.approvedType : 'approvedProduct'}`]);
-    } else if (editFrom === 'rejected-product') {
-      this.router.navigate([`/new-request/registration/${Number(request.ID)}/FinalReject`]);
+    if (editFrom === 'cosmetics-product') {
+      this.router.navigate([`/pages/cosmetics-product/inner/new-request/${request.requestId}`]);
     }
   }
 
-
   deleteProduct(request) {
-    const editFrom = this.route.snapshot.routeConfig.path;
-    if (editFrom === 'tell_do_variation') {
-      this.removeDraftProduct.emit(request);
-    } else if (editFrom === 'do_tell_variation') {
-      this.removeDraftProduct.emit(request);
-    } else if (editFrom === 'registration') {
-      this.removeDraftProduct.emit(Number(request.ID));
-    } else if (editFrom === 're-registration') {
-      this.removeDraftProduct.emit(Number(request.ID));
-    } else if (editFrom === 'legacy') {
-      this.removeDraftProduct.emit(Number(request.ID));
+    const editFrom = this.router.url.split('/')[2];
+
+    if (editFrom === 'cosmetics-product') {
+      this.removeDraftProduct.emit(request.requestId);
     }
 
 
@@ -378,8 +268,28 @@ export class TableListComponent implements OnInit, OnChanges {
   seenNotificationFunction(id) {
     this.seenNotification.emit(id);
   }
-  deleteDraftrequest(requestId: number )
-  {
-    this.removeDraftProduct.emit(requestId);
+
+  choosePackingRow(index, request) {
+    this.choosePackagingRow.emit({index, data: request})
+  }
+
+  chooseDetailsRow(index, request) {
+    this.chooseDetailsRowOutput.emit({index, data: request})
+  }
+
+  editInvoice(index, request) {
+    this.editInvoiceData.emit({index, data: request})
+  }
+
+  deleteInvoice(index, request) {
+    this.deleteInvoiceData.emit(index)
+  }
+
+  editItem(index, request) {
+    this.editItemData.emit({index, data: request})
+  }
+
+  deleteItem(index, request) {
+    this.deleteItemData.emit(index)
   }
 }

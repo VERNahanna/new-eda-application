@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
         ).subscribe(res => {
           this.currentLang = res.payload;
         });
-       
+
         this.inputService.getInput$().pipe(
           filter(x => x.type === 'CompanyData'),
           distinctUntilChanged()
@@ -96,13 +96,13 @@ export class DashboardComponent implements OnInit {
            element.color = this.colorList[i];
          });
        });
-     
+
        this.dataObject = res;
-    
+
        this.numberOFAllRequestObject.map((x, i) => {
          this.counter(this.numberCount, 0, x.numberOfRequest, 5000, i);
        });
-    
+
        this.isLoading = false;
        this.selectCharts('track', 0);
      }, error => this.handleError(error)); */

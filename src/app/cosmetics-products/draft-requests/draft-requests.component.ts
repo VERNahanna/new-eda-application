@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormService} from "../../services/form.service";
 import {distinctUntilChanged, filter} from "rxjs/operators";
 import {InputService} from "../../services/input.service";
+import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 
 @Component({
   selector: 'app-draft-requests',
@@ -17,8 +18,17 @@ export class DraftRequestsComponent implements OnInit {
   alertErrorNotification: any;
   draftList = {};
   CompanyRoleID;
+  @ViewChild('deleteModal') modalDeletedTemplate: TemplateRef<any>;
+  modalRef: BsModalRef;
+  modalOptions: ModalOptions = {
+    backdrop: 'static',
+    keyboard: false,
+    class: 'modal-xl packagingModal',
+  };
+  modalRequestId: any;
 
   constructor(private getService: FormService,
+              private modalService: BsModalService,
               private inputService: InputService) {
   }
 
@@ -44,6 +54,29 @@ export class DraftRequestsComponent implements OnInit {
     }, error => this.handleError(error));
   }
 
+  openDeleteModal(event) {
+    this.modalRef = this.modalService.show(this.modalDeletedTemplate, this.modalOptions);
+    this.modalRequestId = event;
+  }
+
+  removeProduct() {
+    this.isLoading = true;
+    this.getService.deleteRequestDetails(this.modalRequestId).subscribe(res => {
+
+      if (res) {
+        this.isLoading = false;
+        this.modalRef.hide();
+
+        this.alertNotificationStatus = true;
+        this.alertNotification = this.alertForSubmitRequest();
+        this.onClosedErrorAlert();
+
+        this.getDraftProductsList();
+
+      }
+    }, error => this.handleError(error));
+  }
+
   handleError(message) {
     this.alertErrorNotificationStatus = true;
     this.alertErrorNotification = {msg: message};
@@ -56,9 +89,7 @@ export class DraftRequestsComponent implements OnInit {
     }, 2000);
   }
 
-  deleteDraftRequest(id) {
-     this.getService.deleteDraftRequest(id).subscribe(res => {
-    }, error => this.handleError(error));
-
+  alertForSubmitRequest() {
+    return {msg: 'You had a successful Delete'};
   }
 }
