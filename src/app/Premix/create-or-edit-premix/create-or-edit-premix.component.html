@@ -170,10 +170,10 @@
                              formControlName="function"
                              [matAutocomplete]="functionList" required>
                       <mat-autocomplete #functionList="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredOptionsForFunctions | async"
-                                    [value]="option.name[this.currentLang]">
-                            <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
-                                  placement="top">{{option.name[currentLang]}}</span>
+                        <mat-option *ngFor="let option of filteredOptionsForFunctionList | async"
+                                    [value]="option.functionName">
+                            <span class="tooltipContainer" tooltip="{{option.functionName}}"
+                                  placement="top">{{option.functionName}}</span>
                         </mat-option>
                       </mat-autocomplete>
                     </mat-form-field>

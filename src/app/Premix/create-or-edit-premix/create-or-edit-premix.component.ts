@@ -23,7 +23,7 @@ export class CreateOrEditPremixComponent implements OnInit {
   filteredOptionsForSupplierCountry: Observable<LookupState[]>;
   filteredOptionsForOriginCountry: Observable<LookupState[]>;
   filteredOptionsForRawMaterialType: Observable<any[]>;
-  filteredOptionsForFunctions:Observable<any[]>;
+  filteredOptionsForFunctionList:Observable<any[]>;
   rowMaterialNameField = new FormControl();
   currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
   isLoading: boolean = false;
@@ -39,12 +39,7 @@ export class CreateOrEditPremixComponent implements OnInit {
     private getService: FormService) { }
 
   ngOnInit(): void {
-  
-    this.getService.getPremixListofFunctions().subscribe((res: any) => {
-      this.filteredOptionsForFunctions =res;
-      this.isLoading = false;
-    }, error => this.handleError(error)); 
-  
+ 
     this.inputService.getInput$().pipe(
       filter(x => x.type === 'allLookups'),
       distinctUntilChanged()
@@ -54,6 +49,7 @@ export class CreateOrEditPremixComponent implements OnInit {
       };
       this.isLoading = false;
     });
+    debugger;
     this.getFormAsStarting('', '');
     this.setAllLookupsInObservable();
   }
@@ -75,7 +71,7 @@ export class CreateOrEditPremixComponent implements OnInit {
     
     this.Ingredients.push(data);
     this.premixIngredientsList = {
-      tableHeader: ['Id', 'name','concentration','function','action'],
+      tableHeader: ['id', 'name','concentration','function','action'],
       tableBody: this.Ingredients
     };
    
@@ -85,8 +81,7 @@ export class CreateOrEditPremixComponent implements OnInit {
     this.filteredOptionsForRawMaterialType = this.filterLookupsFunction('rowMaterialNameField', this.rowMaterialNameField, this.formData?.rawMaterialList);
     this.filteredOptionsForSupplierCountry = this.filterLookupsFunction('countries', this.PremixForm.get('supplierCountry'), this.formData?.countries);
     this.filteredOptionsForOriginCountry   = this.filterLookupsFunction('countries', this.PremixForm.get('originCountry'), this.formData?.countries);
-    this.filteredOptionsForFunctions  = this.filterLookupsFunction('functions', this.PremixForm.get('function'), this.formData?.functions);
-  
+    this.getService.getPremixListofFunctions().subscribe((res: any) => {this.filteredOptionsForFunctionList =res; }, error => this.handleError(error));  
   }
 
  

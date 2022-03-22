@@ -120,4 +120,6 @@ export class HeaderComponent implements OnInit, OnChanges {
 
     this.selectedLanguage.emit(language);
   }
+ public RedirectToHome()
+  {this.router.navigate(['/pages/home']);}					 										  
 }

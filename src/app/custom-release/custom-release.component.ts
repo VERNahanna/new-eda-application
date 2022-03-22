@@ -218,7 +218,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
-      {
+/*       {
         id: 'coc',
         name: 'COC',
         fileName: '',
@@ -230,7 +230,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         relatedWithField: ['FINISHED_PRDUCTS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
-      },
+      }, */
     ],
     PREMIX: [
       {
@@ -389,11 +389,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
               private modalService: BsModalService,
               private getService: FormService) {
 
-    this.getFormAsStarting('', '');
-    this.getInvoicesFormAsStarting('', '');
-    this.getItemsFormAsStarting('', '');
-    this.getPackagingFormAsStarting('');
-    this.getDetailedFormAsStarting('');
+
 
     this.route.params.subscribe(res => {
       this.serviceId = res.serviceId;
@@ -405,6 +401,11 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         })
       }
     });
+	this.getFormAsStarting('', '');
+    this.getInvoicesFormAsStarting('', '');
+    this.getItemsFormAsStarting('', '');
+    this.getPackagingFormAsStarting('');
+    this.getDetailedFormAsStarting('');
   }
 
   ngOnInit(): void {
@@ -683,13 +684,13 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
     link.click();
   }
 
-  setShelfValue(event) {
+/*   setShelfValue(event) {
     if (Number(event.target.value) > 500) {
       this.regCustomReleaseForm.get('grossWeight').patchValue(500);
     } else {
       this.regCustomReleaseForm.get('grossWeight').patchValue(Number(event.target.value));
     }
-  }
+  } */
 
   getDecimalValue(value, fromWhere) {
     this.regCustomReleaseForm.patchValue({
@@ -768,8 +769,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         packingList: this.fb.control(''),
         receipt: this.fb.control(''),
         exportPledge: this.fb.control(''),
-        importersRecord: this.fb.control(''),
-        supplierCountry: this.fb.control('')
+        importersRecord: this.fb.control('')
       });
     }
   }
@@ -789,7 +789,10 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         currency: this.fb.control('', Validators.required),
         itemDetails: this.fb.control([]),
         invoice: this.fb.control(''),
-        InvApprovalNo: this.fb.control('')
+        InvApprovalNo: this.fb.control(''),
+        supplierName: this.fb.control(''),
+        supplierCountry: this.fb.control(''),
+        InvoiceApprovalNo: this.fb.control('', Validators.required)
       });
     }
   }
@@ -1004,7 +1007,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
   hideInvoiceContainer() {
     this.invoiceContainerDisplayStatus = false;
 
-    this.getInvoicesFormAsStarting('')
+   this.getInvoicesFormAsStarting('')
   }
 
   hideItemContainer() {
@@ -1197,8 +1200,8 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
       applicant: this.companyId,
       LkupPortsId: data.LkupPortsId ? this.getIdFromLookupByName(this.formData.ports, data.LkupPortsId) : 0,
       pod: data.pod ? data.pod : '',
-      supplierName: data.supplierName ? data.supplierName : '',
-      supplierCountryId: data.supplierCountryId ? this.getIdFromLookupByName(this.formData.countries, data.supplierCountryId) : 0,
+     // supplierName: data.supplierName ? data.supplierName : '',
+      //supplierCountryId: data.supplierCountryId ? this.getIdFromLookupByName(this.formData.countries, data.supplierCountryId) : 0,
       carrierName: data.carrierName ? data.carrierName : '',
       grossWeight: data.grossWeight ? data.grossWeight : 0,
       LkupUomId: data.lkupUomId ? this.getIdFromLookupByName(this.formData.unitOfMeasure, data.lkupUomId) : 0,

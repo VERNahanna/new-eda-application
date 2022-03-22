@@ -7,7 +7,7 @@
     "pharmaceuticalProducts": "Pharmaceutical Products",
     "biologicalProducts": "Biological Products",
     "narcotics": "Narcotics",
-    "detergentsAndPesticides": "Detergents and Pesticides",
+  
     "detergentsAndPesticides": "DISINFECTANTS_PESTICIDES",
     "cosmeticsProducts": "Cosmetics Products",
     "pharmaceuticalExemption": "Pharmaceutical Exemption",
@@ -76,7 +76,7 @@
       "requestedReleaseType": "Requested Release Type",
       "applicant": "Applicant",
       "customPortName": "Custom Port name",
-      "pod": "Port of Departure",
+      "pod": "Port of Departure", 
       "supplierName": "Supplier Name",
       "typeOfRegistration": "Type of Registration",
       "supplierCountry": "Supplier Country",
@@ -171,12 +171,10 @@
     "supplierName": "Supplier name",
     "BolNo": "BOL number",
     "action": "Action",
-<<<<<<< HEAD:new-eda-application-develop (1)/new-eda-application-develop/src/assets/i18n/en.json
     "concentration":"Concentration",
     "id":"Id",
     "notificationNo": "Notification Number",
-    "originName": "Origin Name"
-=======
+    "originName": "Origin Name",
     "requestId": "Request id",
     "createdBy": "Created by",
     "status": "Status",
@@ -188,7 +186,6 @@
     "unitOfMeasure": "Unit of measure",
     "typeOfPackaging": "type of packaging",
     "choose": "Choose"
->>>>>>> 29049269d6576c863d1ed9d9e3098ae585b3f1ce:src/assets/i18n/en.json
   },
   "alerts": {
   },

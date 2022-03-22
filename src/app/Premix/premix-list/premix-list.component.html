@@ -15,7 +15,7 @@
   </div>
   <div class="row">
       <div class="col-12 mt-2">
-        <div class="tableContainer premixList">
+        <div class="tableContainer premixList" *ngIf="premixList">
         <app-table-list [data]="premixList" [whichTable]="'premixList'"  (removePremix)="removePremix($event)" ></app-table-list> 
         </div>
       </div>

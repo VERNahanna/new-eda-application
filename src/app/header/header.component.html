@@ -13,11 +13,17 @@
             <div class="TitleContainer"
                  [ngClass]="{'w-100 w-sm-85': screenWidth <= 960 }">
               <div class="d-flex align-items-center">
-                <div class="d-flex align-items-start justify-content-center p-3">
+             
+                  <div class="col-lg-3">
                   <h2>{{'header.partnerTitles.centralAdministration' | translate}}</h2>
+                </div>
+                <div class="col-lg-3">
                   <h2>{{'header.partnerTitles.generalDirectorate' | translate}}</h2>
+                </div>
+                <div class="col-lg-3">
                   <h2>{{'header.partnerTitles.EServices' | translate}}</h2>
                 </div>
+                
                 <a class="{{currentLang === 'ar' ? 'mr-auto':'ml-auto'}} notification"
                    routerLink="/pages/notification-list">
                   <div class="bellContainer">

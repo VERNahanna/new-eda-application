@@ -36,11 +36,13 @@ export class PremixListComponent implements OnInit {
     this.isLoading = false;
 
      this.getService.getPremixList().subscribe((res: any) => {
-      this.premixList = {
+       if(res)
+       { this.premixList = {
         tableHeader: ['id', 'name','notificationNo','originName','supplierName' ,'action'],
         tableBody: res
       };
-      this.isLoading = false;
+      this.isLoading = false;}
+     
     }, error => this.handleError(error)); 
   }
 

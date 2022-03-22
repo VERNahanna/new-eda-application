@@ -1,6 +1,6 @@
 <div *ngIf="data.tableBody && data.tableBody.length > 0">
   <div
-    *ngIf="whichTable === 'drafted' || whichTable === 'track'">
+      *ngIf="whichTable === 'drafted'">
     <app-filters [filterData]="filterData"
                  [removeFilterKey]="removeFilterKey"
                  (selectedFilteredData)="setTheFilteredData($event)"></app-filters>
@@ -40,7 +40,7 @@
                               <span (click)="editProduct(request)">
                                 <i class="fa fa-edit"></i>
                               </span>
-                              <span class="ml-2" (click)="deleteProduct(request)">
+                                       <span class="ml-2" (click)="deleteDraftrequest(request.id)">
                                                             <i class="fa fa-trash"></i>
                                                           </span>
                             </td>
@@ -88,21 +88,23 @@
                       <div class="table-responsive">
                         <table class="table table-sm tableDetailsCont">
                           <tr>
-                            <td>{{request.requestId}}</td>
-                            <td>{{request.bolNo}}</td>
-                            <td>{{request.companyName}}</td>
-                            <td>{{request.countryName}}</td>
-                            <td>{{request.createdBy}}</td>
-                            <td>{{request.submitDate | date}}</td>
-                            <td>{{request.status}}</td>
-                            <td>
-                              <span (click)="editProduct(request)">
-                                <i class="fa fa-edit"></i>
-                              </span>
-                              <span class="ml-2" (click)="deleteProduct(request)">
-                                <i class="fa fa-trash"></i>
-                              </span>
-                            </td>
+                            <td class="col-md-1">{{request.requestId}}</td>     
+                            <td class="col-md-1">{{request.bolNo}}</td>
+                            <td class="col-md-2" >{{request.companyName}}</td>
+                            <td class="col-md-1">{{request.countryName}}</td>
+                            <td class="col-md-2">{{request.createdBy}}</td>
+                            <td class="col-md-2">{{request.SubmitDate | date}}</td>
+                            <td class="col-md-1">{{request.status}}</td>                       
+                                            
+                                                   
+                       <!--      <td class="col-md-2">
+                                  <span (click)="editProduct(request)">
+                                    <i class="fa fa-edit"></i>
+                                  </span>
+                                  <span class="ml-2" (click)="deleteProduct(request)">
+                                    <i class="fa fa-trash"></i>
+                                  </span>
+                            </td> -->
                           </tr>
                         </table>
                       </div>
@@ -417,10 +419,7 @@
                           <td>{{request.name}}</td>
                           <td>{{request.notificationNo}}</td>
                           <td>{{request.companyOrigin}}</td>
-                         
                           <td>{{request.companySupplier}}</td>
-                         
-                         
                           <td>
                             <span (click)="removePremixfunction(request)">
                               <i class="fa fa-trash" ></i>
