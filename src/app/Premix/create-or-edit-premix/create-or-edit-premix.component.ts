@@ -23,12 +23,14 @@ export class CreateOrEditPremixComponent implements OnInit {
   filteredOptionsForSupplierCountry: Observable<LookupState[]>;
   filteredOptionsForOriginCountry: Observable<LookupState[]>;
   filteredOptionsForRawMaterialType: Observable<any[]>;
-  filteredOptionsForFunctionList:Observable<any[]>;
+  filteredOptionsForFunctionList:[];
   rowMaterialNameField = new FormControl();
   currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
   isLoading: boolean = false;
   premixIngredientsList;
-  Ingredients=[{}];
+  Ingredients=[{}]; 
+  alertErrorNotificationStatus: boolean = false;
+  alertErrorNotification: any;
   constructor(private fb: FormBuilder,
     private number: DecimalPipe,
     private router: Router,
@@ -49,31 +51,36 @@ export class CreateOrEditPremixComponent implements OnInit {
       };
       this.isLoading = false;
     });
-    debugger;
     this.getFormAsStarting('', '');
     this.setAllLookupsInObservable();
   }
-  alertErrorNotificationStatus: boolean = false;
-  alertErrorNotification: any;
+
   handleError(message) {
     this.alertErrorNotificationStatus = true;
     this.alertErrorNotification = {msg: message};
     this.isLoading = false;
   }
   AddIngredientToList()
-  { 
+  { debugger;
     const data={
       id:0,
       name: this.rowMaterialNameField.value,
       concentration:this.PremixForm.get('concentration').value,
       function:this.PremixForm.get('function').value
      };
-    
+
+    if(data.name !='' && data.concentration !=0 && data.function !='') {
     this.Ingredients.push(data);
     this.premixIngredientsList = {
       tableHeader: ['id', 'name','concentration','function','action'],
       tableBody: this.Ingredients
     };
+  }
+  else {
+    this.alertErrorNotificationStatus = true;
+    this.alertErrorNotification = {msg: 'Please Select Raw material and its function and enter its Concentration'};
+  
+  }
    
   }
 
@@ -104,19 +111,25 @@ export class CreateOrEditPremixComponent implements OnInit {
   }
   getDecimalValue(value, fromWhere) {
     this.PremixForm.patchValue({
-      receiptValue: this.number.transform(this.PremixForm.get('concentration').value, '1.2-2')
+      concentration: this.number.transform(this.PremixForm.get('concentration').value, '1.2-2')
     }, {emitEvent: false});
   }
   filterLookupsFunction(whichLookup, formControlValue, list, index?: any) {
-    
-
+    if (whichLookup === 'rowMaterialNameField') {
       if (formControlValue) {
+        return formControlValue.valueChanges
+          .pipe(
+            startWith(''),
+            map(state => state ? this.filterInsideListForDiffModel(whichLookup, state, list, index).slice(0, 3000) : list.slice(0, 3000))
+          );
+      }
+    }else{ if (formControlValue) {
         return formControlValue.valueChanges
           .pipe(
             startWith(''),
             map(state => state ? this.filterInsideList(whichLookup, state, list) : list.slice())
           );
-      }
+      }}
     }
     filterInsideList(lookup, value, list, index?: any): LookupState[] {
       let filterValue;
@@ -125,7 +138,13 @@ export class CreateOrEditPremixComponent implements OnInit {
       }
       return list.filter(option => option.name[this.currentLang].toLowerCase().includes(filterValue)).map(x => x);
     }
-    
+    filterInsideListForDiffModel(lookup, value, list, index?: any): any[] {
+      let filterValue;
+      if (value) {
+        filterValue = value.toLowerCase() ? value.toLowerCase() : '';
+      }
+      return list.filter(option => option.inciName.toLowerCase().includes(filterValue)).map(x => x);
+    }
     SavePremix()
     {
       const data=this.PremixForm.value;
@@ -140,32 +159,33 @@ export class CreateOrEditPremixComponent implements OnInit {
       })
       
     }
-    onSubmit()
-    {      const data=this.PremixForm.value;
+    onSubmit(){
+      const data=this.PremixForm.value;
       this.premixObj.id=0;
       this.premixObj.NotificationNo=data.notificationNumber;
       this.premixObj.Name=data.premixName;
       this.premixObj.CompanyOrigin=data.originCompany;
       this.premixObj.CompanySupplier=data.supplierCompany;
-          debugger;
+          
           this.getService.AddNewPremix(this.premixObj).subscribe(res => {
             console.log('res', res)
           })}
   
-    removeIngredientfromPremix(ing)
-    {
-   const x=  this.Ingredients.indexOf[ing];
-   this.Ingredients.splice(x,1);
-   this.premixIngredientsList.tableBody=[]
-   this.premixIngredientsList.tableBody= this.Ingredients;
+    removeIngredientfromPremix(ing){
+      const x=  this.Ingredients.indexOf[ing];
+      this.Ingredients.splice(x,1);
+      this.premixIngredientsList.tableBody=[]
+      this.premixIngredientsList.tableBody= this.Ingredients;
     }
 }
+
 export interface LookupState {
   code: string;
   description: { en: string, ar: string };
   id: number;
   name: { en: string, ar: string };
 }
+
 export interface premix {
   id: number;
   NotificationNo: string;
@@ -177,7 +197,6 @@ export interface premix {
   PremixIngredients:[PremixIngredients];
 }
      
-
 export interface PremixIngredients {
   id: number;
   IngredientId: number;

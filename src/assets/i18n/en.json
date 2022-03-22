@@ -185,7 +185,8 @@
     "volumes": "Volumes",
     "unitOfMeasure": "Unit of measure",
     "typeOfPackaging": "type of packaging",
-    "choose": "Choose"
+    "choose": "Choose",
+    "function":"Raw Material Function"
   },
   "alerts": {
   },
