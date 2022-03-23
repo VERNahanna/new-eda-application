@@ -10,6 +10,7 @@ import {BsModalRef, BsModalService, ModalOptions} from 'ngx-bootstrap/modal';
 import {TranslateService} from "@ngx-translate/core";
 import { InputService } from 'src/app/services/input.service';
 import { FormService } from 'src/app/services/form.service';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-create-or-edit-premix',
@@ -18,19 +19,24 @@ import { FormService } from 'src/app/services/form.service';
 })
 export class CreateOrEditPremixComponent implements OnInit {
   PremixForm: FormGroup;
-  premixObj  :premix;
+
+   premixObj :premix ={} as premix ;
   formData=null;
   filteredOptionsForSupplierCountry: Observable<LookupState[]>;
   filteredOptionsForOriginCountry: Observable<LookupState[]>;
   filteredOptionsForRawMaterialType: Observable<any[]>;
-  filteredOptionsForFunctionList:[];
-  rowMaterialNameField = new FormControl();
+  filteredOptionsForFunctionList:[rawMaterialfunction];
+  
   currentLang = this.translateService.currentLang ? this.translateService.currentLang : 'en';
   isLoading: boolean = false;
   premixIngredientsList;
-  Ingredients=[{}]; 
+  Ingredients=[]; 
   alertErrorNotificationStatus: boolean = false;
   alertErrorNotification: any;
+  selectedOriginCountryId;
+  selectedSupplierCountryId;
+  selectedRawId : number;
+  selectedFunctionId: number;
   constructor(private fb: FormBuilder,
     private number: DecimalPipe,
     private router: Router,
@@ -41,7 +47,7 @@ export class CreateOrEditPremixComponent implements OnInit {
     private getService: FormService) { }
 
   ngOnInit(): void {
- 
+ this.premixObj.PremixIngredients=[];
     this.inputService.getInput$().pipe(
       filter(x => x.type === 'allLookups'),
       distinctUntilChanged()
@@ -49,10 +55,11 @@ export class CreateOrEditPremixComponent implements OnInit {
       this.formData = {
         ...res.payload,
       };
-      this.isLoading = false;
+     
     });
     this.getFormAsStarting('', '');
     this.setAllLookupsInObservable();
+    this.isLoading = false;
   }
 
   handleError(message) {
@@ -61,18 +68,21 @@ export class CreateOrEditPremixComponent implements OnInit {
     this.isLoading = false;
   }
   AddIngredientToList()
-  { debugger;
+  {  
+    this.selectedFunctionId=this.filteredOptionsForFunctionList.find(o => o.functionName ===  this.PremixForm.get('function').value ).id;
+    this.selectedRawId=this.getIdFromLookupByNameWithDiffModel( this.formData?.rawMaterialList, this.PremixForm.get('rowMaterialNameField').value );
     const data={
-      id:0,
-      name: this.rowMaterialNameField.value,
+      id:this.selectedRawId,
+      name: this.PremixForm.get('rowMaterialNameField').value ,
       concentration:this.PremixForm.get('concentration').value,
-      function:this.PremixForm.get('function').value
+      function:this.selectedFunctionId,
+      functionName:this.PremixForm.get('function').value 
      };
 
-    if(data.name !='' && data.concentration !=0 && data.function !='') {
+    if(data.id !=0 && data.concentration !=0 && data.function !=0) {
     this.Ingredients.push(data);
     this.premixIngredientsList = {
-      tableHeader: ['id', 'name','concentration','function','action'],
+      tableHeader: ['id', 'name','concentration','functionName','functionId','action'],
       tableBody: this.Ingredients
     };
   }
@@ -83,11 +93,20 @@ export class CreateOrEditPremixComponent implements OnInit {
   }
    
   }
+  
+  getIdFromLookupByNameWithDiffModel(list, value) {
+    let id;
+    list.filter(option => option.inciName === value).map(res => {
+      id = res.id;
+    });
+
+    return id;
+  }
 
   setAllLookupsInObservable() {
-    this.filteredOptionsForRawMaterialType = this.filterLookupsFunction('rowMaterialNameField', this.rowMaterialNameField, this.formData?.rawMaterialList);
-    this.filteredOptionsForSupplierCountry = this.filterLookupsFunction('countries', this.PremixForm.get('supplierCountry'), this.formData?.countries);
-    this.filteredOptionsForOriginCountry   = this.filterLookupsFunction('countries', this.PremixForm.get('originCountry'), this.formData?.countries);
+    this.filteredOptionsForRawMaterialType = this.filterLookupsFunction('rowMaterialNameField', this.PremixForm.get('rowMaterialNameField'), this.formData?.rawMaterialList);
+    this.filteredOptionsForSupplierCountry = this.filterLookupsFunction('countries',this.PremixForm.get('supplierCountry'), this.formData?.countries);
+    this.filteredOptionsForOriginCountry   = this.filterLookupsFunction('countries',  this.PremixForm.get('originCountry'), this.formData?.countries);
     this.getService.getPremixListofFunctions().subscribe((res: any) => {this.filteredOptionsForFunctionList =res; }, error => this.handleError(error));  
   }
 
@@ -105,7 +124,8 @@ export class CreateOrEditPremixComponent implements OnInit {
         supplierCountry: this.fb.control(''),
         Ingredients: this.fb.control([]),
         concentration: this.fb.control(''),
-        function:this.fb.control('')
+        function:this.fb.control(''),
+        rowMaterialNameField :this.fb.control(''),
       });
     }
   }
@@ -145,32 +165,34 @@ export class CreateOrEditPremixComponent implements OnInit {
       }
       return list.filter(option => option.inciName.toLowerCase().includes(filterValue)).map(x => x);
     }
-    SavePremix()
-    {
-      const data=this.PremixForm.value;
-  this.premixObj.id=0;
-  this.premixObj.NotificationNo=data.notificationNumber;
-  this.premixObj.Name=data.premixName;
-  this.premixObj.CompanyOrigin=data.originCompany;
-  this.premixObj.CompanySupplier=data.supplierCompany;
-      debugger;
-      this.getService.AddNewPremix(this.premixObj).subscribe(res => {
-        console.log('res', res)
-      })
-      
-    }
+
     onSubmit(){
+    debugger;
       const data=this.PremixForm.value;
-      this.premixObj.id=0;
+      this.selectedOriginCountryId=this.getIdFromLookupByName( this.formData?.countries, this.PremixForm.get('originCountry').value );
+      this.selectedSupplierCountryId=this.getIdFromLookupByName( this.formData?.countries, this.PremixForm.get('supplierCountry').value );
+     this.premixObj.id=0;
       this.premixObj.NotificationNo=data.notificationNumber;
       this.premixObj.Name=data.premixName;
       this.premixObj.CompanyOrigin=data.originCompany;
       this.premixObj.CompanySupplier=data.supplierCompany;
-          
+      this.premixObj.LkupCountryOrigin=this.selectedOriginCountryId;
+      this.premixObj.LkupCountrySupplier=this.selectedSupplierCountryId;
+       for (let i = 0; i < this.Ingredients.length; i++) {
+          const data={ id:i, IngredientId: this.Ingredients[i].id ,concentration:this.Ingredients[i].concentration, functionId:this.selectedFunctionId}
+          this.premixObj.PremixIngredients.push(data);  
+          }
           this.getService.AddNewPremix(this.premixObj).subscribe(res => {
             console.log('res', res)
           })}
-  
+  getIdFromLookupByName(list, value) {
+    let id;
+    list.filter(option => option.name[this.currentLang] === value).map(res => {
+      id = res.id;
+    });
+
+    return id;
+  }
     removeIngredientfromPremix(ing){
       const x=  this.Ingredients.indexOf[ing];
       this.Ingredients.splice(x,1);
@@ -194,14 +216,18 @@ export interface premix {
   CompanySupplier: string; 
   LkupCountryOrigin: { en: string, ar: string };
   LkupCountrySupplier: { en: string, ar: string };
-  PremixIngredients:[PremixIngredients];
+  PremixIngredients:PremixIngredients[]; 
 }
      
 export interface PremixIngredients {
   id: number;
   IngredientId: number;
   functionId: number;
-  concentration:number ;
-  COSING_REF_NO: string; 
+  concentration:any ;
+}
+
+export interface rawMaterialfunction {
+  id:number;
+functionName:string;
 
 }

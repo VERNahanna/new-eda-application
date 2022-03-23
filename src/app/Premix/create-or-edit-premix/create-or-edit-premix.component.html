@@ -53,7 +53,8 @@
                              [matAutocomplete]="originCountryList" required>
                       <mat-autocomplete #originCountryList="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptionsForOriginCountry | async"
-                                    [value]="option.name[this.currentLang]">
+                          [value]="option.name[currentLang]">
+                         
                             <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                   placement="top">{{option.name[currentLang]}}</span>
                         </mat-option>
@@ -105,7 +106,7 @@
                              [matAutocomplete]="supplierCountryList" required>
                       <mat-autocomplete #supplierCountryList="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptionsForSupplierCountry | async"
-                                    [value]="option.name[this.currentLang]">
+                                    [value]="option.name[currentLang]">
                             <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                   placement="top">{{option.name[currentLang]}}</span>
                         </mat-option>
@@ -118,14 +119,13 @@
                             [title]="'premix.Ingredients' | translate"></app-title>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12">
-                    <mat-form-field class="example-full-width inputBesideSelect">
+                    <mat-form-field class="example-full-width">
                       <mat-label>{{'customRelease.formLabel.rawMaterialName' | translate}}</mat-label>
                       <input type="text"
                              class="form-control"
                              placeholder="{{'customRelease.formLabel.rawMaterialName' | translate}}"
-              
                              matInput
-                             [formControl]="rowMaterialNameField"
+                             formControlName="rowMaterialNameField"             
                              [matAutocomplete]="rowMaterialNameList" required>
                       <mat-autocomplete #rowMaterialNameList="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptionsForRawMaterialType | async"
@@ -202,12 +202,9 @@
                         <div class="col-12 d-flex flex-column flex-md-row mt-3">
                 
                         <div class="{{currentLang === 'ar'? 'mr-md-auto' :'ml-md-auto'}}">
-                            <button type="button"
+                            <button type="submit"
                                     class="btn btn-primary btn-sm {{currentLang === 'ar'? 'ml-3' :'mr-3'}} bottomButtons"
-                                    [disabled]="false"
-                                    (click)="SavePremix()">
-                            {{'common.save' | translate}}
-                            </button>
+                                    [disabled]="false"> {{'common.save' | translate}}</button>
 
                         </div>
                         </div>
