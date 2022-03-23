@@ -28,23 +28,6 @@
                   <div class="col-lg-4 col-sm-6 col-12">
                     <mat-form-field class="example-full-width inputBesideSelect">
                       <mat-label>
-                        {{'premix.notificationNumber' | translate}}
-                      </mat-label>
-                      <input type="text" class="form-control" matInput formControlName="notificationNumber"
-                             placeholder="{{'premix.notificationNumber' | translate}}" required>
-                      <div
-                        *ngIf="PremixForm.get('notificationNumber').invalid && (PremixForm.get('notificationNumber').dirty || PremixForm.get('notificationNumber').touched)"
-                        class="alert alert-danger">
-                        <div
-                          *ngIf="PremixForm.get('notificationNumber').errors.required">
-                          {{'common.validationStatement.required' | translate}}
-                        </div>
-                      </div>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <mat-form-field class="example-full-width inputBesideSelect">
-                      <mat-label>
                         {{'premix.originCompany' | translate}}
                       </mat-label>
                       <input type="text" class="form-control" matInput formControlName="originCompany"
@@ -54,6 +37,42 @@
                         class="alert alert-danger">
                         <div
                           *ngIf="PremixForm.get('originCompany').errors.required">
+                          {{'common.validationStatement.required' | translate}}
+                        </div>
+                      </div>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>{{'premix.originCountry' | translate}}</mat-label>
+                      <input type="text"
+                             class="form-control"
+                             placeholder="{{'premix.originCountry' | translate}}"
+                             matInput
+                             formControlName="originCountry"
+                             [matAutocomplete]="originCountryList" required>
+                      <mat-autocomplete #originCountryList="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptionsForOriginCountry | async"
+                          [value]="option.name[currentLang]">
+                         
+                            <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
+                                  placement="top">{{option.name[currentLang]}}</span>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <mat-form-field class="example-full-width inputBesideSelect">
+                      <mat-label>
+                        {{'premix.notificationNumber' | translate}}
+                      </mat-label>
+                      <input type="text" class="form-control" matInput formControlName="notificationNumber"
+                             placeholder="{{'premix.notificationNumber' | translate}}" required>
+                      <div
+                        *ngIf="PremixForm.get('notificationNumber').invalid && (PremixForm.get('notificationNumber').dirty || PremixForm.get('notificationNumber').touched)"
+                        class="alert alert-danger">
+                        <div
+                          *ngIf="PremixForm.get('notificationNumber').errors.required">
                           {{'common.validationStatement.required' | translate}}
                         </div>
                       </div>
@@ -87,25 +106,7 @@
                              [matAutocomplete]="supplierCountryList" required>
                       <mat-autocomplete #supplierCountryList="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptionsForSupplierCountry | async"
-                                    [value]="option.name[this.currentLang]">
-                            <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
-                                  placement="top">{{option.name[currentLang]}}</span>
-                        </mat-option>
-                      </mat-autocomplete>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <mat-form-field class="example-full-width">
-                      <mat-label>{{'premix.originCountry' | translate}}</mat-label>
-                      <input type="text"
-                             class="form-control"
-                             placeholder="{{'premix.originCountry' | translate}}"
-                             matInput
-                             formControlName="originCountry"
-                             [matAutocomplete]="originCountryList" required>
-                      <mat-autocomplete #originCountryList="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredOptionsForOriginCountry | async"
-                                    [value]="option.name[this.currentLang]">
+                                    [value]="option.name[currentLang]">
                             <span class="tooltipContainer" tooltip="{{option.name[currentLang]}}"
                                   placement="top">{{option.name[currentLang]}}</span>
                         </mat-option>
@@ -118,14 +119,13 @@
                             [title]="'premix.Ingredients' | translate"></app-title>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12">
-                    <mat-form-field class="example-full-width inputBesideSelect">
+                    <mat-form-field class="example-full-width">
                       <mat-label>{{'customRelease.formLabel.rawMaterialName' | translate}}</mat-label>
                       <input type="text"
                              class="form-control"
                              placeholder="{{'customRelease.formLabel.rawMaterialName' | translate}}"
-              
                              matInput
-                             [formControl]="rowMaterialNameField"
+                             formControlName="rowMaterialNameField"             
                              [matAutocomplete]="rowMaterialNameList" required>
                       <mat-autocomplete #rowMaterialNameList="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptionsForRawMaterialType | async"
@@ -170,7 +170,7 @@
                              formControlName="function"
                              [matAutocomplete]="functionList" required>
                       <mat-autocomplete #functionList="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredOptionsForFunctionList | async"
+                        <mat-option *ngFor="let option of filteredOptionsForFunctionList "
                                     [value]="option.functionName">
                             <span class="tooltipContainer" tooltip="{{option.functionName}}"
                                   placement="top">{{option.functionName}}</span>
@@ -192,7 +192,7 @@
                     </div>
                     </div>
                 </div>
-                <div class="col-12 d-flex flex-column flex-md-row mt-3">
+                <div class="col-12 d-flex flex-column flex-md-row mt-3" *ngIf="premixIngredientsList">
          <app-table-list [data]="premixIngredientsList" [whichTable]="'premixIngredientsList'"  (removeIngredientfromPremix)="removeIngredientfromPremix($event)" ></app-table-list> 
         </div>
 <!--Ingredients List-->
@@ -202,12 +202,9 @@
                         <div class="col-12 d-flex flex-column flex-md-row mt-3">
                 
                         <div class="{{currentLang === 'ar'? 'mr-md-auto' :'ml-md-auto'}}">
-                            <button type="button"
+                            <button type="submit"
                                     class="btn btn-primary btn-sm {{currentLang === 'ar'? 'ml-3' :'mr-3'}} bottomButtons"
-                                    [disabled]="false"
-                                    (click)="SavePremix()">
-                            {{'common.save' | translate}}
-                            </button>
+                                    [disabled]="false"> {{'common.save' | translate}}</button>
 
                         </div>
                         </div>

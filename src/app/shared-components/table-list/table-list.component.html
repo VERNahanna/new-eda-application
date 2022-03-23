@@ -384,7 +384,7 @@
                 </mat-expansion-panel>
               </mat-accordion>
             </td>
-            <td colspan="5" *ngIf="whichTable === 'premixIngredientsList'">
+            <td colspan="6" *ngIf="whichTable === 'premixIngredientsList'">
               <mat-accordion>
                 <mat-expansion-panel class="areaContainer" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
                   <mat-expansion-panel-header>
@@ -394,7 +394,8 @@
                           <td>{{request.id}}</td>
                           <td>{{request.name}}</td>
                           <td>{{request.concentration}}</td>
-                          <td>{{request.function}}</td>
+                          <td>{{request.functionName}}</td>
+                          <td>{{request.functionId}}</td>
                           <td>
                             <span (click)="removeIngredientfromPremixList(request)">
                               <i class="fa fa-trash" ></i>

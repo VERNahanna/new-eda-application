@@ -185,7 +185,10 @@
     "volumes": "Volumes",
     "unitOfMeasure": "Unit of measure",
     "typeOfPackaging": "type of packaging",
-    "choose": "Choose"
+    "choose": "Choose",
+    "function":"Raw Material Function",
+    "functionName":"Raw Material Function Name",
+    "functionId":"Raw Material Function Id"
   },
   "alerts": {
   },
