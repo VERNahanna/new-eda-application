@@ -100,7 +100,7 @@ export const menuObjectKeys: MenuObjectCommonKeys = {
     trackListLink: '/pages/cosmetics-product/inner/track-request',
     dropdownLinks: {
       IMPORTATION_COSMETICS: {
-        link: '#',
+        link: '/pages/cosmetics-product/inner/importation-services',
         icon: 'fas fa-shipping-fast',
       },
       RELEASE_COSMETICS: {

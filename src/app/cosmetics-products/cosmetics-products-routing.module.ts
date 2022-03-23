@@ -19,6 +19,16 @@ const routes: Routes = [
         data: {animation: 'inner'}
       },
       {
+        path: 'importation-services/:departId',
+        component: CosmeticsProductsComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path: 'importation-services/:departId/:departSecId',
+        component: CosmeticsProductsComponent,
+        data: {animation: 'inner'}
+      },
+      {
         path: 'release-services',
         component: CosmeticsProductsComponent,
         data: {animation: 'inner'}
