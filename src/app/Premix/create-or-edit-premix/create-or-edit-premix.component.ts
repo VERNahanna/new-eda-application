@@ -167,11 +167,11 @@ export class CreateOrEditPremixComponent implements OnInit {
     }
 
     onSubmit(){
-    debugger;
+
       const data=this.PremixForm.value;
       this.selectedOriginCountryId=this.getIdFromLookupByName( this.formData?.countries, this.PremixForm.get('originCountry').value );
       this.selectedSupplierCountryId=this.getIdFromLookupByName( this.formData?.countries, this.PremixForm.get('supplierCountry').value );
-     this.premixObj.id=0;
+      this.premixObj.id=0;
       this.premixObj.NotificationNo=data.notificationNumber;
       this.premixObj.Name=data.premixName;
       this.premixObj.CompanyOrigin=data.originCompany;
@@ -184,7 +184,8 @@ export class CreateOrEditPremixComponent implements OnInit {
           }
           this.getService.AddNewPremix(this.premixObj).subscribe(res => {
             console.log('res', res)
-          })}
+          })
+        }
   getIdFromLookupByName(list, value) {
     let id;
     list.filter(option => option.name[this.currentLang] === value).map(res => {

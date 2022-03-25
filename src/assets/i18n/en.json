@@ -22,6 +22,13 @@
       "EServices": "Admin of EICR"
     }
   },
+  "company":{
+    "title":"Compay Profile",
+    "name":"Company Name",
+    "address":"Company Address",
+    "phone":"Company Phone",
+    "email":"E-mail Address"
+  },
   "premix":{
     "notificationNumber":"Notification Number",
     "name":"Premix Name",
@@ -188,7 +195,13 @@
     "choose": "Choose",
     "function":"Raw Material Function",
     "functionName":"Raw Material Function Name",
-    "functionId":"Raw Material Function Id"
+    "functionId":"Raw Material Function Id",
+    "userName":"User Name",
+    "phone":"Phone",
+    "address":"Address",
+    "ip":"IP",
+    "lastLogin":"Last Login"
+
   },
   "alerts": {
   },

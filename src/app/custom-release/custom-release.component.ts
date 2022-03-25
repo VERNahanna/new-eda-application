@@ -213,12 +213,12 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         fileValue: '',
         required: false,
         enable: false,
-        enabledCondition: true,
+        //enabledCondition: true,
         relatedWithField: ['FINISHED_PRDUCTS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
-/*       {
+       /* {
         id: 'coc',
         name: 'COC',
         fileName: '',
@@ -230,7 +230,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         relatedWithField: ['FINISHED_PRDUCTS'],
         attachmentTypeStatus: '',
         loadingStatus: false,
-      }, */
+      },  */
     ],
     PREMIX: [
       {
@@ -263,7 +263,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         attachmentTypeStatus: '',
         loadingStatus: false,
       },
-      {
+        {
         id: 'packingList',
         name: 'Packing list',
         fileName: '',
@@ -272,7 +272,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         enable: true,
         attachmentTypeStatus: '',
         loadingStatus: false,
-      },
+      },  
     ],
     RAW_MATERIAL: [
       {
@@ -823,6 +823,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
         certificateOfOrigin: this.fb.control(''),
         companyManufactureRelationship: this.fb.control(''),
         legalizedHealthCertificate: this.fb.control(''),
+        packingList: this.fb.control(''),
         coa: this.itemType === 'PREMIX' || (this.itemType === 'RAW_MATERIAL' && this.importReason !== 'RAW_MAT_RD') ? this.fb.control('') : this.fb.control(''),
         coc: this.importReason === 'FINISHED_PRDUCTS' ? this.fb.control('') : this.fb.control(''),
         premixName: this.fb.control(''),
@@ -1061,8 +1062,25 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
       this.isLoading = false;
     }, 500);
   }
+/*   renderingTheItemAttachment(itemType, importReason) {
+    debugger;
+    this.ItemAttachmentFields = this.allItemTypeAttachmentFields[itemType.code].map(item => {
+      if (item.requiredWithImportReasonCondition && item.relatedWithField.includes(importReason.code)) {
+        item.required = false;
+      } else if (item.requiredWithImportReasonCondition && !item.relatedWithField.includes(importReason.code)) {
+        item.required = false;
+      }
 
-  renderingTheItemAttachment(itemType, importReason) {
+      if (item.enabledCondition && item.relatedWithField.includes(importReason.code)) {
+        item.enable = true;
+      } else if (item.enabledCondition && !item.relatedWithField.includes(importReason.code)) {
+        item.enable = false;
+      }
+
+      return item;
+    });
+  } */
+   renderingTheItemAttachment(itemType, importReason) {
     this.ItemAttachmentFields = this.allItemTypeAttachmentFields[itemType.code].map(item => {
       if (item.requiredWithImportReasonCondition && item.relatedWithField.includes(importReason.code)) {
         item.required = false;
@@ -1086,7 +1104,7 @@ export class CustomReleaseComponent implements OnInit, OnDestroy {
 
       return item;
     });
-  }
+  } 
 
   applyProduct(notificationNumber) {
     this.isLoading = true;

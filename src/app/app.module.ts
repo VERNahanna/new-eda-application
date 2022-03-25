@@ -52,6 +52,9 @@ import {SharedComponentsModule} from "./shared-components/shared-components.modu
 import {CosmeticsProductsModule} from "./cosmetics-products/cosmetics-products.module";
 import {PremixListComponent} from './Premix/premix-list/premix-list.component';
 import {CreateOrEditPremixComponent} from './Premix/create-or-edit-premix/create-or-edit-premix.component';
+import { AccountsListComponent } from './account-management/accounts-list/accounts-list.component';
+import { CreateOrEditAccountComponent } from './account-management/create-or-edit-account/create-or-edit-account.component';
+import { ViewAccountComponent } from './account-management/view-account/view-account.component';
 
 
 registerLocaleData(localeAr, 'ar-Ar', localeArabicExtra);
@@ -80,6 +83,9 @@ const translations = {
     CustomReleaseComponent,
     DashboardComponent,
     ChartsComponentComponent,
+    AccountsListComponent,
+    CreateOrEditAccountComponent,
+    ViewAccountComponent,
 
   ],
   imports: [

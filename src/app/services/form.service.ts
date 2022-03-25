@@ -951,4 +951,18 @@ return this.http.post(`${this.secondApiURL}Premix/DeltePremix/${id}`, options)
       return throwError(`Error! ${error.error.StatusMessage ? error.error.StatusMessage : error.error}`);
     }
   }
+  GetCompanyInfo(companyProfileId)
+  {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Token': this.Token
+    });
+    const options = {headers};
+    
+    return this.http.get(`${this.secondApiURL}company/getCompanyInfo/${companyProfileId}`, options)
+      .pipe(map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError));
+  }
 }

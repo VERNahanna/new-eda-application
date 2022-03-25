@@ -384,6 +384,37 @@
                 </mat-expansion-panel>
               </mat-accordion>
             </td>
+            <td colspan="8" *ngIf="whichTable === 'usersList'">
+              <mat-accordion>
+                <mat-expansion-panel class="areaContainer" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <table class="table table-sm tableDetailsCont">
+                        <tr>
+                          <td>{{request.id}}</td>
+                          <td>{{request.name}}</td>
+                          <td>{{request.userName}}</td>
+                          <td>{{request.address}}</td>
+                          <td>{{request.mobile}}</td>
+                          <td>{{request.ip}}</td>
+                          <td>{{request.sessionEndTime}}</td>
+                          <td>
+                            <span (click)="removePremixfunction(request)">
+                              <i class="fa fa-trash" ></i>
+                            </span>
+                              <span (click)="removePremixfunction(request)">
+                                <i class="fa fa-edit" ></i>
+                            </span>
+                          </td>
+                          
+                        </tr>
+                      </table>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                
+                </mat-expansion-panel>
+              </mat-accordion>
+            </td>
             <td colspan="6" *ngIf="whichTable === 'premixIngredientsList'">
               <mat-accordion>
                 <mat-expansion-panel class="areaContainer" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
@@ -434,6 +465,7 @@
                 </mat-expansion-panel>
               </mat-accordion>
             </td>
+          
             <td colspan="7" *ngIf="whichTable === 'notificationList'">
               <mat-accordion>
                 <mat-expansion-panel class="areaContainer" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
