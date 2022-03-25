@@ -7,6 +7,9 @@ import {DraftRequestsComponent} from "./draft-requests/draft-requests.component"
 import {TrackRequestsComponent} from "./track-requests/track-requests.component";
 import { PremixListComponent } from '../Premix/premix-list/premix-list.component';
 import { CreateOrEditPremixComponent } from '../Premix/create-or-edit-premix/create-or-edit-premix.component';
+import { CosmaticImportationComponent } from './cosmetics-importation/cosmatic-importation/cosmatic-importation.component';
+import { DraftImportRequestsComponent } from './cosmetics-importation/draft-import-requests/draft-import-requests.component';
+import { TrackImportRequestsComponent } from './cosmetics-importation/track-import-requests/track-import-requests.component';
 
 const routes: Routes = [
   {
@@ -41,6 +44,36 @@ const routes: Routes = [
       {
         path: 'release-services/:departId/:departSecId',
         component: CosmeticsProductsComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path: 'new-request',
+        component: CosmaticImportationComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path: 'new-request/:id',
+        component: CosmaticImportationComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path: 'new-request/:serviceId/:serviceTypeId',
+        component: CosmaticImportationComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path: 'new-request/:serviceId/:serviceTypeId/:serviceTypeName',
+        component: CosmaticImportationComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path: 'draft-request',
+        component: DraftImportRequestsComponent,
+        data: {animation: 'inner'}
+      },
+      {
+        path: 'track-request',
+        component:TrackImportRequestsComponent,
         data: {animation: 'inner'}
       },
       {
