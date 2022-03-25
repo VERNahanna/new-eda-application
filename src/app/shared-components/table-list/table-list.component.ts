@@ -73,7 +73,7 @@ export class TableListComponent implements OnInit, OnChanges {
   @Output() removeDraftProduct = new EventEmitter();
   @Output() removeIngredientfromPremix = new EventEmitter();
   @Output() removePremix = new EventEmitter();
-  
+
   contentArray = [];
   returnedArray: string[];
   deletedIdsListForPackaging = [];
@@ -90,7 +90,7 @@ export class TableListComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.data) {
       if (this.data.tableBody && this.data.tableBody?.length > 0) {
-        if (this.whichTable === 'drafted' || this.whichTable === 'notificationList'||this.whichTable==='track') {
+        if (this.whichTable === 'drafted' || this.whichTable === 'notificationList'||this.whichTable==='track' || this.whichTable==='Importedtrack') {
           this.data.tableBody.sort((a, b) => a.createdDate && b.createdDate ? (a.createdDate > b.createdDate) ? -1 : 1 : -1);
 
           if (this.whichTable === 'notificationList') {

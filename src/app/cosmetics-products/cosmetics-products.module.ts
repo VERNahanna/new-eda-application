@@ -28,11 +28,17 @@ import {SharedComponentsModule} from "../shared-components/shared-components.mod
 import {CosmeticsProductService} from "./cosmetics-product.service";
 import { PremixListComponent } from '../Premix/premix-list/premix-list.component';
 import { CreateOrEditPremixComponent } from '../Premix/create-or-edit-premix/create-or-edit-premix.component';
+import { CosmaticImportationComponent } from './cosmetics-importation/cosmatic-importation/cosmatic-importation.component';
+import { TrackImportRequestsComponent } from './cosmetics-importation/track-import-requests/track-import-requests.component';
+import { DraftImportRequestsComponent } from './cosmetics-importation/draft-import-requests/draft-import-requests.component';
 
 
 @NgModule({
   declarations: [DraftRequestsComponent, TrackRequestsComponent, CosmeticsProductsContainerComponent, CosmeticsProductsComponent    , PremixListComponent,
-    CreateOrEditPremixComponent],
+    CreateOrEditPremixComponent,
+    CosmaticImportationComponent,
+    TrackImportRequestsComponent,
+    DraftImportRequestsComponent],
   imports: [
     CommonModule,
     CosmeticsProductsRoutingModule,
